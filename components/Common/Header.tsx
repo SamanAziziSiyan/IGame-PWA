@@ -15,7 +15,8 @@ const Header = () => {
                 </div>
                 <nav>
                     <ul className="flex gap-x-4 items-center">
-                        <li>
+                        <li className='relative'>
+                            <div className='bg-red-600 rounded-full w-2 h-2 absolute top-0 right-[2px]'></div>
                             <Link href="/">
                                 <NotificationIcon />
                             </Link>
