@@ -1,13 +1,10 @@
 // app/page.tsx
+import Home from '@/components/Home/components';
 import Link from 'next/link';
 
 const HomePage = () => {
   return (
-    <div>
-      <h1>Welcome to My New Home Page!</h1>
-      <p>Explore our latest features and offerings.</p>
-      <Link href="/about">Learn More About Us</Link>
-    </div>
+    <Home/>
   );
 };
 
