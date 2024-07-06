@@ -9,7 +9,6 @@ const Products = () => {
             <FilterCategories />
             <SpecialOffers />
             <Product />
-            <Account/>
         </>
     );
 };
