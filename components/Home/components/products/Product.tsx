@@ -2,8 +2,8 @@ import ProductCards from '@/components/Common/ProductCards';
 
 const Product = () => {
     return (
-        <div className='grid grid-cols-8 gap-x-5 gap-y-11 items-center justify-center p-16'>
-            {Array.from({ length: 24 }).map((_, index) => (
+        <div className='grid 3xl:grid-cols-8 grid-cols-7 gap-x-5 gap-y-14 items-center justify-center mt-6 container-px'>
+            {Array.from({ length: 21 }).map((_, index) => (
                 <ProductCards key={index} />
             ))}
 

@@ -1,10 +1,14 @@
 // components/Home.tsx
 
+import AccountDesc from "./AccountDesc";
+import AccountInfo from "./AccountInfo";
+
 const Account = () => {
     return (
-        <>
-            <div>Account</div>
-        </>
+        <div className="mt-14 container-px">
+            <AccountInfo />
+            <AccountDesc />
+        </div>
     );
 };
 

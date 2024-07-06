@@ -137,3 +137,31 @@ body {
   backdrop-filter: blur(25.385px);
   border-radius: 18.2626px;
 }
+
+
+
+.custom-select-wrapper label {
+    display: block;
+	color: white;
+    margin-bottom: 0.3rem;
+}
+
+.custom-select-container {
+    position: relative;
+}
+
+.custom-select {
+    width: 100%;
+	appearance: none; /* Remove default arrow */
+
+}
+
+.custom-select-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    fill: #333;
+}
+
