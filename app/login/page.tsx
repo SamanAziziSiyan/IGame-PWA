@@ -2,11 +2,11 @@
 
 "use client";
 
-import { Login } from "@/components/Login";
+import LoginFrom from "@/components/Login/LoginForm";
 
 const LoginPage = () => {
     return (
-        <Login />
+        <LoginFrom />
     );
 };
 

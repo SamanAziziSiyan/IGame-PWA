@@ -1,10 +1,15 @@
 import axiosInstance from "../axios"
 
-const Login = async (MobileNumber: string) => {
-    return await axiosInstance.post('login/SendVerificationCode',
-        { MobileNumber }
+const LoginService = async (MobileNumber: string) => {
+    return await axiosInstance.post(`customer/login/SendVerificationCode?number=${MobileNumber}`)
+}
+const OtpVerificationService = async (MobileNumber: string, OtpVerificationCode: string) => {
+    return await axiosInstance.post(`customer/login/VerifyOtpCode`,
+        {
+            "MobileNumber": MobileNumber,
+            "OtpCode": OtpVerificationCode
+        }
     )
-
 }
 
-export { Login }
+export { LoginService, OtpVerificationService }

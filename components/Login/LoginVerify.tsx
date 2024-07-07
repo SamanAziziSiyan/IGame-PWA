@@ -1,24 +1,45 @@
 // components/Login.tsx
-
+"use client"
 import { SubmitHandler, useForm } from "react-hook-form";
 import CustomInput from "../Common/InputField";
 import Button from "../Common/Buttons";
 import PipeIcon from "../Common/icons/pipeIcon";
+import { OtpVerificationService } from "@/services/auth/login";
+import { useRouter } from "next/router";
 
 
 interface IFormInput {
-    phoneNumber: string;
+    userName: string;
     verificationCode: string;
 }
-const LoginVerify = () => {
+interface LoginVerifyProps {
+    userPhoneNumber: string;
+}
+const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
+    // const router = useRouter();
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm<IFormInput>();
 
-    const onSubmit: SubmitHandler<IFormInput> = (data) => {
-        console.log(data);
+    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+        try {
+            const response = await OtpVerificationService(data.userName, data.verificationCode);
+            if (response.status != 200) {
+                throw new Error();
+            } else {
+                alert('true');
+                // router.push('/dashboard');
+                localStorage.setItem("UserData", JSON.stringify({
+                    "token": response.data.data.token,
+                    "userName": response.data.data.username
+                })
+                )
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
     return (
         <div className="mt-11">
@@ -26,22 +47,22 @@ const LoginVerify = () => {
                 <div className='grid grid-cols-1 md:w-1/2 w-full mx-auto gap-[14px] items-center justify-center'>
                     <div className='text-white flex flex-col gap-y-4'>
                         <h3 className='font-bold text-xl'>تایید شماره همراه</h3>
-                        <span className='font-normal text-[14px] '>کد ارسالی به شماره 09179179191 را وارد کنید</span>
+                        <span className='font-normal text-[14px] '>کد ارسالی به شماره {userPhoneNumber} را وارد کنید</span>
                     </div>
                     <CustomInput
-                        id="phoneNumber"
+                        id="userName"
                         type="text"
                         label="نام کاربری*"
-                        name="phoneNumber"
+                        name="userName"
                         register={register}
                         validationRules={{
                             required: 'نام کاربری ضروری است',
-                            pattern: {
-                                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                                message: 'نام کاربری نامعتبر است'
-                            }
+                            // pattern: {
+                            //     value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                            //     message: 'نام کاربری نامعتبر است'
+                            // }
                         }}
-                        errors={errors.phoneNumber}
+                        errors={errors.userName}
                         placeholder="نام کاربری شما"
                     />
                     <CustomInput
@@ -53,7 +74,7 @@ const LoginVerify = () => {
                         validationRules={{
                             required: 'شماره تلفن همراه شما ضروری است',
                         }}
-                        errors={errors.phoneNumber}
+                        errors={errors.verificationCode}
                         placeholder="- - - -"
                     />
                     <div className="flex gap-x-2 items-center">
