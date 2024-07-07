@@ -27,7 +27,7 @@ const Header = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link href="/account">
+                            <Link href="/login">
                                 <AccountIcon />
                             </Link>
                         </li>
