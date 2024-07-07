@@ -41,7 +41,7 @@ const AccountForm: React.FC = () => {
                         label="پلتفرم*"
                         name="platform"
                         register={register}
-                        validationRules={{ required: 'Country is required' }}
+                        validationRules={{ required: 'platform is required' }}
                         errors={errors.platform}
                         options={[
                             { value: 'اکتیویژن', label: 'اکتیویژن' },

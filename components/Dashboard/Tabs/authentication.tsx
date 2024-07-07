@@ -1,8 +1,15 @@
 // components/authentication.tsx
 
+import AccountDetailsForm from "./authentication/AccountDetailsForm";
+import LevelUpForm from "./authentication/levelupForm";
+
 const Authentication = () => {
+
     return (
-        <div>Authentication</div>
+        <>
+            <LevelUpForm />
+            <AccountDetailsForm />
+        </>
     );
 };
 
