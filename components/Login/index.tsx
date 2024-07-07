@@ -1,5 +1,6 @@
 // components/Login.tsx
 
+import LoginRegister from "./auth";
 import LoginFrom from "./LoginForm";
 import LoginVerify from "./LoginVerify";
 

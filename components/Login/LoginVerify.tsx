@@ -3,8 +3,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import CustomInput from "../Common/InputField";
 import Button from "../Common/Buttons";
-import Image from "next/image";
-import InfoIcon from "../Common/icons/infoIcon";
 import PipeIcon from "../Common/icons/pipeIcon";
 
 
