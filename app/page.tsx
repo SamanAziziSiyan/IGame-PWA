@@ -1,11 +1,10 @@
 // app/page.tsx
 import Home from '@/components/Home/components';
-import Link from 'next/link';
+import { ProductsService } from '@/services/products/products';
 
-const HomePage = () => {
-  return (
-    <Home/>
-  );
+const HomePage = async () => {
+  const res = await ProductsService();
+  return <Home data={res} />;
 };
 
 export default HomePage;

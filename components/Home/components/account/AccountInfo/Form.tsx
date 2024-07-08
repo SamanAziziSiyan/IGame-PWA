@@ -7,7 +7,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 
 const svgIcon = `
 <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1.20926 1.80237L6.79065 7.38376L12.372 1.80237" stroke="white" stroke-width="1.86047" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.20926 1.80237L6.79065 7.38376L12.372 1.80237" stroke="white" strokeWidth="1.86047" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 
 `;
@@ -45,8 +45,8 @@ const AccountForm: React.FC = () => {
                         errors={errors.platform}
                         options={[
                             { value: 'اکتیویژن', label: 'اکتیویژن' },
-                            { value: 'اکتیویژن', label: 'اکتیویژن' },
-                            { value: 'اکتیویژن', label: 'اکتیویژن' },
+                            { value: 'اکتیویژن1', label: 'اکتیویژن' },
+                            { value: 'اکتیویژن2', label: 'اکتیویژن' },
                         ]}
                         svgIcon={svgIcon}
                     />

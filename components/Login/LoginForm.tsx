@@ -8,6 +8,8 @@ import InfoIcon from "../Common/icons/infoIcon";
 import { LoginService } from "@/services/auth/login";
 import { useState } from "react";
 import LoginVerify from "./LoginVerify";
+import LoadingIcon from "../Common/icons/loadingIcon";
+import { toastAlert } from "@/utils";
 
 
 interface IFormInput {
@@ -15,6 +17,7 @@ interface IFormInput {
 }
 const LoginFrom = () => {
     const [showVerify, setShowVerify] = useState<boolean>(false);
+    const [showLoading, setShowLoading] = useState<boolean>(false);
     const [userPhoneNumber, setUserPhoneNumber] = useState<string>('');
     const {
         register,
@@ -24,17 +27,32 @@ const LoginFrom = () => {
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
+            setShowLoading(true);
             const response = await LoginService(data.phoneNumber);
-            if (response.status != 200) {
-                throw new Error();
+            if (response.data.status != "Success") {
+                if (response?.data?.status == "Error") {
+                    setShowVerify(true);
+                    toastAlert({ msg: response.data.errors[0] as string, type: "info" });
+                    return;
+                }
+                throw new Error('خطایی رخ داده است');
             } else {
                 setUserPhoneNumber(data.phoneNumber)
                 setShowVerify(true);
-                
+                toastAlert({ msg: "پیامک با موفقیت ارسال شد" as string, type: "success" });
             }
-        } catch (error) {
-            console.log(error);
-            setShowVerify(false);
+        } catch (error: any) {
+            if (error?.response?.status == 401) {
+                toastAlert({ msg: "توکن منقضی شده است: خطای 401" as string })
+                setShowLoading(false);
+                setShowVerify(false);
+                return;
+            } else {
+                setShowLoading(false);
+                toastAlert({ msg: error?.message as string })
+                setShowVerify(false);
+            }
+
         }
     };
     return (
@@ -68,8 +86,11 @@ const LoginFrom = () => {
                                 <InfoIcon />
                                 <span className="text-[12px] font-normal text-white/80">مانند ۰۹۱۲۱۲۳۴۵۶۷۸</span>
                             </div>
-                            <Button className='mt-3 py-[14px] font-semibold rounded-[40px]' type='submit'>
+                            <Button className='mt-3 py-[14px] font-semibold flex items-center justify-center gap-x-4 rounded-[40px]' type='submit'>
                                 تایید شماره موبایل
+                                {showLoading &&
+                                    <LoadingIcon className="fill-gray-600" />
+                                }
                             </Button>
                             <Button className='mt-3 py-[14px] bg-white font-semibold rounded-[40px] flex items-center justify-center gap-x-2' type='submit'>
                                 <Image src={'/assets/images/SSO Icon.png'} width={24} height={24} alt="" />

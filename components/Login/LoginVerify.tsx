@@ -6,6 +6,7 @@ import Button from "../Common/Buttons";
 import PipeIcon from "../Common/icons/pipeIcon";
 import { OtpVerificationService } from "@/services/auth/login";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 
 interface IFormInput {
@@ -16,6 +17,7 @@ interface LoginVerifyProps {
     userPhoneNumber: string;
 }
 const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
+    const [showLoading, setShowLoading] = useState<boolean>(false);
     // const router = useRouter();
     const {
         register,
@@ -36,9 +38,11 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                     "userName": response.data.data.username
                 })
                 )
+                setShowLoading(true);
             }
         } catch (error) {
             console.log(error);
+            setShowLoading(false);
         }
     };
     return (
