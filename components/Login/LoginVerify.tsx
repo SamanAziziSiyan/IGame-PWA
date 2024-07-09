@@ -4,12 +4,12 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import CustomInput from "@/components/Common/InputField"; // Adjust import path if necessary
 import Button from "@/components/Common/Buttons"; // Adjust import path if necessary
-import PipeIcon from "@/components/Common/icons/pipeIcon"; // Adjust import path if necessary
-import { OtpVerificationService } from "@/services/auth/login";
+import { LoginService, OtpVerificationService } from "@/services/auth/login";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toastAlert } from "@/utils";
 import LoadingIcon from "@/components/Common/icons/loadingIcon"; // Adjust import path if necessary
+import Timer from "./Timer";
 
 interface IFormInput {
     userName: string;
@@ -33,7 +33,7 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
         try {
             setShowLoading(true);
             const response = await OtpVerificationService(data.userName, data.verificationCode);
-            if (response.data.status !== "Success" || response.data.joinedErrors != '') {
+            if (response.data.status !== "Success" || response.data.joinedErrors !== '') {
                 throw new Error(response.data.joinedErrors);
             } else {
                 toastAlert({ msg: "کد تایید با موفقیت تایید شد", type: "success" });
@@ -47,6 +47,31 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
             toastAlert({ msg: error?.message || "خطایی رخ داده است", type: "error" });
         } finally {
             setShowLoading(false);
+        }
+    };
+
+    const sendAgain = async () => {
+        try {
+            const response = await LoginService(userPhoneNumber);
+            if (response.data.status != "Success") {
+                if (response?.data?.status == "Error") {
+                    toastAlert({ msg: response.data.errors[0] as string, type: "info" });
+                    return;
+                }
+                throw new Error('خطایی رخ داده است');
+            } else {
+                toastAlert({ msg: "پیامک با موفقیت ارسال شد" as string, type: "success" });
+            }
+        } catch (error: any) {
+            if (error?.response?.status == 401) {
+                toastAlert({ msg: "توکن منقضی شده است: خطای 401" as string })
+                setShowLoading(false);
+                return;
+            } else {
+                setShowLoading(false);
+                toastAlert({ msg: error?.message as string })
+            }
+
         }
     };
 
@@ -86,16 +111,7 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                         errors={errors.verificationCode}
                         placeholder="- - - -"
                     />
-                    <div className="flex gap-x-2 items-center">
-                        <span className="text-[12px] font-normal text-white/80">کد را دریافت نکردید؟ </span>
-                        <a href="" className="text-[#CCFB4B] font-black text-[14px] underline">ارسال مجدد کد</a>
-                    </div>
-
-                    <div className="flex gap-x-2 items-center justify-center">
-                        <span className="text-[12px] font-normal text-white/80">ارسال مجدد کد </span>
-                        <PipeIcon />
-                        <span>01:57</span>
-                    </div>
+                    <Timer onSendAgain={sendAgain} /> {/* Include the Timer component */}
                     <Button className='mt-3 py-[14px] font-semibold flex items-center justify-center gap-x-4 rounded-[40px]' type='submit'>
                         تایید کد
                         {showLoading && <LoadingIcon className="fill-gray-600" />}
