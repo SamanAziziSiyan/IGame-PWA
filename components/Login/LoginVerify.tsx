@@ -1,24 +1,28 @@
-// components/Login.tsx
-"use client"
-import { SubmitHandler, useForm } from "react-hook-form";
-import CustomInput from "../Common/InputField";
-import Button from "../Common/Buttons";
-import PipeIcon from "../Common/icons/pipeIcon";
-import { OtpVerificationService } from "@/services/auth/login";
-import { useRouter } from "next/router";
-import { useState } from "react";
+// app/login/LoginVerify.tsx
+"use client";
 
+import { SubmitHandler, useForm } from "react-hook-form";
+import CustomInput from "@/components/Common/InputField"; // Adjust import path if necessary
+import Button from "@/components/Common/Buttons"; // Adjust import path if necessary
+import PipeIcon from "@/components/Common/icons/pipeIcon"; // Adjust import path if necessary
+import { OtpVerificationService } from "@/services/auth/login";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toastAlert } from "@/utils";
+import LoadingIcon from "@/components/Common/icons/loadingIcon"; // Adjust import path if necessary
 
 interface IFormInput {
     userName: string;
     verificationCode: string;
 }
+
 interface LoginVerifyProps {
     userPhoneNumber: string;
 }
+
 const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
     const [showLoading, setShowLoading] = useState<boolean>(false);
-    // const router = useRouter();
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -27,24 +31,25 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
+            setShowLoading(true);
             const response = await OtpVerificationService(data.userName, data.verificationCode);
-            if (response.status != 200) {
-                throw new Error();
+            if (response.data.status !== "Success" || response.data.joinedErrors != '') {
+                throw new Error(response.data.joinedErrors);
             } else {
-                alert('true');
-                // router.push('/dashboard');
+                toastAlert({ msg: "کد تایید با موفقیت تایید شد", type: "success" });
                 localStorage.setItem("UserData", JSON.stringify({
                     "token": response.data.data.token,
                     "userName": response.data.data.username
-                })
-                )
-                setShowLoading(true);
+                }));
+                router.push('/dashboard');
             }
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            toastAlert({ msg: error?.message || "خطایی رخ داده است", type: "error" });
+        } finally {
             setShowLoading(false);
         }
     };
+
     return (
         <div className="mt-11">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -61,10 +66,6 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                         register={register}
                         validationRules={{
                             required: 'نام کاربری ضروری است',
-                            // pattern: {
-                            //     value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                            //     message: 'نام کاربری نامعتبر است'
-                            // }
                         }}
                         errors={errors.userName}
                         placeholder="نام کاربری شما"
@@ -76,7 +77,11 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                         name="verificationCode"
                         register={register}
                         validationRules={{
-                            required: 'شماره تلفن همراه شما ضروری است',
+                            required: 'کد ارسالی ضروری است',
+                            pattern: {
+                                value: /^\d{6}$/,
+                                message: 'کد ارسالی باید 6 رقم باشد',
+                            },
                         }}
                         errors={errors.verificationCode}
                         placeholder="- - - -"
@@ -91,17 +96,17 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                         <PipeIcon />
                         <span>01:57</span>
                     </div>
-                    <Button className='mt-3 py-[14px] font-semibold rounded-[40px]' type='submit'>
+                    <Button className='mt-3 py-[14px] font-semibold flex items-center justify-center gap-x-4 rounded-[40px]' type='submit'>
                         تایید کد
+                        {showLoading && <LoadingIcon className="fill-gray-600" />}
                     </Button>
-                    <Button className='mt-3 py-[14px] bg-white font-semibold rounded-[40px] flex items-center justify-center gap-x-2' type='submit'>
+                    <Button className='mt-3 py-[14px] bg-white font-semibold rounded-[40px] flex items-center justify-center gap-x-2' type='button'>
                         تغییر شماره
                     </Button>
                 </div>
-            </form >
+            </form>
         </div>
     );
 };
 
 export default LoginVerify;
-

@@ -1,7 +1,7 @@
 import { ToastPosition, TypeOptions, toast } from "react-toastify";
 
 interface IToastAlert {
-    msg: string ;
+    msg: string;
     type?: TypeOptions;
     position?: ToastPosition;
 }
@@ -17,4 +17,20 @@ export const toastAlert = ({ msg, type = "error", position = "top-left" }: IToas
         theme: "colored",
         type: type,
     });
+};
+
+
+export const checkAuthToken = (router: any) => {
+    const userData = localStorage.getItem("UserData");
+    if (!userData) {
+        router.push("/login");
+        return false;
+    } else {
+        const { token } = JSON.parse(userData);
+        if (!token) {
+            router.push("/login");
+            return false;
+        }
+    }
+    return true;
 };
