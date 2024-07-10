@@ -3,8 +3,13 @@
 import Button from "@/components/Common/Buttons";
 import EyeIcon from "@/components/Common/icons/Eye";
 import Image from "next/image";
+import { useState } from "react";
 
 const LastOrders = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const toggleOpen = () => {
+        setIsOpen(!isOpen);
+    };
     return (
         <div className="mt-10">
             <h4 className="text-xl text-white font-bold">آخرین سفارشات شما</h4>
@@ -53,35 +58,38 @@ const LastOrders = () => {
                             </Button>
                         </div>
 
-                        <div className="flex items-center justify-center gap-x-1 ">
+                        <div onClick={toggleOpen} className="flex items-center justify-center gap-x-1 ">
                             <EyeIcon />
                             <span className="text-white xl:text-[14px]">بیشتر ...</span>
                         </div>
                     </div>
 
-                    <div className="w-full border-t border-white/20 py-3 xl:px-5 xl:pr-14 xl:pl-7">
-                        <div className="grid grid-cols-5 gap-x-4 items-center justify-center w-full">
-                            <div className="col-span-2 flex text-[#4285F4] font-medium justify-evenly">
-                                <span className="xl:text-base">کد تخفیف استفاده شده</span>
-                                <span className="xl:text-[22px]">1234567891011</span>
-                            </div>
-                            <div className="col-span-1 flex justify-evenly">
-                                <span>مبلغ تخفیف</span>
-                                <span className="xl:text-base text-[#F04242]">69000 تومان</span>
-                            </div>
-                            <div className="col-span-2 justify-evenly flex">
-                                <span className="xl:text-[22px] text-[#CCFB4B] flex justify-evenly xl:gap-x-4 items-center">
-                                    <span className="text-[#FFFFFF]/50 xl:text-base">
-                                        مبلغ قابل پرداخت
+                    {isOpen &&
+
+                        <div className="w-full border-t border-white/20 py-3 xl:px-5 xl:pr-14 xl:pl-7">
+                            <div className="grid grid-cols-5 gap-x-4 items-center justify-center w-full">
+                                <div className="col-span-2 flex text-[#4285F4] font-medium justify-evenly">
+                                    <span className="xl:text-base">کد تخفیف استفاده شده</span>
+                                    <span className="xl:text-[22px]">1234567891011</span>
+                                </div>
+                                <div className="col-span-1 flex justify-evenly">
+                                    <span>مبلغ تخفیف</span>
+                                    <span className="xl:text-base text-[#F04242]">69000 تومان</span>
+                                </div>
+                                <div className="col-span-2 justify-evenly flex">
+                                    <span className="xl:text-[22px] text-[#CCFB4B] flex justify-evenly xl:gap-x-4 items-center">
+                                        <span className="text-[#FFFFFF]/50 xl:text-base">
+                                            مبلغ قابل پرداخت
+                                        </span>
+                                        69000 تومان
                                     </span>
-                                    69000 تومان
-                                </span>
-                                <Button className="xl:w-1/2 rounded-2xl py-1">
-                                    پرداخت
-                                </Button>
+                                    <Button className="xl:w-1/2 rounded-2xl py-1">
+                                        پرداخت
+                                    </Button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
 
@@ -122,38 +130,39 @@ const LastOrders = () => {
                                 <span className="text-white">SiaMA@k</span>
                             </div>
                         </div>
-                        <div className="flex items-center justify-center gap-x-1 ">
+                        <div onClick={toggleOpen} className="flex items-center justify-center gap-x-1 ">
                             <EyeIcon />
                             <span className="text-white text-[14px] font-bold">بیشتــر ...</span>
                         </div>
                     </div>
+                    {isOpen &&
+                        <div className="">
+                            <div className="w-full py-3 flex flex-col justify-center">
+                                <div className=" flex text-[#4285F4] font-medium justify-between">
+                                    <span className="xl:text-base">کد تخفیف استفاده شده</span>
+                                    <span className="">1234567891011</span>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                    <span className="text-white/50 text-nowrap">شماره سفارش</span>
+                                    <span className="text-white">12346</span>
+                                </div>
 
-                    <div className="">
-                        <div className="w-full py-3 flex flex-col justify-center">
-                            <div className=" flex text-[#4285F4] font-medium justify-between">
-                                <span className="xl:text-base">کد تخفیف استفاده شده</span>
-                                <span className="">1234567891011</span>
+                                <div className=" flex justify-between">
+                                    <span>مبلغ تخفیف</span>
+                                    <span className="xl:text-base text-[#F04242]">69000 تومان</span>
+                                </div>
+                                <div className=" justify-between flex">
+                                    <span className="text-[#FFFFFF]/50 xl:text-base">
+                                        مبلغ قابل پرداخت
+                                    </span>
+                                    69000 تومان
+                                </div>
                             </div>
-                            <div className="flex items-center justify-between">
-                                <span className="text-white/50 text-nowrap">شماره سفارش</span>
-                                <span className="text-white">12346</span>
-                            </div>
-
-                            <div className=" flex justify-between">
-                                <span>مبلغ تخفیف</span>
-                                <span className="xl:text-base text-[#F04242]">69000 تومان</span>
-                            </div>
-                            <div className=" justify-between flex">
-                                <span className="text-[#FFFFFF]/50 xl:text-base">
-                                    مبلغ قابل پرداخت
-                                </span>
-                                69000 تومان
-                            </div>
+                            <Button className="w-full rounded-2xl py-1">
+                                پرداخت
+                            </Button>
                         </div>
-                        <Button className="w-full rounded-2xl py-1">
-                            پرداخت
-                        </Button>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
