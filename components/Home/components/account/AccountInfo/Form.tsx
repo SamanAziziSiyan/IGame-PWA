@@ -31,11 +31,11 @@ const AccountForm: React.FC = () => {
     };
 
     return (
-        <div className="col-span-7 w-full">
+        <div className="lg:col-span-7 xl:order-1 order-2 col-span-12 w-full">
             <form onSubmit={handleSubmit(onSubmit)}>
-            
 
-                <div className='grid grid-cols-2 gap-[14px] items-center justify-center'>
+
+                <div className='grid lg:grid-cols-2 grid-cols-1 lg:gap-[14px] gap-[10px] items-center justify-center'>
                     <CustomSelect
                         id="platform"
                         label="پلتفرم*"
@@ -92,15 +92,17 @@ const AccountForm: React.FC = () => {
                         errors={errors.password}
                         placeholder="توضیحات"
                     />
-
+                    <div className='lg:hidden flex text-[13px] font-medium mt-5'>
+                        ثبت سفارش به معنی  <span className='text-white font-bold'> موافقت با قوانین </span>  است.
+                    </div>
                     <div className='flex mt-3 justify-between'>
-                        <span className='text-white'>مبلغ پرداختی</span>
-                        <div className='flex text-xl font-bold gap-1'>
+                        <span className='text-white xl:text-base text-[14px]'>مبلغ پرداختی</span>
+                        <div className='flex xl:text-xl text-lg font-bold gap-1'>
                             <span className='text-[#CCFB4B] '>1,400,000</span>
                             <span className='text-white'>تومان</span>
                         </div>
                     </div>
-                    <Button className='mt-3 py-[14px] font-semibold rounded-[40px]' type='submit'>
+                    <Button className='mt-3 py-[14px] xl:text-base text-[14px] font-semibold rounded-[40px]' type='submit'>
                         تایید نهایی و ثبت سفارش
                     </Button>
                 </div>

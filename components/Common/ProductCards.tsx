@@ -7,9 +7,9 @@ const ProductCards = () => {
                 <Image src="/assets/images/product.png" alt="IGame product" width={141} height={149} className="rounded -mt-6 w-full" />
             </div>
             <div className='flex flex-col rounded-b-xl items-center pt-2 gap-1 bg-black/20 backdrop-blur-md h-full w-full'>
-                <span className="text-[21px] font-black text-white">30 CP</span>
-                <span className="text-base font-medium text-white/60 mb-1">سی پی کال آف دیوتی</span>
-                <button className=' text-[#111111] text-base bg-[#CCFB4B] px-4 py-[6px] -mb-4 rounded-3xl font-semibold flex items-center justify-center align-middle'><span>81/400 تومان</span></button>
+                <span className="md:text-[21px] text-[15px] font-black text-white">30 CP</span>
+                <span className="md:text-base text-[12px] font-medium text-white/60 mb-1">سی پی کال آف دیوتی</span>
+                <button className=' text-[#111111] md:text-base text-[12px] bg-[#CCFB4B] md:px-4 px-3 md:py-[6px] py-1 -mb-4 rounded-3xl font-semibold flex items-center justify-center align-middle'><span>81/400 تومان</span></button>
             </div>
         </div>
     );

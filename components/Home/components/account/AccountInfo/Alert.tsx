@@ -3,7 +3,7 @@ import WarningIcon from "@/components/Common/icons/warningicon";
 
 const AccountAlert = () => {
     return (
-        <div className="col-span-5 w-full flex flex-col gap-y-2">
+        <div className="lg:col-span-5 col-span-12 lg:order-2 order-1 w-full flex flex-col gap-y-2">
             <Alert type="danger">
                 <p>          توجــه: در خرید آفرها و پیکیج ها، <span className="text-white">در صورت نبود آفر</span> یا <span className="text-white">عدم</span> امکان خرید آن آفـــر روی اکانت شما، معادل مبلغ سفارش از دیگر آیتـــم ها برای شما خرید خواهد شد.
                     <br /><br />
