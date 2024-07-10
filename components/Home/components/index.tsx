@@ -9,7 +9,7 @@ import Trust from "./trust";
 interface HomeProps2 {
     data: HomeProps
 }
-const Home = ({ data }: HomeProps2) => {
+const Home = ({ }) => {
     return (
         <>
             <Hero />

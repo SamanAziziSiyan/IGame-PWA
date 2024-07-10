@@ -1,10 +1,12 @@
 {
-    "short_name": "iGame Shop",
-    "name": "iGame PWA Shop",
-    "start_url": "/",
-    "background_color": "#ffffff",
-    "display": "standalone",
-    "scope": "/",
-    "theme_color": "#000000"
-  }
-  
+  "name": "IGame PWA Shop",
+  "short_name": "IGame Shop",
+  "description": "This is IGame PWA Shop",
+  "icons": [
+  ],
+  "theme_color": "#111",
+  "background_color": "#111",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}

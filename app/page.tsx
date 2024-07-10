@@ -4,7 +4,7 @@ import { ProductsService } from '@/services/products/products';
 
 const HomePage = async () => {
   const res = await ProductsService();
-  return <Home data={res} />;
+  return <Home />;
 };
 
 export default HomePage;
