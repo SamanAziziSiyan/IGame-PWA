@@ -1,10 +1,14 @@
 // components/Header.tsx
+"use client"
 import Link from 'next/link';
 import Image from 'next/image';
 import NotificationIcon from './icons/notification';
 import AccountIcon from './icons/account';
 import ShopIcon from './icons/shopIcon';
 import { checkAuthToken } from '@/utils';
+import DropdownMenu from './DropDownMenu';
+import AccountMenuIcon from './icons/accountmenuIcon';
+import LogoutIcon from './icons/logoutIcon';
 
 const Header = () => {
     return (
@@ -35,15 +39,35 @@ const Header = () => {
                                     <AccountIcon className='max-lg:w-4 max-lg:h-4' />
                                 </Link>
 
-                                : <Link href='/dashboard'>
+                                :
+                                <DropdownMenu trigger={<button>
                                     <Image
                                         src="/assets/images/avatar.png"
                                         alt="avatar"
                                         className="max-lg:w-6 max-lg:h-6"
                                         width={40}
                                         height={40}
-                                    /></Link>
+                                    /></button>}>
+                                    <div className='bg-white flex gap-y-3 flex-col text-center absolute left-4 text-[#111] py-4 px-5 rounded-xl'>
+                                        <span className='text-[#111111]/60 font-bold text-xs'>کاربر عزیز خوش اومدی</span>
+                                        <ul className='flex flex-col gap-y-3'>
+                                            <Link href='/dashboard'>
+                                                <li className='text-[#111111] cursor-pointer flex items-center gap-x-1 font-bold text-xs'>
+                                                    <AccountMenuIcon />
+                                                    حساب کاربری
+                                                </li>
+                                            </Link>
+                                            <Link href='/'>
+                                                <li className='text-[#F04242]/60 cursor-pointer flex items-center gap-x-1 font-semibold text-xs'>
+                                                    <LogoutIcon />
+                                                    خروج از حساب
+                                                </li>
+                                            </Link>
+                                        </ul>
+                                    </div>
+                                </DropdownMenu>
                             }
+
                         </li>
                     </ul>
                 </nav>
