@@ -11,18 +11,18 @@ const CTA = () => {
           <Image
             src="/assets/images/avatar.png"
             alt="avatar"
-            className="max-lg:w-10 max-lg:h-10"
+            className="max-xl:w-10 max-xl:h-10"
             width={74}
             height={74}
           />
           <div className="flex items-center gap-x-2">
-            <span className="lg:text-xl text-[14px] font-bold text-white">
+            <span className="xl:text-xl text-[14px] font-bold text-white">
               سلام، زهــرا عزیـــــز
             </span>
             <Image
               src="/assets/images/hand.png"
               alt="avatar"
-              className="max-lg:w-5 max-lg:h-5"
+              className="max-xl:w-5 max-xl:h-5"
               width={32}
               height={32}
             />
@@ -42,7 +42,7 @@ const CTA = () => {
               height={74}
             />
             <div className="flex items-center gap-x-2">
-              <span className="text-xl font-bold text-white">
+              <span className="xl:text-xl text-[14px] font-bold text-white">
                 سلام، زهــرا عزیـــــز
               </span>
               <Image

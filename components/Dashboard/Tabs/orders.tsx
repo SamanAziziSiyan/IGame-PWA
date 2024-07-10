@@ -37,63 +37,12 @@ const Orders = () => {
                 </div>
             </div>
 
-            
+
             <div className="flex flex-col gap-4 mt-10">
-                {/* <div className="flex items-center 3xl:gap-x-[134px] gap-x-[90px] py-3 px-5 bg-white/5 rounded-[17px]">
-                    <div className="flex items-center gap-x-4">
-                        <Image
-                            alt="order"
-                            src={"/assets/images/game-3.png"}
-                            width={80}
-                            height={80}
-                        />
-                        <div className="flex flex-col">
-                            <h4 className="text-white font-bold">660 سی پی کالاف</h4>
-                            <span className="text-white/50">خرید مستقیم از Activision</span>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-x-4">
-                        <span className="text-white/50">شماره سفارش</span>
-                        <span className="text-white">12346</span>
-                    </div>
-
-                    <div className="flex items-center gap-x-6">
-                        <div className="flex flex-col">
-                            <span className="text-white/50">نام کاربری (ایمیل)</span>
-                            <span className="text-white/50">رمز عبور</span>
-                            <span className="text-white/50"> نام درون بازی</span>
-                        </div>
-                        <div className="flex flex-col">
-                            <span className="text-white">نام </span>
-                            <span className="text-white"> عبور</span>
-                            <span className="text-white"> درون بازی</span>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-x-10">
-                        <div className="flex items-center gap-x-3">
-                            <span className="text-white/50"> مبلـــغ کل</span>
-                            <span className="text-white 3xl:text-[22px] text-[18px]">81,000 تومان</span>
-                        </div>
-                        <Button className="px-6  py-1 rounded-[21px] text-[#111111] font-semibold">
-                            <span>تکمیل شد</span>
-                        </Button>
-                    </div>
-
-                    <div className="flex items-center gap-x-1 ">
-                        <EyeIcon />
-                        <span className="text-white">بیشتر ...</span>
-                    </div>
-                </div> */}
-
-                <div>
-                    
-                </div>
 
 
-                {/* <div className="flex flex-col bg-white/5 rounded-[17px]">
-                    <div className="flex md:flex-row flex-col items-center  3xl:gap-x-[134px] md:gap-x-[80px] gap-x-[10px] md:py-3 py-1 md:px-5 px-2">
+                <div className="flex flex-col bg-white/5 rounded-[17px]">
+                    <div className="flex xl:flex-row flex-col xl:items-center items-start  3xl:gap-x-[134px] xl:gap-x-[80px] gap-x-[10px] xl:py-3 py-1 xl:px-5 px-2">
                         <div className="flex items-center gap-x-4">
                             <Image
                                 alt="order"
@@ -103,11 +52,11 @@ const Orders = () => {
                             />
                             <div className="flex flex-col">
                                 <h4 className="text-white font-bold">660 سی پی کالاف</h4>
-                                <span className="text-white/50">خرید مستقیم از Activision</span>
+                                <span className="text-white/50 xl:text-[14px]">خرید مستقیم از Activision</span>
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-x-4">
+                        <div className="xl:flex hidden items-center gap-x-4">
                             <span className="text-white/50">شماره سفارش</span>
                             <span className="text-white">12346</span>
                         </div>
@@ -130,84 +79,42 @@ const Orders = () => {
                                 <span className="text-white/50"> مبلـــغ کل</span>
                                 <span className="text-white 3xl:text-[22px] text-[18px]">81,000 تومان</span>
                             </div>
-                            <Button className="px-6  py-1 rounded-[21px] text-[#111111] font-semibold">
+                            <Button className="px-4 py-1 rounded-[21px] text-[#111111] text-nowrap font-semibold">
                                 <span>در انتظار پرداخت</span>
                             </Button>
                         </div>
 
-                        <div className="flex items-center gap-x-1 ">
+                        <div className="flex items-center justify-center gap-x-1 ">
                             <EyeIcon />
-                            <span className="text-white">بیشتر ...</span>
+                            <span className="text-white xl:text-[14px]">بیشتر ...</span>
                         </div>
                     </div>
 
-                    <div className="w-full border-t border-white/20 py-3 px-5">
+                    <div className="w-full border-t border-white/20 py-3 xl:px-5 xl:pr-14 xl:pl-7">
                         <div className="grid grid-cols-5 gap-x-4 items-center justify-center w-full">
-                            <div className="col-span-2 flex text-[#4285F4] justify-between">
-                                <span>کد تخفیف استفاده شده</span>
-                                <span>1234567891011</span>
+                            <div className="col-span-2 flex text-[#4285F4] font-medium justify-evenly">
+                                <span className="xl:text-base">کد تخفیف استفاده شده</span>
+                                <span className="xl:text-[22px]">1234567891011</span>
                             </div>
-                            <div className="col-span-1 flex justify-between">
+                            <div className="col-span-1 flex justify-evenly">
                                 <span>مبلغ تخفیف</span>
-                                <span>69000 تومان</span>
+                                <span className="xl:text-base text-[#F04242]">69000 تومان</span>
                             </div>
-                            <div className="col-span-2 justify-between flex">
-                                <span>مبلغ قابل پرداخت 69000 تومان</span>
-                                <Button className="w-full rounded-2xl py-1">
+                            <div className="col-span-2 justify-evenly flex">
+                                <span className="xl:text-[22px] text-[#CCFB4B] flex justify-evenly xl:gap-x-4 items-center">
+                                    <span className="text-[#FFFFFF]/50 xl:text-base">
+                                        مبلغ قابل پرداخت
+                                    </span>
+                                    69000 تومان
+                                </span>
+                                <Button className="xl:w-1/2 rounded-2xl py-1">
                                     پرداخت
                                 </Button>
                             </div>
                         </div>
                     </div>
-                </div> */}
+                </div>
 
-                {/* <div className="flex items-center  3xl:gap-x-[134px] gap-x-[90px] py-3 px-5 bg-white/5 rounded-[17px]">
-                    <div className="flex items-center gap-x-4">
-                        <Image
-                            alt="order"
-                            src={"/assets/images/game-3.png"}
-                            width={80}
-                            height={80}
-                        />
-                        <div className="flex flex-col">
-                            <h4 className="text-white font-bold">660 سی پی کالاف</h4>
-                            <span className="text-white/50">خرید مستقیم از Activision</span>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-x-4">
-                        <span className="text-white/50">شماره سفارش</span>
-                        <span className="text-white">12346</span>
-                    </div>
-
-                    <div className="flex items-center gap-x-6">
-                        <div className="flex flex-col">
-                            <span className="text-white/50">نام کاربری (ایمیل)</span>
-                            <span className="text-white/50">رمز عبور</span>
-                            <span className="text-white/50"> نام درون بازی</span>
-                        </div>
-                        <div className="flex flex-col">
-                            <span className="text-white">نام </span>
-                            <span className="text-white"> عبور</span>
-                            <span className="text-white"> درون بازی</span>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-x-10">
-                        <div className="flex items-center gap-x-3">
-                            <span className="text-white/50"> مبلـــغ کل</span>
-                            <span className="text-white 3xl:text-[22px] text-[18px]">81,000 تومان</span>
-                        </div>
-                        <Button className="px-6  py-1 rounded-[21px] text-[#111111] font-semibold">
-                            <span>تکمیل شد</span>
-                        </Button>
-                    </div>
-
-                    <div className="flex items-center gap-x-1 ">
-                        <EyeIcon />
-                        <span className="text-white">بیشتر ...</span>
-                    </div>
-                </div> */}
             </div>
 
             {/* Pagination */}
