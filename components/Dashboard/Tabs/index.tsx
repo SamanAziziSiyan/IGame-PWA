@@ -9,7 +9,7 @@ const Tabs = () => {
   return (
     <>
       <div className=" mt-[35px]">
-        <ul className="flex gap-x-[55px] text-xl font-normal text-white">
+        <ul className="flex lg:gap-x-[55px] gap-x-[45px] lg:text-xl text-[14px] font-normal text-white">
           <li onClick={() => setActiveTab(1)} className={`${activeTab == 1 && 'border-b-[#CCFB4B] border-b-[1px]'}  cursor-pointer pb-1 transition-all duration-200 ease-linear`}>
             داشبورد
           </li>

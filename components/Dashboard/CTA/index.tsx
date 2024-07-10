@@ -5,80 +5,111 @@ import Image from "next/image";
 
 const CTA = () => {
   return (
-    <div className="grid grid-cols-3 gap-x-8 mt-[34px]">
-      <div className="bg-[#282828] rounded-[28px] p-6  flex items-center justify-between">
+    <>
+      <div className="bg-[#282828]  rounded-[28px] p-6  lg:hidden flex items-center justify-between">
         <div className="flex items-center gap-x-[18px]">
           <Image
             src="/assets/images/avatar.png"
             alt="avatar"
+            className="max-lg:w-10 max-lg:h-10"
             width={74}
             height={74}
           />
           <div className="flex items-center gap-x-2">
-            <span className="text-xl font-bold text-white">
+            <span className="lg:text-xl text-[14px] font-bold text-white">
               سلام، زهــرا عزیـــــز
             </span>
             <Image
               src="/assets/images/hand.png"
               alt="avatar"
+              className="max-lg:w-5 max-lg:h-5"
               width={32}
               height={32}
             />
           </div>
         </div>
-        <Button className="bg-[#fff] p-2 rounded-[22px]">
-          <span className="text-[#111]">ویــرایش</span>
+        <Button className="bg-[#fff] lg:p-2 py-1 px-2 rounded-[22px]">
+          <span className="text-[#111] font-semibold lg:text-base text-[12px]">ویــرایش</span>
         </Button>
       </div>
-
-      <div className="bg-[#CCFB4B] overflow-hidden relative rounded-[28px] p-6  flex items-center justify-between">
-        <div className="flex items-center gap-x-[18px]">
-          <div className="bg-[#111111]/40 p-2.5 rounded-2xl flex items-center justify-center">
-            <WalletIcon />
+      <div className="grid lg:grid-cols-3 grid-cols-2 gap-x-8 mt-[34px]">
+        <div className="bg-[#282828]  rounded-[28px] p-6  lg:flex hidden items-center justify-between">
+          <div className="flex items-center gap-x-[18px]">
+            <Image
+              src="/assets/images/avatar.png"
+              alt="avatar"
+              width={74}
+              height={74}
+            />
+            <div className="flex items-center gap-x-2">
+              <span className="text-xl font-bold text-white">
+                سلام، زهــرا عزیـــــز
+              </span>
+              <Image
+                src="/assets/images/hand.png"
+                alt="avatar"
+                width={32}
+                height={32}
+              />
+            </div>
           </div>
-          <div className="flex items-center gap-x-2">
-            <span className="text-xl font-bold text-[#111111]/60">
-              کیف ‌پــــــول{" "}
+          <Button className="bg-[#fff] p-2 rounded-[22px]">
+            <span className="text-[#111] font-semibold">ویــرایش</span>
+          </Button>
+        </div>
+
+        <div className="bg-[#CCFB4B] overflow-hidden relative rounded-[28px] p-6  flex md:flex-row lg:flex-col xl:flex-row flex-col items-center justify-between">
+          <div className="flex items-center xl:gap-x-[18px] gap-x-2">
+            <div className="bg-[#111111]/40 xl:p-2.5 p-2 rounded-2xl flex items-center justify-center">
+              <WalletIcon className="max-xl:w-8 max-xl:h-8" />
+            </div>
+            <div className="flex items-center gap-x-2">
+              <span className="xl:text-xl text-[12px] font-bold text-[#111111]/60">
+                کیف ‌پــــــول{" "}
+              </span>
+            </div>
+          </div>
+          <div className="">
+            <span className="text-[#111] xl:text-[34px] text-[22px] font-extrabold">
+              ۱٫۴۰0٫00۰
+            </span>
+            <span className="xl:text-[18px] text-[12px] font-semibold text-[#111111]">
+              تومان
             </span>
           </div>
-        </div>
-        <div className="">
-          <span className="text-[#111] text-[34px] font-extrabold">
-            ۱٫۴۰0٫00۰
-          </span>
-          <span className="text-[18px] font-semibold text-[#111111]">
-            تومان
-          </span>
-        </div>
 
-        <div className="absolute rounded-full border-[13px] border-[#111111] left-[-9px] top-[-12px]">
-          <div className="bg-white p-3 rounded-full">
-            <PlusIcon />
+          <div className="absolute rounded-full border-[13px] border-[#111111] left-[-9px] top-[-12px]">
+            <div className="bg-white xl:p-3 p-2 rounded-full">
+              <PlusIcon className="max-xl:w-2 max-xl:h-2" />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="bg-[#fff]/30 rounded-[28px] p-6  flex items-center justify-between">
-        <div className="flex items-center gap-x-[18px]">
-          <div className="bg-[#111111]/40 p-2 rounded-2xl flex items-center justify-center">
-            <Image
-              src="/assets/images/Classification.png"
-              alt="avatar"
-              width={40}
-              height={40}
-            />
+        <div className="bg-[#fff]/30 rounded-[28px] xl:p-6 p-2 flex md:flex-row lg:flex-col xl:flex-row flex-col items-center justify-between">
+          <div className="flex items-center xl:gap-x-[18px] gap-x-7">
+            <div className="bg-[#111111]/40 p-2 rounded-2xl flex items-center justify-center">
+              <Image
+                src="/assets/images/Classification.png"
+                className="max-xl:w-6 max-xl:h-6"
+                alt="avatar"
+                width={40}
+                height={40}
+              />
+            </div>
+            <div className="flex items-center justify-center gap-x-4">
+              <span className="text-white/60 xl:text-xl text-[12px] font-semibold">کاربــــرسطــح</span>
+            </div>
           </div>
-          <div className="flex items-center justify-center gap-x-4">
-            <span className="text-white/60 text-xl">کاربــــرسطــح</span>
-            <span className="text-white font-extrabold text-[34px] drop-shadow-xl shadow-black ">
+          <div className="flex items-center justify-evenly xl:gap-x-[55px] gap-x-7">
+            <span className="text-white font-extrabold xl:text-[34px] text-[22px] drop-shadow-xl shadow-black ">
               {" "}
               برنز
             </span>
+            <span className="text-[#fff] xl:text-[22px] text-[14px] font-bold">ارتقا سطح...</span>
           </div>
         </div>
-        <span className="text-[#fff] text-[22px] font-bold">ارتقا سطح...</span>
       </div>
-    </div>
+    </>
   );
 };
 

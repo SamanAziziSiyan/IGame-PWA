@@ -3,6 +3,7 @@
 import Button from "@/components/Common/Buttons";
 import EyeIcon from "@/components/Common/icons/Eye";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 const Orders = () => {
@@ -10,30 +11,35 @@ const Orders = () => {
 
     return (
         <div className="mt-10">
-            <div className="flex items-center  gap-x-8">
-                <h4 className="text-xl text-nowrap text-white font-bold">سفارشات شما</h4>
-                <div className="flex gap-x-4 items-start justify-start w-full">
-                    <Button type="button" className="py-[9px] flex gap-x-1 pl-10 items-center px-4 h-full bg-white/20 border-[1.28px] border-white/60 rounded-xl text-white">
-                        <span className="bg-white font-semibold text-sm rounded-full text-[#111] p-1 w-7 h-7 flex items-center justify-center align-middle">41</span>
-                        <span className="font-medium text-sm">کل سفارشات</span>
+            <div className="flex md:flex-row flex-col md:items-center items-start md:gap-x-8 gap-x-0 md:gap-y-0 gap-y-2">
+                <div className="flex items-center justify-between">
+                    <h4 className="md:text-xl text-base text-nowrap text-white font-bold">سفارشات شما</h4>
+                    <Link href='/' className="md:text-xl text-base text-nowrap text-[#CCFB4B] md:hidden flex font-bold">نمایش بیشتر..</Link>
+                </div>
+                <div className="flex gap-x-4 items-start justify-start w-full md:overflow-hidden overflow-scroll">
+                    <Button type="button" className="md:py-[9px] py-[6px] flex gap-x-1 md:pl-10 pl-1 text-nowrap items-center px-4 h-full bg-white/20 border-[1.28px] border-white/60 rounded-xl text-white">
+                        <span className="bg-white font-semibold md:text-sm text-[10px] rounded-full text-[#111] p-1 w-7 h-7 flex items-center justify-center align-middle">41</span>
+                        <span className="font-medium md:text-sm text-[10px]">کل سفارشات</span>
                     </Button>
-                    <Button type="button" className="py-[9px] flex gap-x-1 pl-10 items-center px-4 h-full bg-[#4285F4]/30 border-[1.28px] border-[#4285F4]/80 rounded-xl text-[#4285F4]">
+                    <Button type="button" className="md:py-[9px] py-[6px] flex gap-x-1 md:pl-10 pl-1 text-nowrap items-center px-4 h-full bg-[#4285F4]/30 border-[1.28px] border-[#4285F4]/80 rounded-xl text-[#4285F4]">
                         <span className="bg-[#4285F4] font-semibold text-sm rounded-full text-white p-1 w-7 h-7 flex items-center justify-center align-middle">0</span>
-                        <span className="font-medium text-sm">سفارشات جاری</span>
+                        <span className="font-medium md:text-sm text-[10px]">سفارشات جاری</span>
                     </Button>
-                    <Button type="button" className="py-[9px] flex gap-x-1 pl-10 items-center px-4 h-full bg-[#CCFB4B]/20 border-[1.28px] border-[#CCFB4B]/60 rounded-xl text-[#CCFB4B]">
-                        <span className="bg-[#CCFB4B] font-semibold text-sm rounded-full text-[#111] p-1 w-7 h-7 flex items-center justify-center align-middle">5</span>
-                        <span className="font-medium text-sm">سفارشات موفق</span>
+                    <Button type="button" className="md:py-[9px] py-[6px] flex gap-x-1 md:pl-10 pl-1 text-nowrap items-center px-4 h-full bg-[#CCFB4B]/20 border-[1.28px] border-[#CCFB4B]/60 rounded-xl text-[#CCFB4B]">
+                        <span className="bg-[#CCFB4B] font-semibold md:text-sm text-[10px] rounded-full text-[#111] p-1 w-7 h-7 flex items-center justify-center align-middle">5</span>
+                        <span className="font-medium md:text-sm text-[10px]">سفارشات موفق</span>
                     </Button>
-                    <Button type="button" className="py-[9px] flex gap-x-1 pl-10 items-center px-4 h-full bg-[#F04242]/20 border-[1.28px] border-[#F04242]/60 rounded-xl text-[#F04242]">
-                        <span className="bg-[#F04242] font-semibold text-sm rounded-full text-white p-1 w-7 h-7 flex items-center justify-center align-middle">0</span>
-                        <span className="font-medium text-sm">سفارشات کنسلی</span>
+                    <Button type="button" className="md:py-[9px] py-[6px] flex gap-x-1 md:pl-10 pl-1 text-nowrap items-center px-4 h-full bg-[#F04242]/20 border-[1.28px] border-[#F04242]/60 rounded-xl text-[#F04242]">
+                        <span className="bg-[#F04242] font-semibold md:text-sm text-[10px] rounded-full text-white p-1 w-7 h-7 flex items-center justify-center align-middle">0</span>
+                        <span className="font-medium md:text-sm text-[10px]">سفارشات کنسلی</span>
                     </Button>
 
                 </div>
             </div>
+
+            
             <div className="flex flex-col gap-4 mt-10">
-                <div className="flex items-center 3xl:gap-x-[134px] gap-x-[90px] py-3 px-5 bg-white/5 rounded-[17px]">
+                {/* <div className="flex items-center 3xl:gap-x-[134px] gap-x-[90px] py-3 px-5 bg-white/5 rounded-[17px]">
                     <div className="flex items-center gap-x-4">
                         <Image
                             alt="order"
@@ -79,10 +85,15 @@ const Orders = () => {
                         <EyeIcon />
                         <span className="text-white">بیشتر ...</span>
                     </div>
+                </div> */}
+
+                <div>
+                    
                 </div>
 
-                <div className="flex flex-col bg-white/5 rounded-[17px]">
-                    <div className="flex items-center  3xl:gap-x-[134px] gap-x-[80px] py-3 px-5">
+
+                {/* <div className="flex flex-col bg-white/5 rounded-[17px]">
+                    <div className="flex md:flex-row flex-col items-center  3xl:gap-x-[134px] md:gap-x-[80px] gap-x-[10px] md:py-3 py-1 md:px-5 px-2">
                         <div className="flex items-center gap-x-4">
                             <Image
                                 alt="order"
@@ -130,7 +141,6 @@ const Orders = () => {
                         </div>
                     </div>
 
-                    {/* @NOTE: This is just for those with waiting for payments */}
                     <div className="w-full border-t border-white/20 py-3 px-5">
                         <div className="grid grid-cols-5 gap-x-4 items-center justify-center w-full">
                             <div className="col-span-2 flex text-[#4285F4] justify-between">
@@ -149,9 +159,9 @@ const Orders = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
-                <div className="flex items-center  3xl:gap-x-[134px] gap-x-[90px] py-3 px-5 bg-white/5 rounded-[17px]">
+                {/* <div className="flex items-center  3xl:gap-x-[134px] gap-x-[90px] py-3 px-5 bg-white/5 rounded-[17px]">
                     <div className="flex items-center gap-x-4">
                         <Image
                             alt="order"
@@ -197,11 +207,13 @@ const Orders = () => {
                         <EyeIcon />
                         <span className="text-white">بیشتر ...</span>
                     </div>
-                </div>
+                </div> */}
             </div>
+
+            {/* Pagination */}
             <div className="flex items-center justify-center gap-x-[75px] mt-6">
                 <div>
-                    <span className="text-sm font-medium">قبلـی</span>
+                    <span className="md:text-sm text-[10px] font-medium">قبلـی</span>
                 </div>
                 <div className="">
                     <ul className="flex gap-x-2">
@@ -212,7 +224,7 @@ const Orders = () => {
                     </ul>
                 </div>
                 <div>
-                    <span className="text-sm font-medium">بعـدی</span>
+                    <span className="md:text-sm text-[10px] font-medium">بعـدی</span>
                 </div>
             </div>
         </div>

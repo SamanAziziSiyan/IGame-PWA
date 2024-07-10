@@ -34,3 +34,12 @@ export const checkAuthToken = (router: any) => {
     }
     return true;
 };
+
+
+// export const getUserDataFromLocalStorage = () => {
+//     const userData = localStorage.getItem("UserData");
+//     const parsedData = JSON.parse(userData);
+//     return parsedData.userName;
+// };
+
+
