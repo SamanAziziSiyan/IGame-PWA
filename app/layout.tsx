@@ -4,11 +4,11 @@ import "./globals.css";
 import Header from "@/components/Common/Header";
 import Footer from "@/components/Common/Footer";
 import Home from "@/components/Home/components/index";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ["latin"] });
-8
+
 export const metadata: Metadata = {
   manifest: '/manifest.json',
   title: "IGame PWA",
