@@ -5,7 +5,7 @@ const LoginService = async (MobileNumber: string) => {
 }
 
 const TokenRefreshService = async (RefreshToken: string) => {
-    return await axiosInstance.post(`user/refresh`,
+    return await axiosInstance.post(`customer/refresh`,
         {
             "refreshToken": RefreshToken
         }

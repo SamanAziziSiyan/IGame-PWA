@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import { TokenRefreshService } from "@/services/auth/login";
 import { ToastPosition, TypeOptions, toast } from "react-toastify";
 
 interface IToastAlert {
@@ -21,20 +21,37 @@ export const toastAlert = ({ msg, type = "error", position = "top-left" }: IToas
 };
 
 
-export const checkAuthToken = (router: any) => {
+export const checkAuthToken = async (router: any): Promise<boolean> => {
     const userData = localStorage.getItem("UserData");
+
     if (!userData) {
         router.push("/login");
         return false;
-    } else {
-        const { token } = JSON.parse(userData);
-        if (!token) {
+    }
+
+    const { token, RefreshToken } = JSON.parse(userData);
+
+    if (!token) {
+        router.push("/login");
+        return false;
+    }
+
+    try {
+        const response = TokenRefreshService(RefreshToken);
+
+        if (!response) {
             router.push("/login");
             return false;
+        } else {
+            return true;
         }
+    } catch (error) {
+        console.error("Failed to validate token", error);
+        router.push("/login");
+        return false;
     }
-    return true;
 };
+
 
 interface UserData {
     userName: string;
