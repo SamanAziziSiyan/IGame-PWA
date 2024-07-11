@@ -39,8 +39,7 @@ const Header = () => {
                                     <AccountIcon className='max-lg:w-4 max-lg:h-4' />
                                 </Link>
 
-                                :
-                                <DropdownMenu trigger={<button>
+                                : <DropdownMenu className='relative' trigger={<button>
                                     <Image
                                         src="/assets/images/avatar.png"
                                         alt="avatar"
@@ -48,16 +47,16 @@ const Header = () => {
                                         width={40}
                                         height={40}
                                     /></button>}>
-                                    <div className='bg-white flex gap-y-3 flex-col text-center absolute left-4 text-[#111] py-4 px-5 rounded-xl'>
-                                        <span className='text-[#111111]/60 font-bold text-xs'>کاربر عزیز خوش اومدی</span>
+                                    <div className='bg-white z-50 flex gap-y-3 flex-col text-center absolute left-0 text-[#111]  py-4 px-5 rounded-xl'>
+                                        <span className='text-[#111111]/60 font-bold text-xs text-nowrap'>کاربر عزیز خوش اومدی</span>
                                         <ul className='flex flex-col gap-y-3'>
-                                            <Link href='/dashboard'>
+                                            <Link className='cursor-pointer' href='/dashboard'>
                                                 <li className='text-[#111111] cursor-pointer flex items-center gap-x-1 font-bold text-xs'>
                                                     <AccountMenuIcon />
                                                     حساب کاربری
                                                 </li>
                                             </Link>
-                                            <Link href='/'>
+                                            <Link className='cursor-pointer' href='/'>
                                                 <li className='text-[#F04242]/60 cursor-pointer flex items-center gap-x-1 font-semibold text-xs'>
                                                     <LogoutIcon />
                                                     خروج از حساب
