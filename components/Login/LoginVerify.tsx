@@ -39,7 +39,8 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                 toastAlert({ msg: "کد تایید با موفقیت تایید شد", type: "success" });
                 localStorage.setItem("UserData", JSON.stringify({
                     "token": response.data.data.token,
-                    "userName": response.data.data.username
+                    "userName": response.data.data.username,
+                    "refreshToken": response.data.data.refreshToken
                 }));
                 router.push('/dashboard');
             }

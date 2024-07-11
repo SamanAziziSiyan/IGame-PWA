@@ -5,12 +5,18 @@ import Image from 'next/image';
 import NotificationIcon from './icons/notification';
 import AccountIcon from './icons/account';
 import ShopIcon from './icons/shopIcon';
-import { checkAuthToken } from '@/utils';
+import { checkAuthToken, logout } from '@/utils';
 import DropdownMenu from './DropDownMenu';
 import AccountMenuIcon from './icons/accountmenuIcon';
 import LogoutIcon from './icons/logoutIcon';
+import { useRouter } from 'next/navigation';
 
 const Header = () => {
+    const router = useRouter();
+    const handelLogout = ()=>{
+        logout();
+        router.push('/login');
+    }
     return (
         <header className="bg-black text-white container-px py-4 shadow-md h-[91px] flex items-center">
             <div className="container flex justify-between items-center">
@@ -56,12 +62,12 @@ const Header = () => {
                                                     حساب کاربری
                                                 </li>
                                             </Link>
-                                            <Link className='cursor-pointer' href='/'>
+                                            <button onClick={handelLogout} className='cursor-pointer'>
                                                 <li className='text-[#F04242]/60 cursor-pointer flex items-center gap-x-1 font-semibold text-xs'>
                                                     <LogoutIcon />
                                                     خروج از حساب
                                                 </li>
-                                            </Link>
+                                            </button>
                                         </ul>
                                     </div>
                                 </DropdownMenu>

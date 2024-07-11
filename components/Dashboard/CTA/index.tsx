@@ -1,9 +1,12 @@
 import Button from "@/components/Common/Buttons";
 import PlusIcon from "@/components/Common/icons/plus";
 import WalletIcon from "@/components/Common/icons/wallet";
+import { getUserDataFromLocalStorage } from "@/utils";
 import Image from "next/image";
 
 const CTA = () => {
+  const userData = getUserDataFromLocalStorage();
+
   return (
     <>
       <div className="bg-[#282828]  rounded-[28px] p-6  lg:hidden flex items-center justify-between">
@@ -17,7 +20,7 @@ const CTA = () => {
           />
           <div className="flex items-center gap-x-2">
             <span className="xl:text-xl text-[14px] font-bold text-white">
-              سلام، زهــرا عزیـــــز
+              سلام، {userData?.userName} عزیـــــز
             </span>
             <Image
               src="/assets/images/hand.png"
@@ -43,7 +46,7 @@ const CTA = () => {
             />
             <div className="flex items-center gap-x-2">
               <span className="xl:text-xl text-[14px] font-bold text-white">
-                سلام، زهــرا عزیـــــز
+                سلام، {userData?.userName} عزیـــــز
               </span>
               <Image
                 src="/assets/images/hand.png"
