@@ -1,12 +1,31 @@
-// app/page.tsx
-
+// app/login/page.tsx
 "use client";
 
-import LoginFrom from "@/components/Login/LoginForm";
+import LoginForm from "@/components/Login/LoginForm";
+import AuthLayout from "./AuthLayout";
+import { useEffect, useState } from "react";
+import { checkAuthToken } from "@/utils";
+import { useRouter } from "next/navigation";
 
-const LoginPage = () => {
+const LoginPage: React.FC = () => {
+    let router = useRouter();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    useEffect(() => {
+        const checkUserLogin = async () => {
+            let isLoggedIn = await checkAuthToken();
+            if (isLoggedIn){
+                router.push('/dashboard');
+            }else{
+                setIsLoggedIn(true);
+            }
+        }
+        checkUserLogin();
+    }, []);
+    if (!isLoggedIn) return null;
     return (
-        <LoginFrom />
+        <AuthLayout>
+            <LoginForm />
+        </AuthLayout>
     );
 };
 
