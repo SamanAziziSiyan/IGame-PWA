@@ -1,10 +1,10 @@
-import { HomeProps } from "@/types"
 import axiosInstance from "../axios"
 
-const ProductsService = async () => {
-    // return await axiosInstance.get(`productcategory/list`)
-    return true;
+const ProductsListService = async () => {
+    return await axiosInstance.get(`product/table`)
+}
+const ProductsListCategoryService = async (CategoryID: number) => {
+    return await axiosInstance.get(`product/list/${CategoryID}`)
 }
 
-
-export { ProductsService }
+export { ProductsListService, ProductsListCategoryService }
