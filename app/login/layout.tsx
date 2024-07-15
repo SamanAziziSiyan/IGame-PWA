@@ -1,6 +1,6 @@
 // app/login/layout.tsx
-import AuthLayout from '@/components/Common/Layout/AuthLayout';
 import React from 'react';
+import AuthLayout from '../../components/Common/Layout/AuthLayout';
 
 interface AuthLayoutProps {
   children: React.ReactNode;

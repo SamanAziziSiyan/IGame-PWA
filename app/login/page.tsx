@@ -2,7 +2,7 @@
 "use client";
 
 import LoginForm from "@/components/Login/LoginForm";
-import AuthLayout from "./AuthLayout";
+import AuthLayout from "./layout";
 import { useEffect, useState } from "react";
 import { checkAuthToken } from "@/utils";
 import { useRouter } from "next/navigation";
@@ -13,9 +13,9 @@ const LoginPage: React.FC = () => {
     useEffect(() => {
         const checkUserLogin = async () => {
             let isLoggedIn = await checkAuthToken();
-            if (isLoggedIn){
+            if (isLoggedIn) {
                 router.push('/dashboard');
-            }else{
+            } else {
                 setIsLoggedIn(true);
             }
         }
@@ -23,9 +23,7 @@ const LoginPage: React.FC = () => {
     }, []);
     if (!isLoggedIn) return null;
     return (
-        <AuthLayout>
-            <LoginForm />
-        </AuthLayout>
+        <LoginForm />
     );
 };
 
