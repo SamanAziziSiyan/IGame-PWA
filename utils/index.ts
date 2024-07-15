@@ -21,64 +21,45 @@ export const toastAlert = ({ msg, type = "error", position = "top-left" }: IToas
 };
 
 
-export const checkAuthToken = async (router: any): Promise<boolean> => {
-    const userData = localStorage.getItem("UserData");
-
-    if (!userData) {
-        router.push("/login");
-        return false;
-    }
-
-    const { token, RefreshToken } = JSON.parse(userData);
-
-    if (!token) {
-        router.push("/login");
-        return false;
-    }
-
+export const checkAuthToken = async (): Promise<boolean> => {
+    let userData: IUserData = getUserDataFromLocalStorage();
     try {
-        const response = TokenRefreshService(RefreshToken);
+        if (userData) {
+            let response = await TokenRefreshService(userData.refreshToken);
+            console.log(response);
 
-        if (!response) {
-            router.push("/login");
-            return false;
+            if (response.status === 200) {
+                return true;
+            } else {
+                console.error("Token refresh failed", response.data);
+                return false;
+            }
         } else {
-            return true;
+            // No user data available
+            return false;
         }
     } catch (error) {
-        console.error("Failed to validate token", error);
-        router.push("/login");
+        console.error("Error during token refresh", error);
         return false;
     }
 };
 
-
-interface UserData {
-    userName: string;
+interface IUserData {
+    customerID: number;
     token: string;
-    refreshToken: string
+    refreshToken: string;
+    userName: string;
 }
-
-export const getUserDataFromLocalStorage = (): UserData | null => {
-    const userData = localStorage.getItem("UserData");
-
+export const getUserDataFromLocalStorage = (): IUserData => {
+    const userData = localStorage.getItem('UserData');
     if (userData) {
-        try {
-            const parsedData = JSON.parse(userData);
-            const { userName, token, refreshToken } = parsedData;
-
-            if (userName && token && refreshToken) {
-                return { userName, token, refreshToken };
-            } else {
-                return null;
-            }
-        } catch (error) {
-            return null;
-        }
+        let parsedUserData = JSON.parse(userData);
+        return parsedUserData;
     }
-
-    return null;
+    return { customerID: 0, token: '', refreshToken: '', userName: '' };
 };
+
+
 
 
 export const logout = (): void => {
