@@ -10,6 +10,7 @@ import { useState } from "react";
 import LoginVerify from "./LoginVerify";
 import LoadingIcon from "../Common/icons/loadingIcon";
 import { toastAlert } from "@/utils";
+import useLoginLayoutState from "@/store/loginLayout";
 
 
 interface IFormInput {
@@ -24,6 +25,7 @@ const LoginFrom = () => {
         handleSubmit,
         formState: { errors }
     } = useForm<IFormInput>();
+    const { setLoginLayoutState } = useLoginLayoutState();
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
@@ -33,12 +35,15 @@ const LoginFrom = () => {
                 if (response?.data?.status == "Error") {
                     setShowVerify(true);
                     toastAlert({ msg: response.data.errors[0] as string, type: "info" });
+                    setLoginLayoutState(true);
+
                     return;
                 }
                 throw new Error('خطایی رخ داده است');
             } else {
                 setUserPhoneNumber(data.phoneNumber)
                 setShowVerify(true);
+                setLoginLayoutState(true);
                 toastAlert({ msg: "پیامک با موفقیت ارسال شد" as string, type: "success" });
             }
         } catch (error: any) {
@@ -52,16 +57,17 @@ const LoginFrom = () => {
                 toastAlert({ msg: error?.message as string })
                 setShowVerify(false);
             }
+            setLoginLayoutState(true);
 
         }
     };
     return (
-        <div className="container-px">
+        <div className="container-px ">
 
             {!showVerify &&
                 <div className="mt-11">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className='grid grid-cols-1 md:w-1/2 w-full mx-auto gap-[14px] items-center justify-center'>
+                        <div className='grid grid-cols-1 mx-auto gap-[14px] items-center justify-center'>
                             <div className='text-white flex flex-col gap-y-4'>
                                 <h3 className='font-bold text-xl'>ورود به حساب کاربری</h3>
                                 <span className='font-normal text-[14px] '>شمــــــاره موبایل خود را وارد کنیـــــد</span>
@@ -77,7 +83,7 @@ const LoginFrom = () => {
                                     pattern: {
                                         value: /^(0?9|\+?989)((14)|(13)|(12)|(19)|(18)|(17)|(15)|(16)|(11)|(10)|(90)|(91)|(92)|(93)|(94)|(95)|(96)|(32)|(30)|(33)|(35)|(36)|(37)|(38)|(39)|(00)|(01)|(02)|(03)|(04)|(05)|(41)|(20)|(21)|(22)|(23)|(31)|(34)|(9910)|(9911)|(9913)|(9914)|(9999)|(999)|(990)|(9810)|(9811)|(9812)|(9813)|(9814)|(9815)|(9816)|(9817)|(998))\W?\d{3}\W?\d{4}$/,
                                         message: 'شماره تلفن نامعتبر است'
-                                    }                                    
+                                    }
                                 }}
                                 errors={errors.phoneNumber}
                                 placeholder="شماره تلفن همراه شما"

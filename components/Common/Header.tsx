@@ -55,7 +55,7 @@ const Header = () => {
                         </li>
                         <li>
                             {!isLogin ?
-                                (<Link href="/login">
+                                (<Link href="/auth">
                                     <AccountIcon className='max-lg:w-4 max-lg:h-4' />
                                 </Link>
 

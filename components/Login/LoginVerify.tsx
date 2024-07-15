@@ -10,7 +10,9 @@ import { useState } from "react";
 import { toastAlert } from "@/utils";
 import LoadingIcon from "@/components/Common/icons/loadingIcon"; // Adjust import path if necessary
 import Timer from "./Timer";
-import authStore from "@/store/auth"
+import LoginLayoutStore from "@/store/loginLayout"
+import authStore from "@/store/auth";
+
 
 interface IFormInput {
     userName: string;
@@ -23,6 +25,9 @@ interface LoginVerifyProps {
 
 const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
     const [showLoading, setShowLoading] = useState<boolean>(false);
+    const LoginLayout = LoginLayoutStore((state) => state.loginLayoutStore);
+    console.log(LoginLayout);
+
     const router = useRouter();
     const {
         register,
@@ -85,7 +90,7 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
     return (
         <div className="mt-11">
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className='grid grid-cols-1 md:w-1/2 w-full mx-auto gap-[14px] items-center justify-center'>
+                <div className='grid grid-cols-1 mx-auto gap-[14px] items-center justify-center'>
                     <div className='text-white flex flex-col gap-y-4'>
                         <h3 className='font-bold text-xl'>تایید شماره همراه</h3>
                         <span className='font-normal text-[14px] '>کد ارسالی به شماره {userPhoneNumber} را وارد کنید</span>
