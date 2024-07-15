@@ -40,7 +40,9 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                 localStorage.setItem("UserData", JSON.stringify({
                     "token": response.data.data.token,
                     "userName": response.data.data.username,
-                    "refreshToken": response.data.data.refreshToken
+                    "refreshToken": response.data.data.refreshToken,
+                    "customerID": response.data.data.customerId
+                    
                 }));
                 router.push('/dashboard');
             }
