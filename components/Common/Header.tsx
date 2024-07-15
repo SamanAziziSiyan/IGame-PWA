@@ -11,8 +11,11 @@ import AccountMenuIcon from './icons/accountmenuIcon';
 import LogoutIcon from './icons/logoutIcon';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import authStore from '@/store/auth';
 
 const Header = () => {
+    const AuthStore = authStore((state) => state.userStore);
+
     const router = useRouter();
     const [isLogin, setIsLogin] = useState(false);
     const handelLogout = () => {
@@ -22,11 +25,11 @@ const Header = () => {
     }
 
     useEffect(() => {
-        const fetchData = async () => {
-            let isLoggedIn = await checkAuthToken();
-            setIsLogin(isLoggedIn);
+        const checkUserLoggedIn = async () => {
+            let isUserLoggedIn = await checkAuthToken();
+            setIsLogin(isUserLoggedIn);
         }
-        fetchData();
+        checkUserLoggedIn();
     }, []);
     return (
         <header className="bg-black text-white container-px py-4 shadow-md h-[91px] flex items-center">
@@ -52,11 +55,11 @@ const Header = () => {
                         </li>
                         <li>
                             {!isLogin ?
-                                <Link href="/login">
+                                (<Link href="/login">
                                     <AccountIcon className='max-lg:w-4 max-lg:h-4' />
                                 </Link>
 
-                                : <DropdownMenu className='relative' trigger={<button>
+                                ) : (<DropdownMenu className='relative' trigger={<button>
                                     <Image
                                         src="/assets/images/avatar.png"
                                         alt="avatar"
@@ -82,7 +85,7 @@ const Header = () => {
                                         </ul>
                                     </div>
                                 </DropdownMenu>
-                            }
+                                )}
 
                         </li>
                     </ul>

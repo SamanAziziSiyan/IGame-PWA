@@ -10,6 +10,7 @@ import { useState } from "react";
 import { toastAlert } from "@/utils";
 import LoadingIcon from "@/components/Common/icons/loadingIcon"; // Adjust import path if necessary
 import Timer from "./Timer";
+import authStore from "@/store/auth"
 
 interface IFormInput {
     userName: string;
@@ -28,6 +29,7 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
         handleSubmit,
         formState: { errors }
     } = useForm<IFormInput>();
+    const { setAuthData } = authStore();
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
@@ -36,14 +38,16 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
             if (response.data.status !== "Success" || response.data.joinedErrors !== '') {
                 throw new Error(response.data.joinedErrors);
             } else {
+                setAuthData({ userPhoneNumber }, true);
                 toastAlert({ msg: "کد تایید با موفقیت تایید شد", type: "success" });
-                localStorage.setItem("UserData", JSON.stringify({
+                await localStorage.setItem("UserData", JSON.stringify({
                     "token": response.data.data.token,
                     "userName": response.data.data.username,
                     "refreshToken": response.data.data.refreshToken,
                     "customerID": response.data.data.customerId
-                    
+
                 }));
+
                 router.push('/dashboard');
             }
         } catch (error: any) {
