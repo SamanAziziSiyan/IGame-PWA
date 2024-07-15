@@ -2,16 +2,50 @@
 
 import Button from "@/components/Common/Buttons";
 import EyeIcon from "@/components/Common/icons/Eye";
+import { DashboardOrderStatisticsService, OrderListService } from "@/services/orders/orders";
+import { getUserDataFromLocalStorage } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Orders = () => {
     const [page, setPage] = useState<number>(1);
     const [isOpen, setIsOpen] = useState(false);
+    const [orderStatistics, setOrderStatistics] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const toggleOpen = () => {
         setIsOpen(!isOpen);
     };
+    useEffect(() => {
+        const fetchOrderStatistics = async () => {
+            try {
+                const userData = getUserDataFromLocalStorage();
+                const response = await DashboardOrderStatisticsService(userData?.customerID);
+                setOrderStatistics(response.data);
+            } catch (err) {
+                setError("Failed to fetch order statistics");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        const fetchOrderLists = async () => {
+            try {
+                const userData = getUserDataFromLocalStorage();
+                const orders = await OrderListService(userData?.customerID);
+                
+            } catch (err) {
+                console.log(err);
+                
+            } finally {
+            }
+        };
+
+        fetchOrderStatistics();
+        fetchOrderLists();
+    }, []);
+
     return (
         <div className="mt-10">
             <div className="flex md:flex-row flex-col md:items-center items-start md:gap-x-8 gap-x-0 md:gap-y-0 gap-y-2">
@@ -21,19 +55,19 @@ const Orders = () => {
                 </div>
                 <div className="flex gap-x-4 items-start justify-start w-full md:overflow-hidden overflow-scroll">
                     <Button type="button" className="md:py-[9px] py-[6px] flex gap-x-1 md:pl-10 pl-1 text-nowrap items-center px-4 h-full bg-white/20 border-[1.28px] border-white/60 rounded-xl text-white">
-                        <span className="bg-white font-semibold md:text-sm text-[10px] rounded-full text-[#111] p-1 w-7 h-7 flex items-center justify-center align-middle">41</span>
+                        <span className="bg-white font-semibold md:text-sm text-[10px] rounded-full text-[#111] p-1 w-7 h-7 flex items-center justify-center align-middle">{orderStatistics?.totalItems}</span>
                         <span className="font-medium md:text-sm text-[10px]">کل سفارشات</span>
                     </Button>
                     <Button type="button" className="md:py-[9px] py-[6px] flex gap-x-1 md:pl-10 pl-1 text-nowrap items-center px-4 h-full bg-[#4285F4]/30 border-[1.28px] border-[#4285F4]/80 rounded-xl text-[#4285F4]">
-                        <span className="bg-[#4285F4] font-semibold text-sm rounded-full text-white p-1 w-7 h-7 flex items-center justify-center align-middle">0</span>
+                        <span className="bg-[#4285F4] font-semibold text-sm rounded-full text-white p-1 w-7 h-7 flex items-center justify-center align-middle">{orderStatistics?.data?.currentOrdersCount}</span>
                         <span className="font-medium md:text-sm text-[10px]">سفارشات جاری</span>
                     </Button>
                     <Button type="button" className="md:py-[9px] py-[6px] flex gap-x-1 md:pl-10 pl-1 text-nowrap items-center px-4 h-full bg-[#CCFB4B]/20 border-[1.28px] border-[#CCFB4B]/60 rounded-xl text-[#CCFB4B]">
-                        <span className="bg-[#CCFB4B] font-semibold md:text-sm text-[10px] rounded-full text-[#111] p-1 w-7 h-7 flex items-center justify-center align-middle">5</span>
+                        <span className="bg-[#CCFB4B] font-semibold md:text-sm text-[10px] rounded-full text-[#111] p-1 w-7 h-7 flex items-center justify-center align-middle">{orderStatistics?.data?.doneOrdersCount}</span>
                         <span className="font-medium md:text-sm text-[10px]">سفارشات موفق</span>
                     </Button>
                     <Button type="button" className="md:py-[9px] py-[6px] flex gap-x-1 md:pl-10 pl-1 text-nowrap items-center px-4 h-full bg-[#F04242]/20 border-[1.28px] border-[#F04242]/60 rounded-xl text-[#F04242]">
-                        <span className="bg-[#F04242] font-semibold md:text-sm text-[10px] rounded-full text-white p-1 w-7 h-7 flex items-center justify-center align-middle">0</span>
+                        <span className="bg-[#F04242] font-semibold md:text-sm text-[10px] rounded-full text-white p-1 w-7 h-7 flex items-center justify-center align-middle">{orderStatistics?.data?.refundedOrdersCount}</span>
                         <span className="font-medium md:text-sm text-[10px]">سفارشات کنسلی</span>
                     </Button>
 
