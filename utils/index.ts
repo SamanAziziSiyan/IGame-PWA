@@ -26,20 +26,15 @@ export const checkAuthToken = async (): Promise<boolean> => {
     try {
         if (userData) {
             let response = await TokenRefreshService(userData.refreshToken);
-            console.log(response);
-
             if (response.status === 200) {
                 return true;
             } else {
-                console.error("Token refresh failed", response.data);
                 return false;
             }
         } else {
-            // No user data available
             return false;
         }
     } catch (error) {
-        console.error("Error during token refresh", error);
         return false;
     }
 };
