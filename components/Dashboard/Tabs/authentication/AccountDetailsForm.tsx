@@ -4,7 +4,10 @@ import Button from "@/components/Common/Buttons";
 import CustomInput from "@/components/Common/InputField";
 import Alert from "@/components/Common/alert";
 import WarningIcon from "@/components/Common/icons/warningicon";
+import { CustomerProfileService } from "@/services/customer/customer";
+import { getUserDataFromLocalStorage } from "@/utils";
 import Image from "next/image";
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 interface IFormInput {
@@ -22,6 +25,19 @@ const AccountDetailsForm = () => {
     const onSubmit: SubmitHandler<IFormInput> = (data) => {
         console.log(data);
     };
+
+    useEffect(() => {
+        const fetchCustomerProfile = async () => {
+            try {
+                const userData = getUserDataFromLocalStorage();
+                const response = await CustomerProfileService(userData?.customerID);
+            } catch (err) {
+                console.log(err);
+            } 
+        };
+
+        fetchCustomerProfile();
+    }, []);
     return (
         <div className="mt-8">
             <h3 className='font-bold text-xl text-white'>جزئیات حساب</h3>
