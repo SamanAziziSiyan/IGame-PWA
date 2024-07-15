@@ -2,6 +2,7 @@
 import { checkAuthToken } from '@/utils';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { ScaleLoader } from 'react-spinners';
 
 const withAuth = (WrappedComponent: React.ComponentType) => {
     const ComponentWithAuth = (props: any) => {
@@ -11,11 +12,9 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
 
         useEffect(() => {
             const verifyAuth = async () => {
-
+                
                 try {
                     const response = await checkAuthToken();
-                    console.log(response);
-
                     if (response) {
                         setIsAuthenticated(true);
                         setLoading(false)
@@ -33,7 +32,7 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
         }, [router]);
 
         if (loading) {
-            return <div>Loading...</div>;
+            return <div style={{height:'80vh'}} className='w-full !h-[80vh] py-96 flex items-center justify-center '><ScaleLoader color='#fff' height={70} width={10} /></div>;
         }
 
         return isAuthenticated ? <WrappedComponent {...props} /> : null;
