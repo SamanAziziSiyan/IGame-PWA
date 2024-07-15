@@ -10,13 +10,24 @@ import DropdownMenu from './DropDownMenu';
 import AccountMenuIcon from './icons/accountmenuIcon';
 import LogoutIcon from './icons/logoutIcon';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const Header = () => {
     const router = useRouter();
-    const handelLogout = ()=>{
+    const [isLogin, setIsLogin] = useState(false);
+    const handelLogout = () => {
         logout();
+        setIsLogin(false);
         router.push('/login');
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            let isLoggedIn = await checkAuthToken();
+            setIsLogin(isLoggedIn);
+        }
+        fetchData();
+    }, []);
     return (
         <header className="bg-black text-white container-px py-4 shadow-md h-[91px] flex items-center">
             <div className="container flex justify-between items-center">
@@ -40,7 +51,7 @@ const Header = () => {
                             </Link>
                         </li>
                         <li>
-                            {!checkAuthToken ?
+                            {!isLogin ?
                                 <Link href="/login">
                                     <AccountIcon className='max-lg:w-4 max-lg:h-4' />
                                 </Link>
