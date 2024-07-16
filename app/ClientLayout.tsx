@@ -1,5 +1,5 @@
 // app/ClientLayout.tsx
-"use client";  // Mark this file as a client component
+"use client";  
 
 import React from "react";
 import { usePathname } from "next/navigation";
@@ -10,7 +10,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const pathname = usePathname();
-    const isAuthRoute = pathname?.startsWith('/login') || pathname?.startsWith('/auth');
+
+    const isAuthRoute = React.useMemo(() => {
+        return pathname?.startsWith('/login') || pathname?.startsWith('/auth') || pathname?.startsWith('/withdrawal');
+    }, [pathname]);
 
     if (isAuthRoute) {
         return <>{children}</>;
