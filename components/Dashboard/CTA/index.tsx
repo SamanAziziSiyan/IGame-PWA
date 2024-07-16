@@ -1,15 +1,17 @@
 import Button from "@/components/Common/Buttons";
 import PlusIcon from "@/components/Common/icons/plus";
 import WalletIcon from "@/components/Common/icons/wallet";
+import WithdrawIcon from "@/components/Common/icons/withdrawIcon";
 import { getUserDataFromLocalStorage } from "@/utils";
 import Image from "next/image";
+import Link from "next/link";
 
 const CTA = () => {
   const userData = getUserDataFromLocalStorage();
 
   return (
     <>
-      <div className="bg-[#282828]  rounded-[28px] p-6  lg:hidden flex items-center justify-between">
+      <div className="bg-[#282828]  rounded-[28px] p-1  lg:hidden flex items-center justify-between">
         <div className="flex items-center gap-x-[18px]">
           <Image
             src="/assets/images/avatar.png"
@@ -35,7 +37,7 @@ const CTA = () => {
           <span className="text-[#111] font-semibold lg:text-base text-[12px]">ویــرایش</span>
         </Button>
       </div>
-      <div className="grid lg:grid-cols-3 grid-cols-2 gap-x-8 mt-[34px]">
+      <div className="grid lg:grid-cols-3 grid-cols-1 gap-x-8 gap-y-4 mt-[34px]">
         <div className="bg-[#282828]  rounded-[28px] p-6  lg:flex hidden items-center justify-between">
           <div className="flex items-center gap-x-[18px]">
             <Image
@@ -88,6 +90,12 @@ const CTA = () => {
           </div>
         </div>
 
+        <Link href='/withdrawal' className="bg-[#F04242] text-center text-white flex rounded-[32px] items-center gap-x-2 justify-center py-3">
+          <WithdrawIcon className="lg:hidden flex" color="#fff" size={21.5}/>
+          <WithdrawIcon className="lg:flex hidden" color="#fff" size={40}/>
+          برداشت وجه
+        </Link>
+{/* 
         <div className="bg-[#fff]/30 rounded-[28px] xl:p-6 p-2 flex md:flex-row lg:flex-col xl:flex-row flex-col items-center justify-between">
           <div className="flex items-center xl:gap-x-[18px] gap-x-7">
             <div className="bg-[#111111]/40 p-2 rounded-2xl flex items-center justify-center">
@@ -110,7 +118,7 @@ const CTA = () => {
             </span>
             <span className="text-[#fff] xl:text-[22px] text-[14px] font-bold">ارتقا سطح...</span>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
