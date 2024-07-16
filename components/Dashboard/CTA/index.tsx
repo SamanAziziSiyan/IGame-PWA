@@ -11,7 +11,7 @@ const CTA = () => {
 
   return (
     <>
-      <div className="bg-[#282828]  rounded-[28px] p-1  lg:hidden flex items-center justify-between">
+      <div className="bg-[#282828]  rounded-[28px] py-[7px] px-[9px]  lg:hidden flex items-center justify-between">
         <div className="flex items-center gap-x-[18px]">
           <Image
             src="/assets/images/avatar.png"

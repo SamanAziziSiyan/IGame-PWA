@@ -47,7 +47,22 @@ const Wallet = () => {
                 <div className="flex flex-col gap-y-[10px] mt-4">
 
                     {/* transaction Cards */}
-                    <div className="bg-white/5 py-3 px-2 rounded-2xl flex gap-x-3 items-center justify-evenly">
+                    <div className="bg-white/5 py-3 px-2 rounded-2xl flex gap-x-3 items-center lg:justify-between lg:px-10 justify-evenly">
+                        <Image src='/assets/images/logo.png' className='' width={50} height={50} alt="" />
+                        <div className="flex flex-col gap-y-1">
+                            <h4 className="text-[14px] max-[376px]:text-[12px] font-bold text-white">پرداخت بانک شهر</h4>
+                            <span className="text-xs max-[376px]:text-[10px] font-medium text-white/50">08 خرداد  ۱۴۰2</span>
+                            <span className="text-xs max-[376px]:text-[10px] font-medium text-white/50">شماره پیگیری 2123525553535353</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-y-1">
+                            <span className="text-white 3xl:text-[22px] font-semibold text-[14px] max-[376px]:text-[12px]">81,000 تومان</span>
+                            <Button className="px-2 py-1 rounded-[21px] text-[#111111] text-nowrap text-[12px] max-[376px]:text-[10px] font-semibold">
+                                <span>تکمیل شده</span>
+                            </Button>
+                        </div>
+                    </div>
+                    {/* transaction Cards */}
+                    <div className="bg-white/5 py-3 px-2 rounded-2xl flex gap-x-3 items-center lg:justify-between lg:px-10 justify-evenly">
                         <Image src='/assets/images/logo.png' className='' width={50} height={50} alt="" />
                         <div className="flex flex-col gap-y-1">
                             <h4 className="text-[14px] max-[376px]:text-[12px] font-bold text-white">پرداخت بانک شهر</h4>
@@ -63,7 +78,7 @@ const Wallet = () => {
                     </div>
 
                     {/* transaction Cards */}
-                    <div className="bg-white/5 py-3 px-2 rounded-2xl flex gap-x-3 items-center justify-evenly">
+                    <div className="bg-white/5 py-3 px-2 rounded-2xl flex gap-x-3 items-center lg:justify-between lg:px-10 justify-evenly">
                         <Image src='/assets/images/logo.png' className='' width={50} height={50} alt="" />
                         <div className="flex flex-col gap-y-1">
                             <h4 className="text-[14px] max-[376px]:text-[12px] font-bold text-white">پرداخت بانک شهر</h4>
@@ -72,27 +87,12 @@ const Wallet = () => {
                         </div>
                         <div className="flex flex-col items-center gap-y-1">
                             <span className="text-white 3xl:text-[22px] font-semibold text-[14px] max-[376px]:text-[12px]">81,000 تومان</span>
-                            <Button className="px-2 py-1 rounded-[21px] text-[#111111] text-nowrap text-[12px] max-[376px]:text-[10px] font-semibold">
-                                <span>تکمیل شده</span>
-                            </Button>
-                        </div>
-                    </div>
-
-                    {/* transaction Cards */}
-                    <div className="bg-white/5 py-3 px-2 rounded-2xl flex gap-x-3 items-center justify-evenly">
-                        <Image src='/assets/images/logo.png' className='' width={50} height={50} alt="" />
-                        <div className="flex flex-col gap-y-1">
-                            <h4 className="text-[14px] max-[376px]:text-[12px] font-bold text-white">پرداخت بانک شهر</h4>
-                            <span className="text-xs max-[376px]:text-[10px] font-medium text-white/50">08 خرداد  ۱۴۰2</span>
-                            <span className="text-xs max-[376px]:text-[10px] font-medium text-white/50">شماره پیگیری 2123525553535353</span>
-                        </div>
-                        <div className="flex flex-col items-center gap-y-1">
-                            <span className="text-white 3xl:text-[22px] font-semibold text-[14px] max-[376px]:text-[12px]">81,000 تومان</span>
-                            <Button className="px-2 py-1 rounded-[21px] text-[#111111] bg-white text-nowrap text-[12px] max-[376px]:text-[10px] font-semibold">
+                            <Button className="px-2 py-1 bg-white rounded-[21px] text-[#111111] text-nowrap text-[12px] max-[376px]:text-[10px] font-semibold">
                                 <span>در انتظار پرداخت</span>
                             </Button>
                         </div>
                     </div>
+
                 </div>
             </div>
         </>
