@@ -6,9 +6,11 @@ import PipeIcon from '../Common/icons/pipeIcon';
 
 interface TimerProps {
     onSendAgain: () => void;
+    showSendAgain: boolean;
+    showReceiveCode: boolean;
 }
 
-const Timer: React.FC<TimerProps> = ({ onSendAgain }) => {
+const Timer: React.FC<TimerProps> = ({ onSendAgain, showSendAgain, showReceiveCode }) => {
     const [seconds, setSeconds] = useState<number>(300); // Set the timer duration to 5 minutes (300 seconds)
     const [isActive, setIsActive] = useState<boolean>(true);
 
@@ -44,7 +46,7 @@ const Timer: React.FC<TimerProps> = ({ onSendAgain }) => {
     return (
         <>
             <div className="flex gap-x-2 items-center">
-                <span className="text-[12px] font-normal text-white/80">کد را دریافت نکردید؟ </span>
+                <span className={`text-[12px] ${!showSendAgain && 'hidden'} font-normal text-white/80`}>کد را دریافت نکردید؟ </span>
                 {!isActive && (
                     <button onClick={handleSendAgain} className="text-[#CCFB4B] font-black text-[14px] underline">
                         ارسال مجدد کد
@@ -52,7 +54,7 @@ const Timer: React.FC<TimerProps> = ({ onSendAgain }) => {
                 )}
             </div>
             <div className="flex gap-x-2 items-center justify-center mt-2">
-                <span className="text-[12px] font-normal text-white/80">ارسال مجدد کد </span>
+                <span className={`text-[12px] ${!showSendAgain && 'hidden'} font-normal text-white/80`}>ارسال مجدد کد </span>
                 <PipeIcon />
                 <span>{minutes}:{displaySeconds}</span>
             </div>
