@@ -3,13 +3,16 @@ import axiosInstance from "../axios"
 const OrderListService = async (CustomerID: number) => {
     return await axiosInstance.post(`orderlist/customer/${CustomerID}`,
         {
+            "currentPage": 0,
+            "limit": 20,
             "offset": -20,
-            "sorts": [{
-                "_fields": "CreatedDateTime",
-                "dir": "desc",
-                "field": "CreatedDateTime"
-            }]
-
+            "sorts": [
+                {
+                    "_field": "createDateTime",
+                    "dir": "desc",
+                    "field": "createDateTime"
+                }
+            ]
         })
 }
 
