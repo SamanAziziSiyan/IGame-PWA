@@ -6,8 +6,8 @@ const Auth = () => {
     return (
         <div className=" mx-auto ">
             <div className="relative">
-                <Image src={'/assets/images/LoginSoldier.png'} className="!z-40 relative top-14 mx-auto" width={250} height={400} alt="" />
-                <Image src={'/assets/images/LoginSoldier-yellow.png'} className="absolute z-10 left-0 top-40" width={249} height={249} alt="" />
+                <Image src={'/assets/images/LoginSoldier.png'} className=" relative top-14 mx-auto" width={250} height={400} alt="" />
+                <Image src={'/assets/images/LoginSoldier-yellow.png'} className="absolute left-0 top-40" width={249} height={249} alt="" />
             </div>
             <div className="bg-white rounded-t-[50px] py-[50px] px-6 -mt-20 relative !z-50">
 
