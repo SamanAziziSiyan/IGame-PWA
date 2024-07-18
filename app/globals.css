@@ -218,3 +218,19 @@ body {
 	pointer-events: none;
 	fill: #333;
 }
+
+.otp-input-container {
+	background-color: #ffffff24;
+	padding: 14px;
+	border-radius: 6px;
+	border: 1px solid #ffffff8f;
+}
+
+.otp-input {
+	outline: none !important;
+	border: none !important;
+	text-align: center !important;
+	background: transparent !important;
+	padding: 0px !important;
+	width: 100% !important;
+}

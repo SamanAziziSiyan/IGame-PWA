@@ -12,7 +12,7 @@ import LoadingIcon from "@/components/Common/icons/loadingIcon"; // Adjust impor
 import Timer from "./Timer";
 import LoginLayoutStore from "@/store/loginLayout"
 import authStore from "@/store/auth";
-
+import OTPInput from "react-otp-input";
 
 interface IFormInput {
     userName: string;
@@ -26,12 +26,13 @@ interface LoginVerifyProps {
 const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
     const [showLoading, setShowLoading] = useState<boolean>(false);
     const LoginLayout = LoginLayoutStore((state) => state.loginLayoutStore);
-    console.log(LoginLayout);
-
+    const [otp, setOtp] = useState('');
     const router = useRouter();
+
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors }
     } = useForm<IFormInput>();
     const { setAuthData } = authStore();
@@ -50,7 +51,6 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                     "userName": response.data.data.username,
                     "refreshToken": response.data.data.refreshToken,
                     "customerID": response.data.data.customerId
-
                 }));
 
                 router.push('/dashboard');
@@ -83,9 +83,30 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                 setShowLoading(false);
                 toastAlert({ msg: error?.message as string })
             }
-
         }
     };
+
+    const handleOtpChange = (otp: string) => {
+        setOtp(otp);
+        setValue('verificationCode', otp, { shouldValidate: true });
+    };
+
+    interface OTPInputProps {
+        value: string;
+        onChange: (otp: string) => void;
+        numInputs: number;
+        isInputNum?: boolean;
+        renderInput: (props: any) => JSX.Element;
+        separator?: JSX.Element; // Add separator as an optional prop
+    }
+    // Custom renderer for OTPInput
+    const renderCustomInput = (props) => (
+        <input
+            {...props}
+            className="otp-input"
+            placeholder="-"
+        />
+    );
 
     return (
         <div className="mt-11">
@@ -107,23 +128,29 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                         errors={errors.userName}
                         placeholder="نام کاربری شما"
                     />
-                    <CustomInput
-                        id="verificationCode"
-                        type="text"
-                        label="کد ارسالی*"
-                        name="verificationCode"
-                        register={register}
-                        validationRules={{
+                    <label htmlFor="verificationCode">کد ارسالی*</label>
+                    <div className="otp-input-container">
+                        <OTPInput
+                            value={otp}
+                            onChange={handleOtpChange}
+                            numInputs={6}
+                            separator={<span>-</span>}
+                            isInputNum
+                            renderInput={renderCustomInput}
+                        />
+                    </div>
+                    <input
+                        type="hidden"
+                        {...register("verificationCode", {
                             required: 'کد ارسالی ضروری است',
                             pattern: {
                                 value: /^\d{6}$/,
                                 message: 'کد ارسالی باید 6 رقم باشد',
                             },
-                        }}
-                        errors={errors.verificationCode}
-                        placeholder="- - - -"
+                        })}
                     />
-                    <Timer onSendAgain={sendAgain} showReceiveCode={true} showSendAgain={true}/> {/* Include the Timer component */}
+                    {errors.verificationCode && <span>{errors.verificationCode.message}</span>}
+                    <Timer onSendAgain={sendAgain} showReceiveCode={true} showSendAgain={true} /> {/* Include the Timer component */}
                     <Button className='mt-3 py-[14px] font-semibold flex items-center justify-center gap-x-4 rounded-[40px]' type='submit'>
                         تایید کد
                         {showLoading && <LoadingIcon className="fill-gray-600" />}
