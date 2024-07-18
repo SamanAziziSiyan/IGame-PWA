@@ -11,7 +11,6 @@ interface CustomInputProps<T extends FieldValues> {
     errors?: FieldError;
     placeholder?: string;
     className?: string;
-    multiple?:boolean
 }
 
 const CustomInput = <T extends FieldValues>({
@@ -24,7 +23,6 @@ const CustomInput = <T extends FieldValues>({
     errors,
     placeholder = '',
     className = '',
-    multiple = false,
 }: CustomInputProps<T>) => {
     return (
         <div className={`text-white flex flex-col gap-y-[6px] ${className}`}>

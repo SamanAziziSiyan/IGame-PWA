@@ -1,23 +1,19 @@
 // components/Common/CustomCheckbox.tsx
 import React from 'react';
-import { UseFormRegister, FieldError, Path } from 'react-hook-form';
+import { UseFormRegister, FieldError, Path, FieldValues } from 'react-hook-form';
 
-interface IFormInput {
-  // Define your form input types here
-  [key: string]: any;
-}
 
-interface CustomCheckboxProps {
+interface CustomCheckboxProps<T extends FieldValues> {
     id: string;
     label: string;
-    register: UseFormRegister<IFormInput>;
-    name: Path<IFormInput>;
+    register: UseFormRegister<T>;
+    name: Path<T>;
     validationRules?: Record<string, any>;
     errors?: FieldError;
     className?: string;
 }
 
-const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
+const CustomCheckbox = <T extends FieldValues>({
     id,
     label,
     register,
@@ -25,7 +21,7 @@ const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
     validationRules,
     errors,
     className = '',
-}) => {
+}: CustomCheckboxProps<T>) => {
     return (
         <>
             <div className={`flex items-center gap-2 ${className}`}>

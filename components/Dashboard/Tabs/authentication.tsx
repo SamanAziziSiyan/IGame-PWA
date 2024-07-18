@@ -16,7 +16,7 @@ const Authentication = () => {
             <CardAuth />
             <Silver/>
             <CardUpgrade/>
-            <PhoneVerify/>
+            <PhoneVerify phoneNumber={'09142601571'} verificationCode={'5555'}/>
             <PhoneVerifyConfirm/>
         </>
     );

@@ -72,7 +72,6 @@ const Bronze = () => {
                         register={register}
                         errors={errors.documentImage}
                         placeholder="5047-0611-6598-3255"
-                        multiple={true}
                     />
 
                     <Button className='mt-3 py-[14px] font-semibold rounded-[40px]' type='submit'>
