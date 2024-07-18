@@ -1,14 +1,23 @@
 // components/authentication.tsx
 
-import AccountDetailsForm from "./authentication/AccountDetailsForm";
-import LevelUpForm from "./authentication/levelupForm";
+import AccountDetailsForm from "./Profile";
+import Bronze from "./authentication/Bronze";
+import CardAuth from "./authentication/CardAuth";
+import CardUpgrade from "./authentication/CardUpgrade";
+import PhoneVerify from "./authentication/PhoneVerify";
+import PhoneVerifyConfirm from "./authentication/PhoneVerifyConfirm";
+import Silver from "./authentication/Silver";
 
 const Authentication = () => {
 
     return (
         <>
-            <LevelUpForm />
-            <AccountDetailsForm />
+            <Bronze />
+            <CardAuth />
+            <Silver/>
+            <CardUpgrade/>
+            <PhoneVerify/>
+            <PhoneVerifyConfirm/>
         </>
     );
 };
