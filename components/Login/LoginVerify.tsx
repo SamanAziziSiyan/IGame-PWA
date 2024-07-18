@@ -123,7 +123,7 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                         errors={errors.verificationCode}
                         placeholder="- - - -"
                     />
-                    <Timer onSendAgain={sendAgain} /> {/* Include the Timer component */}
+                    <Timer onSendAgain={sendAgain} showReceiveCode={true} showSendAgain={true}/> {/* Include the Timer component */}
                     <Button className='mt-3 py-[14px] font-semibold flex items-center justify-center gap-x-4 rounded-[40px]' type='submit'>
                         تایید کد
                         {showLoading && <LoadingIcon className="fill-gray-600" />}
