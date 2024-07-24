@@ -2,13 +2,27 @@ import Button from "@/components/Common/Buttons";
 import PlusIcon from "@/components/Common/icons/plus";
 import WalletIcon from "@/components/Common/icons/wallet";
 import WithdrawIcon from "@/components/Common/icons/withdrawIcon";
+import { WalletBalanceService } from "@/services/wallet/wallet";
 import { getUserDataFromLocalStorage } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+interface WalletBalance {
+  balance: number;
+}
 
 const CTA = () => {
   const userData = getUserDataFromLocalStorage();
+  const [WalletBalance, setWalletBalance] = useState<WalletBalance>({ balance: 0 });
+  useEffect(() => {
+    const getWalletBalance = async () => {
+      const response = await WalletBalanceService(userData?.userName);
+      setWalletBalance(response.data);
+    }
+    getWalletBalance();
 
+  }, [])
   return (
     <>
       <div className="bg-[#282828]  rounded-[28px] py-[7px] px-[9px]  lg:hidden flex items-center justify-between">
@@ -76,7 +90,7 @@ const CTA = () => {
           </div>
           <div className="">
             <span className="text-[#111] xl:text-[34px] text-[22px] font-extrabold">
-              ۱٫۴۰0٫00۰
+              {WalletBalance?.balance}
             </span>
             <span className="xl:text-[18px] text-[12px] font-semibold text-[#111111]">
               تومان
@@ -91,11 +105,11 @@ const CTA = () => {
         </div>
 
         <Link href='/withdrawal' className="bg-[#F04242] text-center text-white flex rounded-[32px] items-center gap-x-2 justify-center py-3">
-          <WithdrawIcon className="lg:hidden flex" color="#fff" size={21.5}/>
-          <WithdrawIcon className="lg:flex hidden" color="#fff" size={40}/>
+          <WithdrawIcon className="lg:hidden flex" color="#fff" size={21.5} />
+          <WithdrawIcon className="lg:flex hidden" color="#fff" size={40} />
           برداشت وجه
         </Link>
-{/* 
+        {/* 
         <div className="bg-[#fff]/30 rounded-[28px] xl:p-6 p-2 flex md:flex-row lg:flex-col xl:flex-row flex-col items-center justify-between">
           <div className="flex items-center xl:gap-x-[18px] gap-x-7">
             <div className="bg-[#111111]/40 p-2 rounded-2xl flex items-center justify-center">
