@@ -7,31 +7,32 @@ import Alert from "@/components/Common/alert";
 import WarningIcon from "@/components/Common/icons/warningicon";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 interface IFormInput {
     walletAmount: number;
     return: boolean;
+    return1: boolean;
 }
 const CardAuth = () => {
+    const [isChecked, setIsChecked] = useState(0);
     const {
         register,
         handleSubmit,
         formState: { errors },
-        watch
     } = useForm<IFormInput>();
 
     const onSubmit: SubmitHandler<IFormInput> = (data) => {
         console.log(data);
     };
-    const isChecked = watch("return");
     return (
         <div className="mt-8">
             <h3 className='font-bold text-xl text-white'>احراز هویت و تایید اطلاعات کارت های بانکی</h3>
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col w-full">
-                    <div className={`${isChecked ? 'bg-white' : 'bg-white/80'}  rounded-3xl py-6 px-5 mt-12`}>
+                    <div className={`${isChecked == 1 ? 'bg-white' : 'bg-white/80'}  rounded-3xl py-6 px-5 mt-12`}>
                         <div className="flex gap-x-2  items-center justify-between">
                             <div className="flex flex-col gap-y-3">
                                 <span className="text-[#111] font-semibold text-sm">محمدرضا بیضاوی</span>
@@ -42,6 +43,13 @@ const CardAuth = () => {
                                 <CustomCheckbox
                                     id="return"
                                     name="return"
+                                    checked={isChecked == 1 ? true : false}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                        if (e.target.checked)
+                                            setIsChecked(1);
+                                        else
+                                            setIsChecked(0)
+                                    }}
                                     label="بازگشت پول به این کارت"
                                     register={register}
                                     validationRules={{ required: 'یک کارت را انتخاب کنید' }}
@@ -49,7 +57,7 @@ const CardAuth = () => {
                                 />
 
                             </div>
-                            <Image src='/assets/images/logo.png' className={`${isChecked ? '' : 'grayscale'}`} width={100} height={100} alt="" />
+                            <Image src='/assets/images/logo.png' className={`${isChecked == 1 ? '' : 'grayscale'}`} width={100} height={100} alt="" />
 
                         </div>
                         <div className="flex flex-col gap-y-4 mt-6">
@@ -61,7 +69,7 @@ const CardAuth = () => {
                         </div>
                     </div>
 
-                    <div className={`${isChecked ? 'bg-white' : 'bg-white/80'}  rounded-3xl py-6 px-5 mt-12`}>
+                    <div className={`${isChecked == 2 ? 'bg-white' : 'bg-white/80'}  rounded-3xl py-6 px-5 mt-12`}>
                         <div className="flex gap-x-2  items-center justify-between">
                             <div className="flex flex-col gap-y-3">
                                 <span className="text-[#111] font-semibold text-sm">محمدرضا بیضاوی</span>
@@ -70,16 +78,23 @@ const CardAuth = () => {
                                     <span className="font-normal text-[#111]/50 text-[9px] font-[Tomorrow] tracking-[2px]">IR800003253659874125632541</span>
                                 </div>
                                 <CustomCheckbox
-                                    id="return"
-                                    name="return"
+                                    id="return1"
+                                    checked={isChecked == 2 ? true : false}
+                                    name="return1"
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                        if (e.target.checked)
+                                            setIsChecked(2);
+                                        else
+                                            setIsChecked(0)
+                                    }}
                                     label="بازگشت پول به این کارت"
                                     register={register}
                                     validationRules={{ required: 'یک کارت را انتخاب کنید' }}
-                                    errors={errors.return}
+                                    errors={errors.return1}
                                 />
 
                             </div>
-                            <Image src='/assets/images/logo.png' className={`${isChecked ? '' : 'grayscale'}`} width={100} height={100} alt="" />
+                            <Image src='/assets/images/logo.png' className={`${isChecked == 2 ? '' : 'grayscale'}`} width={100} height={100} alt="" />
 
                         </div>
                         <div className="flex flex-col gap-y-4 mt-6">
