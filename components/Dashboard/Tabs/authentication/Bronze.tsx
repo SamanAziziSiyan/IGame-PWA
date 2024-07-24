@@ -4,14 +4,16 @@ import Button from "@/components/Common/Buttons";
 import CustomInput from "@/components/Common/InputField";
 import Alert from "@/components/Common/alert";
 import WarningIcon from "@/components/Common/icons/warningicon";
+import { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 interface IFormInput {
     firstName: string;
     lastName: string;
-    documentImage: string;
+    document?: string
 }
 const Bronze = () => {
+    const inputFileRef = useRef<HTMLInputElement>(null);
     const {
         register,
         handleSubmit,
@@ -19,8 +21,14 @@ const Bronze = () => {
     } = useForm<IFormInput>();
 
     const onSubmit: SubmitHandler<IFormInput> = (data) => {
+        delete data.document
         console.log(data);
+        
+        console.log(inputFileRef.current?.files);
     };
+    const handleUploadDocuments = () => {
+        inputFileRef?.current?.click();
+    }
     return (
         <div className="mt-8">
             <h3 className='font-bold text-xl text-white'>احراز هویت سطح برنــــز</h3>
@@ -50,7 +58,7 @@ const Bronze = () => {
                         label="نام*"
                         name="firstName"
                         register={register}
-                        validationRules={{ required: 'platform is required' }}
+                        validationRules={{ required: 'نام ضروری میباشد' }}
                         errors={errors.firstName}
                         placeholder="نام"
                     />
@@ -60,19 +68,31 @@ const Bronze = () => {
                         label="نام خانوادگی*"
                         name="lastName"
                         register={register}
-                        validationRules={{ required: 'platform is required' }}
+                        validationRules={{ required: 'نام خانوادگی ضروری میباشد' }}
                         errors={errors.lastName}
                         placeholder="نام خانوادگی"
                     />
-                    <CustomInput
-                        id="documentImage"
-                        type="file"
-                        label="تصویر سلفی و مدارک هویتی "
-                        name="documentImage"
-                        register={register}
-                        errors={errors.documentImage}
-                        placeholder="5047-0611-6598-3255"
-                    />
+
+                    <div className="relative">
+                        <input type="file" className="absolute w-0 h-0 overflow-hidden opacity-0"
+                            id="documentImage"
+                            ref={inputFileRef}
+                            name="documentImage"
+                            multiple={true} />
+                        <CustomInput
+                            id="document"
+                            type="text"
+                            value={''}
+                            label="تصویر سلفی و مدارک هویتی*"
+                            name="document"
+                            register={register}
+                            errors={errors.document}
+                            placeholder="تصویر سلفی و مدارک هویتی "
+                        />
+                        <Button onClick={() => handleUploadDocuments()} className='mt-3 py-[5px] absolute top-8 bg-white left-3 font-semibold rounded-[16px] flex items-center justify-between px-6 text-[10px]' type='button'>
+                            بارگذاری کنید
+                        </Button>
+                    </div>
 
                     <Button className='mt-3 py-[14px] font-semibold rounded-[40px]' type='submit'>
                         ثبت درخواست ارتقا سطح

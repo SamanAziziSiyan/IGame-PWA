@@ -5,12 +5,18 @@ import CustomInput from "@/components/Common/InputField";
 import Alert from "@/components/Common/alert";
 import WarningIcon from "@/components/Common/icons/warningicon";
 import Image from "next/image";
+import { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 interface IFormInput {
-    walletAmount: number;
+    Bankcard: number;
+    FullName: string;
+    IdDocuments?: string;
+    IdDocumentsHand?: string;
 }
 const Silver = () => {
+    const inputFileRef = useRef<HTMLInputElement>(null);
+    const inputFileRefHand = useRef<HTMLInputElement>(null);
     const {
         register,
         handleSubmit,
@@ -19,7 +25,10 @@ const Silver = () => {
 
     const onSubmit: SubmitHandler<IFormInput> = (data) => {
         console.log(data);
+        console.log(inputFileRef?.current?.files);
+        console.log(inputFileRefHand?.current?.files);
     };
+
     return (
         <div className="mt-8">
             <h3 className='font-bold text-xl text-white'>احراز هویت سطح نقره ای</h3>
@@ -48,45 +57,72 @@ const Silver = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='grid md:grid-cols-3 grid-cols-1 gap-[14px] items-center justify-center mt-4'>
                     <CustomInput
-                        id="walletAmount"
+                        id="Bankcard"
                         type="text"
                         label="کارت بانکی"
-                        name="walletAmount"
+                        name="Bankcard"
                         register={register}
-                        errors={errors.walletAmount}
+                        errors={errors.Bankcard}
                         placeholder="5047-0611-6598-3255"
                     />
                     <Alert type='warning' icon={<WarningIcon />}>
                         برای تایید هویت اطلاعات لطفا مدارک زیر را در قالب یک عکس و بدون دستکاری ارسال کنید.
                     </Alert>
                     <CustomInput
-                        id="walletAmount"
+                        id="FullName"
                         type="text"
                         label="نام و نام خانوادگی مالک کارت*"
-                        name="walletAmount"
+                        name="FullName"
                         register={register}
                         validationRules={{ required: 'platform is required' }}
-                        errors={errors.walletAmount}
+                        errors={errors.FullName}
                         placeholder="محمد رضا بیضاوی"
                     />
-                    <CustomInput
-                        id="walletAmount"
-                        type="file"
-                        label="تصویر سلفی و مدارک هویتی "
-                        name="walletAmount"
-                        register={register}
-                        errors={errors.walletAmount}
-                        placeholder="5047-0611-6598-3255"
-                    />
-                    <CustomInput
-                        id="walletAmount"
-                        type="file"
-                        label="تصویر مدارک هویتی و متن دست نویس "
-                        name="walletAmount"
-                        register={register}
-                        errors={errors.walletAmount}
-                        placeholder="5047-0611-6598-3255"
-                    />
+
+                    <div className="relative">
+                        <input type="file" className="absolute w-0 h-0 overflow-hidden opacity-0"
+                            id="IdDocument"
+                            ref={inputFileRef}
+                            name="IdDocument"
+                            multiple={true} />
+                        <CustomInput
+                            id="IdDocuments"
+                            type="text"
+                            value={''}
+                            label="تصویر سلفی و مدارک هویتی*"
+                            name="IdDocuments"
+                            register={register}
+                            errors={errors.IdDocuments}
+                            placeholder="تصویر سلفی و مدارک هویتی "
+                        />
+                        <Button onClick={() => {
+                            inputFileRef?.current?.click();
+                        }} className='mt-3 py-[5px] absolute top-8 bg-white left-3 font-semibold rounded-[16px] flex items-center justify-between px-6 text-[10px]' type='button'>
+                            بارگذاری کنید
+                        </Button>
+                    </div>
+                    <div className="relative">
+                        <input type="file" className="absolute w-0 h-0 overflow-hidden opacity-0"
+                            id="IdDocumentHand"
+                            ref={inputFileRefHand}
+                            name="IdDocumentHand"
+                            multiple={true} />
+                        <CustomInput
+                            id="IdDocumentsHand"
+                            type="text"
+                            value={''}
+                            label="تصویر مدارک هویتی و متن دست نویس*"
+                            name="IdDocumentsHand"
+                            register={register}
+                            errors={errors.IdDocumentsHand}
+                            placeholder="تصویر مدارک هویتی و متن دست نویس "
+                        />
+                        <Button onClick={() => {
+                            inputFileRefHand?.current?.click();
+                        }} className='mt-3 py-[5px] absolute top-8 bg-white left-3 font-semibold rounded-[16px] flex items-center justify-between px-6 text-[10px]' type='button'>
+                            بارگذاری کنید
+                        </Button>
+                    </div>
                     <Button className='mt-3 py-[14px] font-semibold rounded-[40px]' type='submit'>
                         ثبت درخواست ارتقا سطح
                     </Button>
