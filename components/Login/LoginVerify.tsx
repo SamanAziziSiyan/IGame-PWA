@@ -13,6 +13,7 @@ import Timer from "./Timer";
 import LoginLayoutStore from "@/store/loginLayout"
 import authStore from "@/store/auth";
 import OTPInput from "react-otp-input";
+import Link from "next/link";
 
 interface IFormInput {
     userName: string;
@@ -99,8 +100,10 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
         renderInput: (props: any) => JSX.Element;
         separator?: JSX.Element; // Add separator as an optional prop
     }
-    // Custom renderer for OTPInput
-    const renderCustomInput = (props) => (
+    interface CustomInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+        placeholder?: string;
+    }
+    const renderCustomInput = (props:CustomInputProps) => (
         <input
             {...props}
             className="otp-input"
@@ -134,8 +137,6 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                             value={otp}
                             onChange={handleOtpChange}
                             numInputs={6}
-                            separator={<span>-</span>}
-                            isInputNum
                             renderInput={renderCustomInput}
                         />
                     </div>
@@ -155,9 +156,9 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                         تایید کد
                         {showLoading && <LoadingIcon className="fill-gray-600" />}
                     </Button>
-                    <Button className='mt-3 py-[14px] bg-white font-semibold rounded-[40px] flex items-center justify-center gap-x-2' type='button'>
+                    <Link href='/login' className='mt-3 py-[14px] text-center bg-white font-semibold rounded-[40px] flex items-center justify-center gap-x-2'>
                         تغییر شماره
-                    </Button>
+                    </Link>
                 </div>
             </form>
         </div>

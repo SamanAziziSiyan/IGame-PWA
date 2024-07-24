@@ -57,7 +57,7 @@ const LoginFrom = () => {
                 toastAlert({ msg: error?.message as string })
                 setShowVerify(false);
             }
-            setLoginLayoutState(true);
+            setLoginLayoutState(false);
 
         }
     };
