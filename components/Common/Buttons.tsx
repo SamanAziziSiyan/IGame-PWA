@@ -1,12 +1,12 @@
-const Button = ({ className = '', children, type = 'button' }: ButtonProps) => {
+const Button = ({ className = '', children, type = 'button', onClick }: ButtonProps) => {
     return (
         <>
-            <button className={`${className} bg-[#CCFB4B] text-[#111]`} type={type}>{children}</button>
+            <button onClick={onClick} className={`${className} bg-[#CCFB4B] text-[#111]`} type={type}>{children}</button>
         </>
     );
 }
 
 export default Button;
 
-interface ButtonProps { className?: string, children: React.ReactNode, type?: 'button' | 'submit' | 'reset' }
+interface ButtonProps { className?: string, children: React.ReactNode, type?: 'button' | 'submit' | 'reset', onClick?: () => void }
 
