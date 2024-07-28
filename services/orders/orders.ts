@@ -1,3 +1,4 @@
+import { IOrderProductData } from "@/types";
 import axiosInstance from "../axios"
 
 const OrderListService = async (CustomerID: number, page: number, ITEMS_PER_PAGE: number) => {
@@ -40,7 +41,7 @@ const DashboardOrderStatisticsService = async (CustomerID: number) => {
     return await axiosInstance.get(`order/statistics/${CustomerID}`)
 }
 
-const PreOrderService = async (orderData: string) => {
+const PreOrderService = async (orderData: IOrderProductData) => {
     return await axiosInstance.post(`order/preorder/`,
         orderData
     )

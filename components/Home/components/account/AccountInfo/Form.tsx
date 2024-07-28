@@ -2,6 +2,11 @@
 import Button from '@/components/Common/Buttons';
 import CustomInput from '@/components/Common/InputField';
 import CustomSelect from '@/components/Common/SelectField';
+import { PreOrderService } from '@/services/orders/orders';
+import { PaymentService } from '@/services/Payment/payment';
+import useProductState from '@/store/products';
+import { IOrderProductData } from '@/types';
+import { getBrowserInfo, getDeviceInfo, getUserDataFromLocalStorage, numberFormat, toastAlert } from '@/utils';
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -13,22 +18,104 @@ const svgIcon = `
 `;
 
 interface IFormInput {
-    email: string;
+    mobile: string;
     password: string;
     description: string;
     platform: string;
+    price: number;
 }
 
 const AccountForm: React.FC = () => {
+    const productStore = useProductState(state => state.productStore);
+    const userData = getUserDataFromLocalStorage();
+    console.log('productStore:', productStore);
+
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm<IFormInput>();
 
-    const onSubmit: SubmitHandler<IFormInput> = (data) => {
-        console.log(data);
+    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+        console.log('data', data);
+
+        const productData = productStore?.productData;
+        const productTitle = productData?.titleFa || productData?.title || 'Unknown Product';
+
+
+        let formData: IOrderProductData = {
+            callbackUrl: 'http://localhost:3000/dashboard',
+            TotalProductsAmountToman: 0,
+            DiscountAmountToman: 0,
+            WalletAmountToman: 0,
+            PaymentAmountToman: data.price,
+            Mobile: userData?.userName || '',
+            CustomerId: userData?.customerID || 0,
+            DiscountCode: 0,
+            Description: data.description,
+            Ip: '127.0.0.1',
+            Browser: getBrowserInfo().browserName,
+            Device: getDeviceInfo().deviceType,
+            OrderProducts: [
+                {
+                    productId: productData?.id || '0',
+                    quantity: 1,
+                    productUnitAmountToman: data.price || 0,
+                    additionalData: [
+                        {
+                            name: '',
+                            value: '',
+                        }
+                    ],
+                    playerId: 'examplePlayerId',
+                    name: 'exampleProductName',
+                    platform: data.platform || '',
+                    username: data.mobile,
+                    password: data.password,
+                    nameInGame: 'exampleNameInGame',
+                    backupCode: 'exampleBackupCode',
+                    description: data.description,
+                    os: getDeviceInfo().os,
+                    imageUrl: 'http://example.com/image.png',
+                    gmailPassword: 'exampleGmailPassword'
+                }
+            ]
+        };
+        console.log('formData', formData);
+        try {
+            const response = await PreOrderService(formData);
+            if (response) {
+                toastAlert({ msg: "سفارش شما ثبت شد در حال هدایت به درگاه پرداخت ...", type: "success" });
+                const payment = PaymentService(
+                    {
+                        customerId: userData?.customerID,
+                        amount: 1,
+                        orderId: response.data,
+                        callBackUrl: 'string',
+                        mobile: userData?.userName,
+                        description: data.description,
+                        products: [
+                            {
+                                quantity: 1,
+                                title: productTitle,
+                                amount: 1,
+                                code: 'string'
+                            }
+                        ],
+                    }
+                );
+                console.log('payment', payment);
+
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+
+
+
     };
+
 
     return (
         <div className="lg:col-span-7 xl:order-1 order-2 col-span-12 w-full">
@@ -50,22 +137,29 @@ const AccountForm: React.FC = () => {
                         ]}
                         svgIcon={svgIcon}
                     />
-
+                    {/* <CustomInput
+                        id="price"
+                        type="hidden"
+                        value={productStore.productData == null ? '0' : productData?.currentIrtRate}
+                        name="price"
+                        register={register}
+                        errors={errors.price}
+                    /> */}
                     <CustomInput
-                        id="email"
-                        type="email"
-                        label="ایمیل*"
-                        name="email"
+                        id="mobile"
+                        type="text"
+                        label="موبایل*"
+                        name="mobile"
                         register={register}
                         validationRules={{
-                            required: 'ایمیل ضروری است',
+                            required: 'موبایل ضروری است',
                             pattern: {
-                                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                                message: 'ایمیل نامعتبر می‌باشد'
+                                value: /^(0?9|\+?989)((14)|(13)|(12)|(19)|(18)|(17)|(15)|(16)|(11)|(10)|(90)|(91)|(92)|(93)|(94)|(95)|(96)|(32)|(30)|(33)|(35)|(36)|(37)|(38)|(39)|(00)|(01)|(02)|(03)|(04)|(05)|(41)|(20)|(21)|(22)|(23)|(31)|(34)|(9910)|(9911)|(9913)|(9914)|(9999)|(999)|(990)|(9810)|(9811)|(9812)|(9813)|(9814)|(9815)|(9816)|(9817)|(998))\W?\d{3}\W?\d{4}$/,
+                                message: 'شماره تلفن نامعتبر است'
                             }
                         }}
-                        errors={errors.email}
-                        placeholder="ایمیل متصل به اکانت شما"
+                        errors={errors.mobile}
+                        placeholder="موبایل متصل به اکانت شما"
                     />
                     <CustomInput
                         id="password"
@@ -89,7 +183,7 @@ const AccountForm: React.FC = () => {
                         label="توضیحات"
                         name="description"
                         register={register}
-                        errors={errors.password}
+                        errors={errors.description}
                         placeholder="توضیحات"
                     />
                     <div className='lg:hidden flex text-[13px] font-medium mt-5'>
@@ -98,7 +192,7 @@ const AccountForm: React.FC = () => {
                     <div className='flex mt-3 justify-between'>
                         <span className='text-white xl:text-base text-[14px]'>مبلغ پرداختی</span>
                         <div className='flex xl:text-xl text-lg font-bold gap-1'>
-                            <span className='text-[#CCFB4B] '>1,400,000</span>
+                            <span className='text-[#CCFB4B] '>{productStore.productData == null ? '0' : numberFormat(productStore?.productData?.currentIrtRate)}</span>
                             <span className='text-white'>تومان</span>
                         </div>
                     </div>
