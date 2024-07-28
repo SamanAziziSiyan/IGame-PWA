@@ -1,5 +1,6 @@
 "use client";
 import Button from '@/components/Common/Buttons';
+import LoadingIcon from '@/components/Common/icons/loadingIcon';
 import CustomInput from '@/components/Common/InputField';
 import CustomSelect from '@/components/Common/SelectField';
 import { PreOrderService } from '@/services/orders/orders';
@@ -7,7 +8,7 @@ import { PaymentService } from '@/services/Payment/payment';
 import useProductState from '@/store/products';
 import { IOrderProductData } from '@/types';
 import { getBrowserInfo, getDeviceInfo, getUserDataFromLocalStorage, numberFormat, toastAlert } from '@/utils';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 const svgIcon = `
@@ -27,8 +28,9 @@ interface IFormInput {
 
 const AccountForm: React.FC = () => {
     const productStore = useProductState(state => state.productStore);
+    const [showLoading, setShowLoading] = useState<boolean>(false);
+
     const userData = getUserDataFromLocalStorage();
-    console.log('productStore:', productStore);
 
     const {
         register,
@@ -37,12 +39,8 @@ const AccountForm: React.FC = () => {
     } = useForm<IFormInput>();
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        console.log('data', data);
-
         const productData = productStore?.productData;
         const productTitle = productData?.titleFa || productData?.title || 'Unknown Product';
-
-
         let formData: IOrderProductData = {
             callbackUrl: 'http://localhost:3000/dashboard',
             TotalProductsAmountToman: 0,
@@ -81,34 +79,36 @@ const AccountForm: React.FC = () => {
                 }
             ]
         };
-        console.log('formData', formData);
         try {
+            setShowLoading(true);
             const response = await PreOrderService(formData);
             if (response) {
+                setShowLoading(false);
                 toastAlert({ msg: "سفارش شما ثبت شد در حال هدایت به درگاه پرداخت ...", type: "success" });
-                const payment = PaymentService(
-                    {
-                        customerId: userData?.customerID,
-                        amount: 1,
-                        orderId: response.data,
-                        callBackUrl: 'string',
-                        mobile: userData?.userName,
-                        description: data.description,
-                        products: [
-                            {
-                                quantity: 1,
-                                title: productTitle,
-                                amount: 1,
-                                code: 'string'
-                            }
-                        ],
-                    }
-                );
-                console.log('payment', payment);
+                // const payment = PaymentService(
+                //     {
+                //         customerId: userData?.customerID,
+                //         amount: 1,
+                //         orderId: response.data,
+                //         callBackUrl: 'string',
+                //         mobile: userData?.userName,
+                //         description: data.description,
+                //         products: [
+                //             {
+                //                 quantity: 1,
+                //                 title: productTitle,
+                //                 amount: 1,
+                //                 code: 'string'
+                //             }
+                //         ],
+                //     }
+                // );
+                // console.log('payment', payment);
 
             }
 
         } catch (error) {
+            setShowLoading(false);
             console.log(error);
         }
 
@@ -196,8 +196,10 @@ const AccountForm: React.FC = () => {
                             <span className='text-white'>تومان</span>
                         </div>
                     </div>
-                    <Button className='mt-3 py-[14px] xl:text-base text-[14px] font-semibold rounded-[40px]' type='submit'>
+                    <Button className='mt-3 py-[14px] xl:text-base text-[14px] font-semibold rounded-[40px] flex items-center justify-center gap-x-2' type='submit'>
                         تایید نهایی و ثبت سفارش
+                        {showLoading && <LoadingIcon className="fill-gray-600" />}
+
                     </Button>
                 </div>
             </form >
