@@ -3,7 +3,6 @@ import axiosInstance from "../axios"
 const ProductsListService = async () => {
     return await axiosInstance.post(`product/table`,
         {
-            "currentPage": 0,
             "limit": 20,
             "offset": -20,
             "sorts": [
@@ -16,7 +15,11 @@ const ProductsListService = async () => {
         })
 }
 const ProductsListCategoryService = async (CategoryID: number) => {
-    return await axiosInstance.get(`product/list/${CategoryID}`)
+    return await axiosInstance.get(`Product/List/${CategoryID}`)
 }
 
-export { ProductsListService, ProductsListCategoryService }
+const CategoryListService = async () => {
+    return await axiosInstance.get(`productcategory/list/`)
+}
+
+export { ProductsListService, ProductsListCategoryService, CategoryListService }
