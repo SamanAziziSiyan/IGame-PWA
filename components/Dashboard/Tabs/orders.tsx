@@ -217,6 +217,83 @@ const Orders = () => {
                             </div>
                         ))}
                     </div>
+                    <div className="lg:hidden flex flex-col gap-4 mt-10">
+                        {OrdersData.map((order: IOrdersData, index: number) => (
+                            <div key={index} className="flex flex-col bg-white/5 rounded-[17px]">
+                                <div className="flex lg:flex-row flex-col gap-x-[10px] xl:py-3 py-1 xl:px-5 px-2">
+                                    <div className="flex items-center justify-between w-full gap-x-4 border-b border-[#FFFFFF]/20 py-2">
+                                        <Image
+                                            alt="order"
+                                            src={order?.products[0]?.productImageUrl}
+                                            className="max-lg:w-14 max-lg:h-14"
+                                            width={80}
+                                            height={80}
+                                        />
+                                        <div className="flex flex-col">
+                                            <h4 className="text-white text-[14px] font-bold">{order?.products[0]?.title}</h4>
+                                            <span className="text-white/50 text-nowrap text-[12px]">خرید مستقیم از Activision</span>
+                                        </div>
+                                        <div className="flex flex-col items-center gap-x-10">
+                                            <div className="flex items-center gap-x-3">
+                                                <span className="text-white 3xl:text-[22px] text-[14px]">{order?.products[0]?.price}</span>
+                                            </div>
+                                            <Button className="px-4 text-[14px] py-1 rounded-[21px] text-[#111111] text-nowrap font-semibold">
+                                                <span>{order?.products[0]?.statusText}</span>
+                                            </Button>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center gap-x-6 justify-between text-[14px] mt-4">
+                                        <div className="flex flex-col">
+                                            <span className="text-white/50 text-nowrap">نام کاربری (ایمیل)</span>
+                                            <span className="text-white/50 text-nowrap">رمز عبور</span>
+                                            <span className="text-white/50 text-nowrap"> نام درون بازی</span>
+                                        </div>
+                                        <div className="flex flex-col text-left">
+                                            <span className="text-white">{order?.products[0]?.email}</span>
+                                            <span className="text-white"> {order?.products[0]?.password}</span>
+                                            <span className="text-white">{order?.products[0]?.nameInGame}</span>
+                                        </div>
+                                    </div>
+                                    {order.id !== isAccordionOpen ? (<div onClick={() => {
+                                        toggleOpen(order?.id)
+                                    }} className="flex items-center justify-center gap-x-1 ">
+                                        <EyeIcon />
+                                        <span className="text-white text-[14px] font-bold">بیشتــر ...</span>
+                                    </div>) : ''}
+                                </div>
+                                {order.id === isAccordionOpen &&
+                                    <div className="">
+                                        <div className="w-full py-3 flex flex-col justify-center">
+                                            <div className=" flex text-[#4285F4] font-medium justify-between">
+                                                <span className="xl:text-base">کد تخفیف استفاده شده</span>
+                                                <span className="">{order?.discountCode}</span>
+                                            </div>
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-white/50 text-nowrap">شماره سفارش</span>
+                                                <span className="text-white">{order?.code}</span>
+                                            </div>
+
+                                            <div className=" flex justify-between">
+                                                <span>مبلغ تخفیف</span>
+                                                <span className="xl:text-base text-[#F04242]">{order?.discountAmount}</span>
+                                            </div>
+                                            <div className=" justify-between flex">
+                                                <span className="text-[#FFFFFF]/50 xl:text-base">
+                                                    مبلغ قابل پرداخت
+                                                </span>
+                                                {order?.paidPrice}
+                                            </div>
+                                        </div>
+                                        <Button className="w-full rounded-2xl py-1">
+                                            پرداخت
+                                        </Button>
+                                    </div>
+                                }
+                            </div>
+                        ))}
+
+                    </div>
                     <Pagination
                         totalPages={totalPages}
                         currentPage={page}
