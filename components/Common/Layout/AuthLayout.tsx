@@ -5,7 +5,8 @@ import LeftArrowIcon from "@/components/Common/icons/leftarrowIcon";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import loginLayoutStore from '@/store/loginLayout';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const pathname = usePathname();
@@ -15,6 +16,7 @@ const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
     if (isAuthRoute) {
         return (
+            <>
             <div className="bg-[url(/assets/images/Login-bg.png)] md:w-1/2 mx-auto h-[500px] bg-no-repeat bg-cover bg-center">
                 <div className="flex w-full items-center justify-around pt-14">
                     <div></div>
@@ -41,9 +43,12 @@ const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
                 {children}
             </div>
+            <ToastContainer/>
+            </>
         );
     }
     return (
+        <>
         <div className=" mx-auto h-[500px] md:w-1/2 bg-no-repeat bg-cover bg-center">
             <div className="flex w-full items-center justify-around pt-14">
                 <div></div>
@@ -52,6 +57,9 @@ const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </div>
             {children}
         </div>
+        <ToastContainer/>
+
+        </>
     );
 };
 
