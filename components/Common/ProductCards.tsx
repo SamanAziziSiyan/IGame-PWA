@@ -1,6 +1,6 @@
 import useProductState from "@/store/products";
 import { IProduct } from "@/types";
-import { numberFormat } from "@/utils";
+import { numberFormat, toastAlert } from "@/utils";
 import Image from "next/image";
 
 
@@ -8,8 +8,11 @@ import Image from "next/image";
 const ProductCards = ({ products }: { products: IProduct }) => {
     const { setProductData } = useProductState();
     const handlePreOrder = (productData: IProduct) => {
-        console.log(productData);
         setProductData(productData);
+        const title = productData.titleFa ? productData.titleFa : productData.title;
+        toastAlert({
+            msg: (<span>{title}<br />انتخاب شد</span>), type: "success"
+        });
     }
 
     return (
