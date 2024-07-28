@@ -121,7 +121,7 @@ interface IProductPayment {
 export interface IPayment {
     customerId: number | string,
     amount: number,
-    orderId: string,
+    orderId: string | number,
     callBackUrl: string,
     mobile: string,
     description: string,
