@@ -40,80 +40,81 @@ const AccountForm: React.FC = () => {
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         const productData = productStore?.productData;
-        const productTitle = productData?.titleFa || productData?.title || 'Unknown Product';
-        let formData: IOrderProductData = {
-            callbackUrl: 'http://localhost:3000/dashboard',
-            TotalProductsAmountToman: 0,
-            DiscountAmountToman: 0,
-            WalletAmountToman: 0,
-            PaymentAmountToman: data.price,
-            Mobile: userData?.userName || '',
-            CustomerId: userData?.customerID || 0,
-            DiscountCode: 0,
-            Description: data.description,
-            Ip: '127.0.0.1',
-            Browser: getBrowserInfo().browserName,
-            Device: getDeviceInfo().deviceType,
-            OrderProducts: [
-                {
-                    productId: productData?.id || '0',
-                    quantity: 1,
-                    productUnitAmountToman: data.price || 0,
-                    additionalData: [
+        if (productData != null) {
+            const productTitle = productData?.titleFa || productData?.title || 'Unknown Product';
+            let formData: IOrderProductData = {
+                callbackUrl: 'http://localhost:3000/dashboard',
+                TotalProductsAmountToman: 0,
+                DiscountAmountToman: 0,
+                WalletAmountToman: 0,
+                PaymentAmountToman: data.price,
+                Mobile: userData?.userName || '',
+                CustomerId: userData?.customerID || 0,
+                DiscountCode: 0,
+                Description: data.description,
+                Ip: '127.0.0.1',
+                Browser: getBrowserInfo().browserName,
+                Device: getDeviceInfo().deviceType,
+                OrderProducts: [
+                    {
+                        productId: productData?.id || '0',
+                        quantity: 1,
+                        productUnitAmountToman: data.price || 0,
+                        additionalData: [
+                            {
+                                name: '',
+                                value: '',
+                            }
+                        ],
+                        playerId: 'examplePlayerId',
+                        name: 'exampleProductName',
+                        platform: data.platform || '',
+                        username: data.mobile,
+                        password: data.password,
+                        nameInGame: 'exampleNameInGame',
+                        backupCode: 'exampleBackupCode',
+                        description: data.description,
+                        os: getDeviceInfo().os,
+                        imageUrl: 'http://example.com/image.png',
+                        gmailPassword: 'exampleGmailPassword'
+                    }
+                ]
+            };
+            try {
+                setShowLoading(true);
+                const response = await PreOrderService(formData);
+                if (response) {
+                    setShowLoading(false);
+                    toastAlert({ msg: "سفارش شما ثبت شد در حال هدایت به درگاه پرداخت ...", type: "success" });
+                    const payment = await PaymentService(
                         {
-                            name: '',
-                            value: '',
+                            customerId: userData?.customerID,
+                            amount: 1,
+                            orderId: Math.random(),
+                            callBackUrl: 'http://localhost:3000',
+                            mobile: userData?.userName,
+                            description: data.description,
+                            products: [
+                                {
+                                    quantity: 1,
+                                    title: productTitle,
+                                    amount: 1,
+                                    code: 'string'
+                                }
+                            ],
                         }
-                    ],
-                    playerId: 'examplePlayerId',
-                    name: 'exampleProductName',
-                    platform: data.platform || '',
-                    username: data.mobile,
-                    password: data.password,
-                    nameInGame: 'exampleNameInGame',
-                    backupCode: 'exampleBackupCode',
-                    description: data.description,
-                    os: getDeviceInfo().os,
-                    imageUrl: 'http://example.com/image.png',
-                    gmailPassword: 'exampleGmailPassword'
+                    );
+                    console.log('payment', payment);
+
                 }
-            ]
-        };
-        try {
-            setShowLoading(true);
-            const response = await PreOrderService(formData);
-            if (response) {
+
+            } catch (error) {
                 setShowLoading(false);
-                toastAlert({ msg: "سفارش شما ثبت شد در حال هدایت به درگاه پرداخت ...", type: "success" });
-                // const payment = PaymentService(
-                //     {
-                //         customerId: userData?.customerID,
-                //         amount: 1,
-                //         orderId: response.data,
-                //         callBackUrl: 'string',
-                //         mobile: userData?.userName,
-                //         description: data.description,
-                //         products: [
-                //             {
-                //                 quantity: 1,
-                //                 title: productTitle,
-                //                 amount: 1,
-                //                 code: 'string'
-                //             }
-                //         ],
-                //     }
-                // );
-                // console.log('payment', payment);
-
+                console.log(error);
             }
-
-        } catch (error) {
-            setShowLoading(false);
-            console.log(error);
+        } else {
+            toastAlert({ msg: "ابتدا یک محصول انتخاب کنید", type: "warning" })
         }
-
-
-
     };
 
 
