@@ -1,9 +1,6 @@
 // app/withdrawal/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
-import { checkAuthToken } from "@/utils";
-import { useRouter } from "next/navigation";
 import Withdrawal from "@/components/Withdrawal";
 
 const WithdrawalPage: React.FC = () => {

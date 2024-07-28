@@ -4,7 +4,7 @@ import { FieldValues, UseFormRegister, FieldError, Path } from 'react-hook-form'
 interface CustomInputProps<T extends FieldValues> {
     id: string;
     type?: string;
-    label: string;
+    label?: string;
     value?: string;
     defaultValue?: string;
     register: UseFormRegister<T>;
