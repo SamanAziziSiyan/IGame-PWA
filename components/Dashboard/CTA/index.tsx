@@ -3,7 +3,7 @@ import PlusIcon from "@/components/Common/icons/plus";
 import WalletIcon from "@/components/Common/icons/wallet";
 import WithdrawIcon from "@/components/Common/icons/withdrawIcon";
 import { WalletBalanceService } from "@/services/wallet/wallet";
-import { getUserDataFromLocalStorage } from "@/utils";
+import { getUserDataFromLocalStorage, numberFormat } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -90,7 +90,7 @@ const CTA = () => {
           </div>
           <div className="">
             <span className="text-[#111] xl:text-[34px] text-[22px] font-extrabold">
-              {WalletBalance?.balance}
+              {numberFormat(WalletBalance?.balance)}
             </span>
             <span className="xl:text-[18px] text-[12px] font-semibold text-[#111111]">
               تومان
