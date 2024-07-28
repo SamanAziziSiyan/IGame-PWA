@@ -29,25 +29,22 @@ const PhoneVerify = ({ phoneNumber }: IFormInput) => {
     const sendAgain = async () => {
         try {
             const response = await LoginService(phoneNumber);
-            if (response.data.status != "Success") {
-                if (response?.data?.status == "Error") {
-                    toastAlert({ msg: response.data.errors[0] as string, type: "info" });
-                    return;
-                }
-                throw new Error('خطایی رخ داده است');
-            } else {
-                toastAlert({ msg: "پیامک با موفقیت ارسال شد" as string, type: "success" });
-            }
-        } catch (error: any) {
-            if (error?.response?.status == 401) {
-                toastAlert({ msg: "توکن منقضی شده است: خطای 401" as string })
-                setShowLoading(false);
+
+            if (response.data.status === "Success") {
+                toastAlert({ msg: "پیامک با موفقیت ارسال شد", type: "success" });
                 return;
-            } else {
-                setShowLoading(false);
-                toastAlert({ msg: error?.message as string })
             }
 
+            const errorMsg = response.data.status === "Error" ? response.data.errors[0] : 'خطایی رخ داده است';
+            toastAlert({ msg: errorMsg, type: "info" });
+        } catch (error: any) {
+            const errorMsg = error?.response?.status === 401
+                ? "توکن منقضی شده است: خطای 401"
+                : error?.message || 'خطایی رخ داده است';
+
+            toastAlert({ msg: errorMsg, type: "error" });
+        } finally {
+            setShowLoading(false);
         }
     };
     return (
@@ -90,7 +87,7 @@ const PhoneVerify = ({ phoneNumber }: IFormInput) => {
 
                     <Button className='mt-3 py-[14px] w-full font-semibold rounded-[40px] flex items-center justify-between px-6 text-sm' type='submit'>
                         ثبت درخواست تماس دوباره
-                        <Timer onSendAgain={sendAgain} showReceiveCode={false} showSendAgain={false} />
+                        <Timer duration={60} onSendAgain={sendAgain} showReceiveCode={false} showSendAgain={false} />
                     </Button>
                 </div>
             </form >
