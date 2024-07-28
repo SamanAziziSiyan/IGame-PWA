@@ -11,6 +11,7 @@ import LoginVerify from "./LoginVerify";
 import LoadingIcon from "../Common/icons/loadingIcon";
 import { toastAlert } from "@/utils";
 import useLoginLayoutState from "@/store/loginLayout";
+import { toast } from "react-toastify";
 
 
 interface IFormInput {
@@ -31,35 +32,30 @@ const LoginFrom = () => {
         try {
             setShowLoading(true);
             const response = await LoginService(data.phoneNumber);
-            if (response.data.status != "Success") {
-                if (response?.data?.status == "Error") {
-                    setShowVerify(true);
-                    toastAlert({ msg: response.data.errors[0] as string, type: "info" });
-                    setLoginLayoutState(true);
 
-                    return;
-                }
-                throw new Error('خطایی رخ داده است');
-            } else {
-                setUserPhoneNumber(data.phoneNumber)
+            if (response.data.status === "Success") {
+                toastAlert({ msg: "پیامک با موفقیت ارسال شد", type: "success" });
+                setUserPhoneNumber(data.phoneNumber);
                 setShowVerify(true);
                 setLoginLayoutState(true);
-                toastAlert({ msg: "پیامک با موفقیت ارسال شد" as string, type: "success" });
+            } else {
+                const errorMsg = response?.data?.status === "Error" ? response.data.errors[0] : 'خطایی رخ داده است';
+                toastAlert({ msg: errorMsg, type: "info" });
+                setShowVerify(response?.data?.status === "Error");
+                setLoginLayoutState(true);
             }
         } catch (error: any) {
-            if (error?.response?.status == 401) {
-                toastAlert({ msg: "توکن منقضی شده است: خطای 401" as string })
-                setShowLoading(false);
-                setShowVerify(false);
-                return;
-            } else {
-                setShowLoading(false);
-                toastAlert({ msg: error?.message as string })
-                setShowVerify(false);
-            }
-            setLoginLayoutState(false);
+            const errorMsg = error?.response?.status === 401
+                ? "توکن منقضی شده است: خطای 401"
+                : error?.message || 'خطایی رخ داده است';
 
+            toastAlert({ msg: errorMsg, type: "error" });
+            setShowVerify(false);
+            setLoginLayoutState(false);
+        } finally {
+            setShowLoading(false);
         }
+
     };
     return (
         <div className="container-px ">

@@ -9,27 +9,54 @@ import WithdrawIcon from "../Common/icons/withdrawIcon";
 import Image from "next/image";
 import CustomCheckbox from "../Common/CustomCheckbox";
 import Approval from "./Approval";
+import { IWalletProps } from "@/types";
+import { getUserDataFromLocalStorage, toastAlert } from "@/utils";
+import { debitWalletBalanceService } from "@/services/wallet/wallet";
+import LoadingIcon from "../Common/icons/loadingIcon";
 
 interface IFormInput {
     walletIncreaseAmount: number;
     return: boolean;
+    return1: boolean;
 }
 
 const Withdrawal = () => {
+    const userData = getUserDataFromLocalStorage(); 
+    const [isChecked, setIsChecked] = useState(0);
+    const [showLoading, setShowLoading] = useState(false);
+    const [transactionId, setTransactionId] = useState(0);
     const [isRequestedWalletIncrease, setIsRequestedWalletIncrease] = useState(false)
     const {
         register,
         handleSubmit,
         formState: { errors },
-        watch
+        reset
     } = useForm<IFormInput>();
 
-    const onSubmit: SubmitHandler<IFormInput> = (data) => {
-        console.log(data);
-        setIsRequestedWalletIncrease(true);
+    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+
+        setShowLoading(true);
+        let walletData = {
+            phone: userData?.userName,
+            type: 'debit',
+            amount: data.walletIncreaseAmount,
+            locked: 0,
+            description: 'برداشت موجودی'
+        } as IWalletProps;
+        try {
+            const response = await debitWalletBalanceService(walletData);
+            toastAlert({ msg: response?.data?.message, type: "success" })
+            setShowLoading(false);
+            setIsRequestedWalletIncrease(true);
+            setTransactionId(response?.data?.transaction_id);
+            reset();
+        } catch (error: any) {
+            toastAlert({ msg: error.message })
+            setShowLoading(false);
+            setIsRequestedWalletIncrease(false);
+        }
     };
 
-    const isChecked = watch("return");
 
     return (
         <div className="py-2">
@@ -68,6 +95,13 @@ const Withdrawal = () => {
                                             label="بازگشت پول به این کارت"
                                             register={register}
                                             name="return"
+                                            checked={isChecked == 1 ? true : false}
+                                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                if (e.target.checked)
+                                                    setIsChecked(1);
+                                                else
+                                                    setIsChecked(0)
+                                            }}
                                             validationRules={{ required: 'یک کارت را انتخاب کنید' }}
                                             errors={errors.return}
                                         />
@@ -76,8 +110,10 @@ const Withdrawal = () => {
                                 </div>
                             </div>
                             <div className="flex flex-col">
-                                <Button className='mt-3 py-[14px] font-semibold text-white bg-[#F04242] rounded-[40px]' type='submit'>
+                                <Button className='mt-3 py-[14px] font-semibold text-white bg-[#F04242] rounded-[40px] flex items-center justify-center gap-x-4' type='submit'>
                                     برداشت وجه
+                                    {showLoading && <LoadingIcon className="fill-gray-600" />}
+
                                 </Button>
                                 <Button className='mt-3 py-[14px] font-semibold bg-white rounded-[40px]' type='button'>
                                     مدیریت کارت های بانکی
@@ -85,7 +121,7 @@ const Withdrawal = () => {
                             </div>
                         </form>
                     </div>
-                </div> : <Approval />}
+                </div> : <Approval transactionId={transactionId} />}
 
         </div>
     );
