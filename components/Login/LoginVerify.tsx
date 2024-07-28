@@ -26,6 +26,7 @@ interface LoginVerifyProps {
 
 const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
     const [showLoading, setShowLoading] = useState<boolean>(false);
+    const [TimerDuration, setTimerDuration] = useState<number>(60);
     const LoginLayout = LoginLayoutStore((state) => state.loginLayoutStore);
     const [otp, setOtp] = useState('');
     const router = useRouter();
@@ -53,6 +54,7 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                     "refreshToken": response.data.data.refreshToken,
                     "customerID": response.data.data.customerId
                 }));
+                setTimerDuration(response?.data?.data?.validityDuration);
 
                 router.push('/dashboard');
             }
@@ -66,26 +68,25 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
     const sendAgain = async () => {
         try {
             const response = await LoginService(userPhoneNumber);
-            if (response.data.status != "Success") {
-                if (response?.data?.status == "Error") {
-                    toastAlert({ msg: response.data.errors[0] as string, type: "info" });
-                    return;
-                }
-                throw new Error('خطایی رخ داده است');
-            } else {
-                toastAlert({ msg: "پیامک با موفقیت ارسال شد" as string, type: "success" });
-            }
-        } catch (error: any) {
-            if (error?.response?.status == 401) {
-                toastAlert({ msg: "توکن منقضی شده است: خطای 401" as string })
-                setShowLoading(false);
+
+            if (response.data.status === "Success") {
+                toastAlert({ msg: "پیامک با موفقیت ارسال شد", type: "success" });
                 return;
-            } else {
-                setShowLoading(false);
-                toastAlert({ msg: error?.message as string })
             }
+
+            const errorMsg = response.data.status === "Error" ? response.data.errors[0] : 'خطایی رخ داده است';
+            toastAlert({ msg: errorMsg, type: "info" });
+        } catch (error: any) {
+            const errorMsg = error?.response?.status === 401
+                ? "توکن منقضی شده است: خطای 401"
+                : error?.message || 'خطایی رخ داده است';
+
+            toastAlert({ msg: errorMsg, type: "error" });
+        } finally {
+            setShowLoading(false);
         }
     };
+
 
     const handleOtpChange = (otp: string) => {
         setOtp(otp);
@@ -98,12 +99,12 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
         numInputs: number;
         isInputNum?: boolean;
         renderInput: (props: any) => JSX.Element;
-        separator?: JSX.Element; // Add separator as an optional prop
+        separator?: JSX.Element; 
     }
     interface CustomInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
         placeholder?: string;
     }
-    const renderCustomInput = (props:CustomInputProps) => (
+    const renderCustomInput = (props: CustomInputProps) => (
         <input
             {...props}
             className="otp-input"
@@ -151,7 +152,7 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                         })}
                     />
                     {errors.verificationCode && <span>{errors.verificationCode.message}</span>}
-                    <Timer onSendAgain={sendAgain} showReceiveCode={true} showSendAgain={true} /> {/* Include the Timer component */}
+                    <Timer duration={TimerDuration} onSendAgain={sendAgain} showReceiveCode={true} showSendAgain={true} /> {/* Include the Timer component */}
                     <Button className='mt-3 py-[14px] font-semibold flex items-center justify-center gap-x-4 rounded-[40px]' type='submit'>
                         تایید کد
                         {showLoading && <LoadingIcon className="fill-gray-600" />}

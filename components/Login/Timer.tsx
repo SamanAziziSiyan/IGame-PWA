@@ -8,10 +8,11 @@ interface TimerProps {
     onSendAgain: () => void;
     showSendAgain: boolean;
     showReceiveCode: boolean;
+    duration: number;
 }
 
-const Timer: React.FC<TimerProps> = ({ onSendAgain, showSendAgain, showReceiveCode }) => {
-    const [seconds, setSeconds] = useState<number>(300); // Set the timer duration to 5 minutes (300 seconds)
+const Timer: React.FC<TimerProps> = ({ onSendAgain, showSendAgain, showReceiveCode, duration }) => {
+    const [seconds, setSeconds] = useState<number>(duration); // Set the timer duration to 5 minutes (300 seconds)
     const [isActive, setIsActive] = useState<boolean>(true);
 
     useEffect(() => {
@@ -36,7 +37,7 @@ const Timer: React.FC<TimerProps> = ({ onSendAgain, showSendAgain, showReceiveCo
 
     const handleSendAgain = () => {
         onSendAgain();
-        setSeconds(300);
+        setSeconds(duration);
         setIsActive(true);
     };
 
