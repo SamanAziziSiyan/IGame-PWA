@@ -1,7 +1,9 @@
 import Button from "@/components/Common/Buttons";
+import LoadingIcon from "@/components/Common/icons/loadingIcon";
 import CustomInput from "@/components/Common/InputField";
-import { WalletTransactionsService } from "@/services/wallet/wallet";
-import { getUserDataFromLocalStorage } from "@/utils";
+import { creditWalletBalanceService, WalletTransactionsService } from "@/services/wallet/wallet";
+import { IWalletProps } from "@/types";
+import { getUserDataFromLocalStorage, numberFormat, toastAlert } from "@/utils";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -22,15 +24,33 @@ interface ITransaction {
 const Wallet = () => {
     const userData = getUserDataFromLocalStorage();
     const [Loading, setLoading] = useState(false);
+    const [showLoading, setShowLoading] = useState(false);
     const [WalletTransactions, setWalletTransactions] = useState<ITransaction[]>([]); // Initialize as an array
     const {
         register,
         handleSubmit,
-        formState: { errors }
+        formState: { errors },
+        reset
     } = useForm<IFormInput>();
 
-    const onSubmit: SubmitHandler<IFormInput> = (data) => {
-        console.log(data);
+    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+        setShowLoading(true);
+        let walletData = {
+            phone: userData?.userName,
+            type: 'credit',
+            amount: data.walletAmount,
+            locked: 0,
+            description: 'افزایش موجودی'
+        } as IWalletProps;
+        try {
+            const response = await creditWalletBalanceService(walletData);
+            toastAlert({ msg: response?.data?.message, type: "success" })
+            setShowLoading(false);
+            reset();
+        } catch (error: any) {
+            toastAlert({ msg: error.message })
+            setShowLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -64,8 +84,9 @@ const Wallet = () => {
                             errors={errors.walletAmount}
                             placeholder="مبلغ را به تومان وارد کنید"
                         />
-                        <Button className='mt-3 py-[14px] font-semibold rounded-[40px]' type='submit'>
+                        <Button className='mt-3 py-[14px] font-semibold rounded-[40px]  flex items-center justify-center gap-x-4 ' type='submit'>
                             افزودن موجودی
+                            {showLoading && <LoadingIcon className="fill-gray-600" />}
                         </Button>
                     </div>
                 </form>
@@ -83,7 +104,7 @@ const Wallet = () => {
                                     <span className="text-xs max-[376px]:text-[10px] font-medium text-white/50">شماره پیگیری {transaction.transaction_id}</span>
                                 </div>
                                 <div className="flex flex-col items-center gap-y-1">
-                                    <span className="text-white 3xl:text-[22px] font-semibold text-[14px] max-[376px]:text-[12px]">{transaction.amount} تومان</span>
+                                    <span className="text-white 3xl:text-[22px] font-semibold text-[14px] max-[376px]:text-[12px]">{numberFormat(transaction.amount)} تومان</span>
                                     <Button className="px-2 py-1 rounded-[21px] text-[#111111] text-nowrap text-[12px] max-[376px]:text-[10px] font-semibold">
                                         <span>تکمیل شده</span>
                                     </Button>
