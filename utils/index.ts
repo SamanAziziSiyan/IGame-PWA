@@ -2,15 +2,15 @@ import { TokenRefreshService } from "@/services/auth/login";
 import { ToastPosition, TypeOptions, toast } from "react-toastify";
 import moment from 'moment';
 import 'moment/locale/fa';
-
 interface IToastAlert {
-    msg: string;
+    msg: React.ReactNode;  // Update the type to accept ReactNode
     type?: TypeOptions;
     position?: ToastPosition;
 }
+
 export const toastAlert = ({ msg, type = "error", position = "top-left" }: IToastAlert) => {
     toast(msg, {
-        position: position,
+        position,
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -18,7 +18,7 @@ export const toastAlert = ({ msg, type = "error", position = "top-left" }: IToas
         draggable: true,
         progress: undefined,
         theme: "colored",
-        type: type,
+        type,
     });
 };
 
