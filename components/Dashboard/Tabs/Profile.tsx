@@ -1,7 +1,7 @@
 import Button from "@/components/Common/Buttons";
 import CustomInput from "@/components/Common/InputField";
 import { CustomerProfileService, CustomerProfileUpdateService } from "@/services/customer/customer";
-import { getUserDataFromLocalStorage } from "@/utils";
+import { getUserDataFromLocalStorage, toastAlert } from "@/utils";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -68,10 +68,12 @@ const Profile = () => {
                     verificationCode: null
                 }
             );
-            console.log('profile', response);
+            if (response.data.status === 'Success')
+                toastAlert({ msg: "پروفایل با موفقیت بروزرسانی شد", type: "success" });
 
         } catch (error) {
-            console.log('error:', error);
+            const errorMessage = (error as Error).message || 'An unknown error occurred';
+            toastAlert({ msg: errorMessage });
         }
 
 
@@ -153,11 +155,11 @@ const Profile = () => {
                                 value={profileData.email}
                                 register={register}
                                 validationRules={{
-                                    required: 'ایمیل ضروری است',
-                                    pattern: {
-                                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                                        message: 'ایمیل نامعتبر است'
-                                    }
+                                    // required: 'ایمیل ضروری است',
+                                    // pattern: {
+                                    //     value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                                    //     message: 'ایمیل نامعتبر است'
+                                    // }
                                 }}
                                 errors={errors.email}
                                 placeholder="ایمیل متصل به اکانت شما"
@@ -185,7 +187,7 @@ const Profile = () => {
                             />
 
                         </div>
-                        <Button className='mt-6 py-[14px] px-3 mx-auto max-lg:w-full font-semibold rounded-[40px]' type='submit'>
+                        <Button className='mt-6 py-[14px] px-3 mx-auto w-full font-semibold rounded-[40px]' type='submit'>
                             ثبت درخواست ارتقا سطح
                         </Button>
                     </form>

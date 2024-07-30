@@ -16,10 +16,8 @@ interface IProfileData {
     verificationCode?: null
 }
 
-const CustomerProfileUpdateService = async (CustomerData: IProfileData) => {
-    console.log(CustomerData);
-    
-    return await axiosInstance.put(`/customer`, CustomerData)
+const CustomerProfileUpdateService = async (CustomerData: IProfileData) => {    
+    return await axiosInstance.post(`customer/update`, CustomerData)
 }
 
 
