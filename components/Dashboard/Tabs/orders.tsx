@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BarLoader } from "react-spinners";
+import { statusColors } from "../utils/utils";
 
 interface IOrderProduct {
     backupCode: string;
@@ -133,6 +134,7 @@ const Orders = () => {
 
             {!Loading ? (
                 <>
+                    {/* Desktop */}
                     <div className="lg:flex hidden flex-col gap-4 mt-10">
                         {OrdersData.map((order: IOrdersData, index: number) => (
                             <div key={index} className="flex flex-col bg-white/5 rounded-[17px]">
@@ -173,7 +175,7 @@ const Orders = () => {
                                             <span className="text-white/50 text-nowrap"> مبلـــغ کل</span>
                                             <span className="text-white 3xl:text-[22px] text-[18px]">{order?.products[0]?.price}</span>
                                         </div>
-                                        <Button className="px-4 py-1 rounded-[21px] text-[#111111] text-nowrap font-semibold">
+                                        <Button className={`px-4 py-1 rounded-[21px] text-[#111111] text-nowrap font-semibold ${statusColors[order?.products[0]?.statusText]}`}>
                                             <span>{order?.products[0]?.statusText}</span>
                                         </Button>
                                     </div>
@@ -207,9 +209,11 @@ const Orders = () => {
                                                     </span>
                                                     {order?.paidPrice}
                                                 </span>
-                                                <Button className="xl:w-1/2 rounded-2xl py-1">
-                                                    پرداخت
-                                                </Button>
+                                                {order?.products[0]?.statusText === "در حال ثبت سفارش" &&
+                                                    <Button className="xl:w-1/2 rounded-2xl py-1">
+                                                        پرداخت
+                                                    </Button>
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -217,6 +221,7 @@ const Orders = () => {
                             </div>
                         ))}
                     </div>
+                    {/* Mobile */}
                     <div className="lg:hidden flex flex-col gap-4 mt-10">
                         {OrdersData.map((order: IOrdersData, index: number) => (
                             <div key={index} className="flex flex-col bg-white/5 rounded-[17px]">
@@ -237,7 +242,7 @@ const Orders = () => {
                                             <div className="flex items-center gap-x-3">
                                                 <span className="text-white 3xl:text-[22px] text-[14px]">{order?.products[0]?.price}</span>
                                             </div>
-                                            <Button className="px-4 text-[14px] py-1 rounded-[21px] text-[#111111] text-nowrap font-semibold">
+                                            <Button className={`px-4 py-1 rounded-[21px] text-[#111111] text-nowrap font-semibold ${statusColors[order?.products[0]?.statusText]}`}>
                                                 <span>{order?.products[0]?.statusText}</span>
                                             </Button>
                                         </div>
@@ -285,9 +290,11 @@ const Orders = () => {
                                                 {order?.paidPrice}
                                             </div>
                                         </div>
-                                        <Button className="w-full rounded-2xl py-1">
-                                            پرداخت
-                                        </Button>
+                                        {order?.products[0]?.statusText === "در حال ثبت سفارش" &&
+                                            <Button className="xl:w-1/2 rounded-2xl py-1">
+                                                پرداخت
+                                            </Button>
+                                        }
                                     </div>
                                 }
                             </div>
