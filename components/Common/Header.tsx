@@ -61,7 +61,7 @@ const Header = () => {
 
                                 ) : (<DropdownMenu className='relative' trigger={<button>
                                     <Image
-                                        src="/assets/images/avatar.png"
+                                        src="/assets/images/male-avatar.png"
                                         alt="avatar"
                                         className="max-lg:w-6 max-lg:h-6"
                                         width={40}

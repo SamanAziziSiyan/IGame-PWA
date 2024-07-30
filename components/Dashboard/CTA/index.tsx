@@ -28,7 +28,7 @@ const CTA = () => {
       <div className="bg-[#282828]  rounded-[28px] py-[7px] px-[9px]  lg:hidden flex items-center justify-between">
         <div className="flex items-center gap-x-[18px]">
           <Image
-            src="/assets/images/avatar.png"
+            src="/assets/images/male-avatar.png"
             alt="avatar"
             className="max-xl:w-10 max-xl:h-10"
             width={74}
@@ -47,15 +47,15 @@ const CTA = () => {
             />
           </div>
         </div>
-        <Button className="bg-[#fff] lg:p-2 py-1 px-2 rounded-[22px]">
+        <Link href={'/dashboard/?tab=profile'} className="bg-[#fff] lg:p-2 py-1 px-2 rounded-[22px]">
           <span className="text-[#111] font-semibold lg:text-base text-[12px]">ویــرایش</span>
-        </Button>
+        </Link>
       </div>
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-x-8 gap-y-4 mt-[34px]">
         <div className="bg-[#282828]  rounded-[28px] p-6  lg:flex hidden items-center justify-between">
           <div className="flex items-center gap-x-[18px]">
             <Image
-              src="/assets/images/avatar.png"
+              src="/assets/images/male-avatar.png"
               alt="avatar"
               width={74}
               height={74}
@@ -72,9 +72,9 @@ const CTA = () => {
               />
             </div>
           </div>
-          <Button className="bg-[#fff] p-2 rounded-[22px]">
+          <Link href={'/dashboard/?tab=profile'} className="bg-[#fff] p-2 rounded-[22px]">
             <span className="text-[#111] font-semibold">ویــرایش</span>
-          </Button>
+          </Link>
         </div>
 
         <div className="bg-[#CCFB4B] overflow-hidden relative rounded-[28px] p-6  flex md:flex-row lg:flex-col xl:flex-row flex-col items-center justify-between">
@@ -98,9 +98,11 @@ const CTA = () => {
           </div>
 
           <div className="absolute rounded-full border-[13px] border-[#111111] left-[-9px] top-[-12px]">
-            <div className="bg-white xl:p-3 p-2 rounded-full">
-              <PlusIcon className="max-xl:w-2 max-xl:h-2" />
-            </div>
+            <Link href={'/dashboard/?tab=wallet'}>
+              <div className="bg-white xl:p-3 p-2 rounded-full">
+                <PlusIcon className="max-xl:w-2 max-xl:h-2" />
+              </div>
+            </Link>
           </div>
         </div>
 
