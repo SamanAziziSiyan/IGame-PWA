@@ -4,7 +4,7 @@ import axiosInstance from "../axios"
 const OrderListService = async (CustomerID: number, page: number, ITEMS_PER_PAGE: number) => {
     let offset;
     if (page == 1)
-        offset = 5;
+        offset = 0;
     else
         offset = (page - 1) * ITEMS_PER_PAGE;
     return await axiosInstance.post(`orderlist/customer/${CustomerID}`,
