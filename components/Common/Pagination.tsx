@@ -10,7 +10,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPage
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
     return (
-        <div className="flex items-center justify-center gap-x-[75px] mt-6">
+        <div className="flex items-center justify-center md:gap-x-[75px] gap-x-4 mt-6">
             <div>
                 <button
                     className="md:text-sm text-[10px] font-medium"
