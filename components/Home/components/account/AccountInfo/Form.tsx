@@ -4,10 +4,10 @@ import LoadingIcon from '@/components/Common/icons/loadingIcon';
 import CustomInput from '@/components/Common/InputField';
 import CustomSelect from '@/components/Common/SelectField';
 import { PreOrderService } from '@/services/orders/orders';
-import { PaymentService } from '@/services/Payment/payment';
 import useProductState from '@/store/products';
 import { IOrderProductData } from '@/types';
 import { getBrowserInfo, getDeviceInfo, getUserDataFromLocalStorage, numberFormat, toastAlert } from '@/utils';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -38,16 +38,17 @@ const AccountForm: React.FC = () => {
         formState: { errors }
     } = useForm<IFormInput>();
 
+    let router = useRouter();
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         const productData = productStore?.productData;
         if (productData != null) {
             const productTitle = productData?.titleFa || productData?.title || 'Unknown Product';
             let formData: IOrderProductData = {
                 callbackUrl: 'http://localhost:3000/dashboard',
-                TotalProductsAmountToman: 0,
+                TotalProductsAmountToman: productData.staticPrice,
                 DiscountAmountToman: 0,
                 WalletAmountToman: 0,
-                PaymentAmountToman: data.price,
+                PaymentAmountToman: productData.staticPrice,
                 Mobile: userData?.userName || '',
                 CustomerId: userData?.customerID || 0,
                 DiscountCode: 0,
@@ -59,7 +60,7 @@ const AccountForm: React.FC = () => {
                     {
                         productId: productData?.id || '0',
                         quantity: 1,
-                        productUnitAmountToman: data.price || 0,
+                        productUnitAmountToman: productData.staticPrice || 0,
                         additionalData: [
                             {
                                 name: '',
@@ -80,36 +81,20 @@ const AccountForm: React.FC = () => {
                     }
                 ]
             };
+            
             try {
                 setShowLoading(true);
                 const response = await PreOrderService(formData);
-                if (response) {
+                if (response?.data?.status === 'Success') {
                     setShowLoading(false);
                     toastAlert({ msg: "سفارش شما ثبت شد در حال هدایت به درگاه پرداخت ...", type: "success" });
-                    const payment = await PaymentService(
-                        {
-                            customerId: userData?.customerID,
-                            amount: 1,
-                            orderId: Math.random(),
-                            callBackUrl: 'http://localhost:3000',
-                            mobile: userData?.userName,
-                            description: data.description,
-                            products: [
-                                {
-                                    quantity: 1,
-                                    title: productTitle,
-                                    amount: 1,
-                                    code: 'string'
-                                }
-                            ],
-                        }
-                    );
-                    console.log('payment', payment);
-
+                    router.push(response.data.data);
                 }
 
             } catch (error) {
                 setShowLoading(false);
+                const errorMessage = (error as Error).message || 'An unknown error occurred';
+                toastAlert({ msg: errorMessage });
                 console.log(error);
             }
         } else {
@@ -193,7 +178,7 @@ const AccountForm: React.FC = () => {
                     <div className='flex mt-3 justify-between'>
                         <span className='text-white xl:text-base text-[14px]'>مبلغ پرداختی</span>
                         <div className='flex xl:text-xl text-lg font-bold gap-1'>
-                            <span className='text-[#CCFB4B] '>{productStore.productData == null ? '0' : numberFormat(productStore?.productData?.currentIrtRate)}</span>
+                            <span className='text-[#CCFB4B] '>{productStore.productData == null ? '0' : numberFormat(productStore?.productData?.staticPrice)}</span>
                             <span className='text-white'>تومان</span>
                         </div>
                     </div>
