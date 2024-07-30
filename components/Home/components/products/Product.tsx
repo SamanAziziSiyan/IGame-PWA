@@ -15,7 +15,6 @@ const Product = () => {
                 const response = await ProductsListCategoryService(481);
                 setProductData(response.data);
                 setLoading(false)
-                console.log('products', response);
 
             } catch (error) {
                 setLoading(false);

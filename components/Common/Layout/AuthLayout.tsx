@@ -12,7 +12,6 @@ const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const pathname = usePathname();
     const isAuthRoute = pathname?.startsWith('/login');
     const LoginStore = loginLayoutStore((state) => state.loginLayoutStore);
-    console.log(LoginStore);
 
     if (isAuthRoute) {
         return (
