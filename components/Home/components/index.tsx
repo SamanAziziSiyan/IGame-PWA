@@ -1,5 +1,5 @@
 
-import { HomeProps } from "@/types";
+import { HomeProps } from "../types";
 import Hero from "./Hero";
 import Account from "./account";
 import Comments from "./comments";

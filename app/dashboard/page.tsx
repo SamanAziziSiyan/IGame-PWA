@@ -2,11 +2,8 @@
 
 "use client";
 
-import Dashboard from "@/components/Dashboard";
+import Dashboard from "@/components/Dashboard/components";
 import withAuth from "@/HOC/auth";
-import { checkAuthToken } from "@/utils";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 
 
 const DashboardPage = () => {

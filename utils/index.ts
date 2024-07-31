@@ -1,9 +1,9 @@
-import { TokenRefreshService } from "@/services/auth/login";
+import { LoginService, TokenRefreshService } from "@/services/auth/login";
 import { ToastPosition, TypeOptions, toast } from "react-toastify";
 import moment from 'moment';
 import 'moment/locale/fa';
 interface IToastAlert {
-    msg: React.ReactNode;  // Update the type to accept ReactNode
+    msg: React.ReactNode;
     type?: TypeOptions;
     position?: ToastPosition;
 }
@@ -58,7 +58,24 @@ export const getUserDataFromLocalStorage = (): IUserData => {
     return { customerID: 0, token: '', refreshToken: '', userName: '' };
 };
 
+export const sendAgain = async (userPhoneNumber: string) => {
+    try {
+        const response = await LoginService(userPhoneNumber);
 
+        if (response.data.status === "Success") {
+            toastAlert({ msg: "پیامک با موفقیت ارسال شد", type: "success" });
+            return;
+        }
+        const errorMsg = response.data.status === "Error" ? response.data.errors[0] : 'خطایی رخ داده است';
+        toastAlert({ msg: errorMsg, type: "info" });
+    } catch (error: any) {
+        const errorMsg = error?.response?.status === 401
+            ? "توکن منقضی شده است: خطای 401"
+            : error?.message || 'خطایی رخ داده است';
+
+        toastAlert({ msg: errorMsg, type: "error" });
+    }
+};
 
 
 export const logout = (): void => {
@@ -106,75 +123,8 @@ export const getRelativeTime = (dateString: string): string => {
 
 
 
-export const getBrowserInfo = () => {
-    const userAgent = navigator.userAgent;
-    let browserName = 'Unknown';
-
-    if (userAgent.indexOf('Firefox') > -1) {
-        browserName = 'Mozilla Firefox';
-    } else if (userAgent.indexOf('Opera') > -1 || userAgent.indexOf('OPR') > -1) {
-        browserName = 'Opera';
-    } else if (userAgent.indexOf('Trident') > -1) {
-        browserName = 'Microsoft Internet Explorer';
-    } else if (userAgent.indexOf('Edge') > -1) {
-        browserName = 'Microsoft Edge';
-    } else if (userAgent.indexOf('Chrome') > -1) {
-        browserName = 'Google Chrome';
-    } else if (userAgent.indexOf('Safari') > -1) {
-        browserName = 'Apple Safari';
-    }
-
-    return {
-        browserName,
-        userAgent,
-    };
-};
-
-export const getDeviceInfo = () => {
-    const userAgent = navigator.userAgent;
-
-    // Determine the device type
-    const isMobile = /Mobi|Android/i.test(userAgent);
-    const isTablet = /Tablet|iPad/i.test(userAgent);
-    const isDesktop = !isMobile && !isTablet;
-
-    let deviceType = 'Unknown';
-    if (isMobile) {
-        deviceType = 'Mobile';
-    } else if (isTablet) {
-        deviceType = 'Tablet';
-    } else if (isDesktop) {
-        deviceType = 'Desktop';
-    }
-
-    // Determine the operating system
-    let os = 'Unknown';
-    if (userAgent.indexOf('Win') > -1) {
-        os = 'Windows';
-    } else if (userAgent.indexOf('Mac') > -1) {
-        os = 'MacOS';
-    } else if (userAgent.indexOf('X11') > -1) {
-        os = 'UNIX';
-    } else if (userAgent.indexOf('Linux') > -1) {
-        os = 'Linux';
-    } else if (/Android/i.test(userAgent)) {
-        os = 'Android';
-    } else if (/iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream) {
-        os = 'iOS';
-    }
-
-    return {
-        deviceType,
-        os,
-        userAgent,
-    };
-};
 
 
 
-export const maskAuthorName = (name: string) => {
-    if (name.length <= 4) {
-        return name + '****';
-    }
-    return name.slice(0, -4) + '****';
-}
+
+

@@ -1,4 +1,4 @@
-import { IProduct } from '@/types';
+import { IProduct } from '@/components/Home/types';
 import { create } from 'zustand';
 
 

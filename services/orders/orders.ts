@@ -1,4 +1,4 @@
-import { IOrderProductData } from "@/types";
+import { IOrderProductData } from "@/components/Home/types";
 import axiosInstance from "../axios"
 
 const OrderListService = async (CustomerID: number, page: number, ITEMS_PER_PAGE: number) => {

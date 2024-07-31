@@ -1,26 +1,16 @@
 "use client"
-import Button from "@/components/Common/Buttons";
+import Button from "@/components/Common/components/Buttons";
 import DislikeIcon from "@/components/Common/icons/dislikeIcon";
 import LikeIcon from "@/components/Common/icons/likeIcon";
 import MessageIcon from "@/components/Common/icons/messageIcon";
 import PipeIcon from "@/components/Common/icons/pipeIcon";
 import UserIcon from "@/components/Common/icons/userIcon";
 import { CommentsService } from "@/services/comments/comments";
-import { getRelativeTime, maskAuthorName, stripHtml } from "@/utils";
+import { getRelativeTime, stripHtml } from "@/utils";
 import { useEffect, useState } from "react";
-import { BarLoader } from "react-spinners";
-
-interface ICommentContent {
-    rendered: string,
-}
-interface ICommentData {
-    author_name: string,
-    content: ICommentContent,
-    date: string,
-    id: number,
-    liked: boolean;
-    disliked: boolean;
-}
+import { maskAuthorName } from "../../utils";
+import { ICommentData } from "../../types";
+import { ContentLoading } from "@/components/Common/components/ContentLoading";
 
 const Comments = () => {
     const [commentData, setCommentData] = useState<ICommentData[]>([]);
@@ -104,10 +94,7 @@ const Comments = () => {
                         ))}
                     </div>
                 ) : (
-                    <div className="h-[50vh] min-h-[50vh] w-full flex flex-col gap-y-4 items-center justify-center py-6">
-                        <BarLoader width={100} color="white" />
-                        در حال بارگزاری
-                    </div>
+                    <ContentLoading />
                 )}
             </div>
             <div className={`text-white ${commentData.length > visibleCount ? '' : 'hidden'} xl:text-base text-[12px] text-center w-full underline py-4 font-bold cursor-pointer`} onClick={handleShowMore}>

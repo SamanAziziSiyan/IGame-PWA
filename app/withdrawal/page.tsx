@@ -1,7 +1,7 @@
 // app/withdrawal/page.tsx
 "use client";
 
-import Withdrawal from "@/components/Withdrawal";
+import Withdrawal from "@/components/Withdrawal/components";
 
 const WithdrawalPage: React.FC = () => {
     // let router = useRouter();

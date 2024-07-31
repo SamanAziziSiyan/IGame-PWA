@@ -1,7 +1,7 @@
 // app/login/page.tsx
 "use client";
 
-import LoginForm from "@/components/Login/LoginForm";
+import LoginForm from "@/components/Login/components/LoginForm";
 import AuthLayout from "./layout";
 import { useEffect, useState } from "react";
 import { checkAuthToken } from "@/utils";
@@ -20,7 +20,7 @@ const LoginPage: React.FC = () => {
             }
         }
         checkUserLogin();
-    }, []);
+    });
     if (!isLoggedIn) return null;
     return (
         <LoginForm />

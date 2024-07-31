@@ -2,7 +2,7 @@
 
 "use client";
 
-import Auth from "@/components/Login/auth";
+import Auth from "@/components/Login/components/auth";
 import { checkAuthToken } from "@/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,7 +20,7 @@ const LoginPage = () => {
             }
         }
         checkUserLogin();
-    }, []);
+    });
     if (!isLoggedIn) return null;
     return (
         <Auth />

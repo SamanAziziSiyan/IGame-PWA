@@ -1,22 +1,17 @@
 "use client";
-import Button from '@/components/Common/Buttons';
-import LoadingIcon from '@/components/Common/icons/loadingIcon';
-import CustomInput from '@/components/Common/InputField';
-import CustomSelect from '@/components/Common/SelectField';
+import Button from '@/components/Common/components/Buttons';
+import CustomInput from '@/components/Common/components/InputField';
+import CustomSelect from '@/components/Common/components/SelectField';
 import { PreOrderService } from '@/services/orders/orders';
 import useProductState from '@/store/products';
-import { IOrderProductData } from '@/types';
-import { getBrowserInfo, getDeviceInfo, getUserDataFromLocalStorage, numberFormat, toastAlert } from '@/utils';
+import { getUserDataFromLocalStorage, numberFormat, toastAlert } from '@/utils';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-
-const svgIcon = `
-<svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1.20926 1.80237L6.79065 7.38376L12.372 1.80237" stroke="white" strokeWidth="1.86047" strokeLinecap="round" strokeLinejoin="round"/>
-</svg>
-
-`;
+import { IOrderProductData } from '@/components/Home/types';
+import { getBrowserInfo, getDeviceInfo } from '@/components/Home/utils';
+import SelectArrowIcon from '@/components/Common/icons/SelectArrowIcon';
+import { ButtonLoading } from '@/components/Common/icons/ButtonLoading';
 
 interface IFormInput {
     mobile: string;
@@ -81,7 +76,7 @@ const AccountForm: React.FC = () => {
                     }
                 ]
             };
-            
+
             try {
                 setShowLoading(true);
                 const response = await PreOrderService(formData);
@@ -121,16 +116,8 @@ const AccountForm: React.FC = () => {
                             { value: 'اکتیویژن1', label: 'اکتیویژن' },
                             { value: 'اکتیویژن2', label: 'اکتیویژن' },
                         ]}
-                        svgIcon={svgIcon}
+                        svgIcon={<SelectArrowIcon />}
                     />
-                    {/* <CustomInput
-                        id="price"
-                        type="hidden"
-                        value={productStore.productData == null ? '0' : productData?.currentIrtRate}
-                        name="price"
-                        register={register}
-                        errors={errors.price}
-                    /> */}
                     <CustomInput
                         id="mobile"
                         type="text"
@@ -184,7 +171,7 @@ const AccountForm: React.FC = () => {
                     </div>
                     <Button className='mt-3 py-[14px] xl:text-base text-[14px] font-semibold rounded-[40px] flex items-center justify-center gap-x-2' type='submit'>
                         تایید نهایی و ثبت سفارش
-                        {showLoading && <LoadingIcon className="fill-gray-600" />}
+                        {showLoading && <ButtonLoading />}
 
                     </Button>
                 </div>
