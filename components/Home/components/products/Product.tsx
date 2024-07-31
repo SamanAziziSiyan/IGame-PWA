@@ -1,9 +1,9 @@
 "use client";
-import ProductCards from '@/components/Common/components/ProductCards';
+import ProductCards from '@/components/Common/components/Products/ProductCards';
 import { ProductsListCategoryService } from '@/services/products/products';
 import { useEffect, useState } from 'react';
 import { IProduct } from '../../types';
-import { ContentLoading } from '@/components/Common/components/ContentLoading';
+import { ContentLoading } from '@/components/Common/components/Loading/ContentLoading';
 
 const Product = () => {
     const [productData, setProductData] = useState<IProduct[]>([]);

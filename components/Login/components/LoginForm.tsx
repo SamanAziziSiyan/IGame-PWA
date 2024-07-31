@@ -1,14 +1,14 @@
 // components/Login.tsx
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import CustomInput from "../../Common/components/InputField";
-import Button from "../../Common/components/Buttons";
+import CustomInput from "@/components/Common/components/FormInputs/InputField";
+import Button from "../../Common/components/Elements/Buttons";
 import Image from "next/image";
 import InfoIcon from "../../Common/icons/infoIcon";
 import { LoginService } from "@/services/auth/login";
 import { useState } from "react";
 import LoginVerify from "./LoginVerify";
-import { ButtonLoading } from "../../Common/icons/ButtonLoading";
+import { ButtonLoading } from "../../Common/components/Loading/ButtonLoading";
 import { toastAlert } from "@/utils";
 import { toast } from "react-toastify";
 import useLoginLayoutState from "@/store/loginLayout";

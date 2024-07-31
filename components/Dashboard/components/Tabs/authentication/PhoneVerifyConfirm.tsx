@@ -1,12 +1,7 @@
 // components/authentication.tsx
 
-import Button from "@/components/Common/components/Buttons";
-import CustomInput from "@/components/Common/components/InputField";
-import Alert from "@/components/Common/components/alert";
+import Button from "@/components/Common/components/Elements/Buttons";
 import PhoneConfirmIcon from "@/components/Common/icons/PhoneConfirmIcon";
-import ApprovalIcon from "@/components/Common/icons/approvalIcon";
-import WarningIcon from "@/components/Common/icons/warningicon";
-import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 interface IFormInput {

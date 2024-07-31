@@ -3,7 +3,7 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
-import Header from "@/components/Common/components/Header";
+import Header from "@/components/Common/components/Header/Header";
 import Footer from "@/components/Common/components/Footer";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

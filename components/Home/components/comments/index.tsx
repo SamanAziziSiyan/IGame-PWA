@@ -1,5 +1,5 @@
 "use client"
-import Button from "@/components/Common/components/Buttons";
+import Button from "@/components/Common/components/Elements/Buttons";
 import DislikeIcon from "@/components/Common/icons/dislikeIcon";
 import LikeIcon from "@/components/Common/icons/likeIcon";
 import MessageIcon from "@/components/Common/icons/messageIcon";
@@ -10,7 +10,7 @@ import { getRelativeTime, stripHtml } from "@/utils";
 import { useEffect, useState } from "react";
 import { maskAuthorName } from "../../utils";
 import { ICommentData } from "../../types";
-import { ContentLoading } from "@/components/Common/components/ContentLoading";
+import { ContentLoading } from "@/components/Common/components/Loading/ContentLoading";
 
 const Comments = () => {
     const [commentData, setCommentData] = useState<ICommentData[]>([]);

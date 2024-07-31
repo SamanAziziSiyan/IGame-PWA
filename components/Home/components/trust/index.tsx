@@ -1,6 +1,6 @@
 // components/trust.tsx
 
-import Button from "@/components/Common/components/Buttons";
+import Button from "@/components/Common/components/Elements/Buttons";
 import CallIcon from "@/components/Common/icons/callIcon";
 import DeliveryIcon from "@/components/Common/icons/deliveryIcon";
 import EnmadIcon from "@/components/Common/icons/enmadIcon";

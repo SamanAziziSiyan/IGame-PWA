@@ -2,8 +2,8 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import CustomInput from "@/components/Common/components/InputField"; // Adjust import path if necessary
-import Button from "@/components/Common/components/Buttons"; // Adjust import path if necessary
+import CustomInput from "@/components/Common/components/FormInputs/InputField";
+import Button from "@/components/Common/components/Elements/Buttons"; // Adjust import path if necessary
 import { OtpVerificationService } from "@/services/auth/login";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -13,8 +13,8 @@ import LoginLayoutStore from "@/store/loginLayout"
 import authStore from "@/store/auth";
 import OTPInput from "react-otp-input";
 import { CustomInputProps, LoginVerifyProps } from "../types";
-import { ButtonLoading } from "@/components/Common/icons/ButtonLoading";
 import useLoginLayoutState from "@/store/loginLayout";
+import { ButtonLoading } from "@/components/Common/components/Loading/ButtonLoading";
 
 interface IFormInput {
     userName: string;

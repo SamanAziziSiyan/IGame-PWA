@@ -1,4 +1,4 @@
-import Button from "@/components/Common/components/Buttons";
+import Button from "@/components/Common/components/Elements/Buttons";
 import PhoneIcon from "@/components/Common/icons/phone";
 import PlusIcon from "@/components/Common/icons/plus";
 import WalletIcon from "@/components/Common/icons/wallet";

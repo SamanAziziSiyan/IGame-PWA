@@ -1,7 +1,7 @@
 // components/Common/CustomCheckbox.tsx
 import React from 'react';
 import {FieldValues } from 'react-hook-form';
-import { CustomCheckboxProps } from '../types';
+import { CustomCheckboxProps } from '../../types';
 
 
 const CustomCheckbox = <T extends FieldValues>({

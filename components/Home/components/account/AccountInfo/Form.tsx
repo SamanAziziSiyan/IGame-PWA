@@ -3,17 +3,16 @@ import React, { useState, ChangeEvent } from 'react';
 import { useForm, SubmitHandler, FieldError } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 
-import Button from '@/components/Common/components/Buttons';
-import CustomInput from '@/components/Common/components/InputField';
-import CustomSelect from '@/components/Common/components/SelectField';
+import Button from '@/components/Common/components/Elements/Buttons';
 import SelectArrowIcon from '@/components/Common/icons/SelectArrowIcon';
-import { ButtonLoading } from '@/components/Common/icons/ButtonLoading';
-
+import { ButtonLoading } from "@/components/Common/components/Loading/ButtonLoading";
 import { PreOrderService } from '@/services/orders/orders';
 import useProductState from '@/store/products';
 import { numberFormat, toastAlert } from '@/utils';
 import { platformFieldsAndRules } from '@/components/Home/utils/platformFormConfig';
 import { createOrderFormData } from '@/components/Home/utils/orderUtils';
+import CustomSelect from '@/components/Common/components/FormInputs/SelectField';
+import CustomInput from '@/components/Common/components/FormInputs/InputField';
 
 interface IFormInput {
     mobile: string;

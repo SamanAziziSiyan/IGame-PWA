@@ -1,7 +1,7 @@
-import Button from "@/components/Common/components/Buttons";
+import Button from "@/components/Common/components/Elements/Buttons";
 import CloseAccordionIcon from "@/components/Common/icons/closeAccordionIcon";
 import EyeIcon from "@/components/Common/icons/Eye";
-import Pagination from "@/components/Common/components/Pagination";
+import Pagination from "@/components/Common/components/Elements/Pagination";
 import { DashboardOrderStatisticsService, OrderListService } from "@/services/orders/orders";
 import { getUserDataFromLocalStorage } from "@/utils";
 import Image from "next/image";
@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { statusColors } from "../../utils";
 import { IOrdersData } from "../types";
-import { ContentLoading } from "@/components/Common/components/ContentLoading";
+import { ContentLoading } from "@/components/Common/components/Loading/ContentLoading";
 
 
 
@@ -59,7 +59,7 @@ const Orders = () => {
                 const orders = await OrderListService(userData?.customerID, page, ITEMS_PER_PAGE);
                 const responseData: ApiResponse = orders.data;
                 if (responseData.status === 'Success') {
-                    setOrdersData(responseData.data); // Set data as an array
+                    setOrdersData(responseData.data); 
                     setTotalPages(Math.ceil(responseData.totalItems / ITEMS_PER_PAGE));
                 } else {
                     console.error('Failed to fetch order data:', responseData.errors);

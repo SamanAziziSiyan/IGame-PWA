@@ -1,14 +1,14 @@
 // components/authentication.tsx
 
-import Button from "@/components/Common/components/Buttons";
-import CustomCheckbox from "@/components/Common/components/CustomCheckbox";
-import CustomInput from "@/components/Common/components/InputField";
-import Alert from "@/components/Common/components/alert";
+import Button from "@/components/Common/components/Elements/Buttons";
+import CustomInput from "@/components/Common/components/FormInputs/InputField";
+import Alert from "@/components/Common/components/Elements/alert";
 import WarningIcon from "@/components/Common/icons/warningicon";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import CustomCheckbox from "@/components/Common/components/FormInputs/CustomCheckbox";
 
 interface IFormInput {
     walletAmount: number;

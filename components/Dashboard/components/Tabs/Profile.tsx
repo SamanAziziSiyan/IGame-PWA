@@ -1,12 +1,12 @@
-import Button from "@/components/Common/components/Buttons";
-import CustomInput from "@/components/Common/components/InputField";
+import Button from "@/components/Common/components/Elements/Buttons";
 import { CustomerProfileService, CustomerProfileUpdateService } from "@/services/customer/customer";
 import { getUserDataFromLocalStorage, toastAlert } from "@/utils";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IProfileData } from "../types";
-import { ContentLoading } from "@/components/Common/components/ContentLoading";
+import { ContentLoading } from "@/components/Common/components/Loading/ContentLoading";
+import CustomInput from "@/components/Common/components/FormInputs/InputField";
 
 
 interface ApiResponse {

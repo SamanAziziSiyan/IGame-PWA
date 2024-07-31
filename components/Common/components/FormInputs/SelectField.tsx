@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import { FieldError, FieldValues } from 'react-hook-form';
-import { CustomSelectProps } from '../types';
+import { CustomSelectProps } from '../../types';
 
 const CustomSelect = <T extends FieldValues>({
     id,

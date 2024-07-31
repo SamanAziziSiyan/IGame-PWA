@@ -1,6 +1,6 @@
 // components/Pagination.tsx
 
-import { PaginationProps } from "../types";
+import { PaginationProps } from "../../types";
 
 const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPageChange }) => {
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);

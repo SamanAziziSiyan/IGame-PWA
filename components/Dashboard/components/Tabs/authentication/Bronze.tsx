@@ -1,8 +1,8 @@
 // components/authentication.tsx
 
-import Button from "@/components/Common/components/Buttons";
-import CustomInput from "@/components/Common/components/InputField";
-import Alert from "@/components/Common/components/alert";
+import Button from "@/components/Common/components/Elements/Buttons";
+import Alert from "@/components/Common/components/Elements/alert";
+import CustomInput from "@/components/Common/components/FormInputs/InputField";
 import WarningIcon from "@/components/Common/icons/warningicon";
 import { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";

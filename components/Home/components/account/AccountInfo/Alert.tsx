@@ -1,4 +1,4 @@
-import Alert from "@/components/Common/components/alert";
+import Alert from "@/components/Common/components/Elements/alert";
 import WarningIcon from "@/components/Common/icons/warningicon";
 
 const AccountAlert = () => {

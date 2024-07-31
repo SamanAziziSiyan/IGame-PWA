@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Button from "../../Common/components/Buttons";
+import Button from "../../Common/components/Elements/Buttons";
 import Link from "next/link";
 
 const Auth = () => {

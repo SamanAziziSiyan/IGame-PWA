@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FieldValues } from 'react-hook-form';
-import { CustomInputProps } from '../types';
+import { CustomInputProps } from '../../types';
 
 
 

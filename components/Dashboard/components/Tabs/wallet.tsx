@@ -1,14 +1,14 @@
-import Button from "@/components/Common/components/Buttons";
-import CustomInput from "@/components/Common/components/InputField";
+import Button from "@/components/Common/components/Elements/Buttons";
 import { creditWalletBalanceService, WalletTransactionsService } from "@/services/wallet/wallet";
 import { getUserDataFromLocalStorage, numberFormat, toastAlert } from "@/utils";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ITransaction } from "../types";
-import { ContentLoading } from "@/components/Common/components/ContentLoading";
-import { ButtonLoading } from "@/components/Common/icons/ButtonLoading";
+import { ContentLoading } from "@/components/Common/components/Loading/ContentLoading";
+import { ButtonLoading } from "@/components/Common/components/Loading/ButtonLoading";
 import { IWalletProps } from "@/types";
+import CustomInput from "@/components/Common/components/FormInputs/InputField";
 
 interface IFormInput {
     walletAmount: number;

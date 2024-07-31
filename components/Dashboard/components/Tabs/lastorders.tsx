@@ -1,6 +1,6 @@
 // components/LastOrders.tsx
 
-import Button from "@/components/Common/components/Buttons";
+import Button from "@/components/Common/components/Elements/Buttons";
 import CloseAccordionIcon from "@/components/Common/icons/closeAccordionIcon";
 import EyeIcon from "@/components/Common/icons/Eye";
 import { LastOrderListService, OrderListService } from "@/services/orders/orders";
@@ -9,7 +9,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { statusColors } from "../../utils";
 import { IOrderProduct } from "../types";
-import { ContentLoading } from "@/components/Common/components/ContentLoading";
+import { ContentLoading } from "@/components/Common/components/Loading/ContentLoading";
 
 interface ILastOrdersData {
     id: string;

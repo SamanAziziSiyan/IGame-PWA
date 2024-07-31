@@ -3,16 +3,16 @@
 
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Button from "../../Common/components/Buttons";
-import CustomInput from "../../Common/components/InputField";
+import Button from "../../Common/components/Elements/Buttons";
+import CustomInput from "@/components/Common/components/FormInputs/InputField";
 import WithdrawIcon from "../../Common/icons/withdrawIcon";
 import Image from "next/image";
-import CustomCheckbox from "../../Common/components/CustomCheckbox";
 import Approval from "./Approval";
 import { getUserDataFromLocalStorage, toastAlert } from "@/utils";
 import { debitWalletBalanceService } from "@/services/wallet/wallet";
-import  { ButtonLoading } from "../../Common/icons/ButtonLoading";
+import  { ButtonLoading } from "../../Common/components/Loading/ButtonLoading";
 import { IWalletProps } from "@/types";
+import CustomCheckbox from "@/components/Common/components/FormInputs/CustomCheckbox";
 
 interface IFormInput {
     walletIncreaseAmount: number;
