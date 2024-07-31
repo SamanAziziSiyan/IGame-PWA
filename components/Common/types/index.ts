@@ -1,5 +1,5 @@
-import { UseFormRegister, FieldError, Path, FieldValues } from 'react-hook-form';
-import React, { ReactNode } from 'react';
+import { UseFormRegister, FieldError, Path, FieldValues, Merge, FieldErrorsImpl } from 'react-hook-form';
+import React, { ChangeEvent, ReactNode } from 'react';
 
 export interface CustomCheckboxProps<T extends FieldValues> {
     id: string;
@@ -31,10 +31,11 @@ export interface CustomSelectProps<T extends FieldValues> {
     register: UseFormRegister<T>;
     name: Path<T>;
     validationRules?: Record<string, any>;
-    errors?: FieldError;
+    errors?: FieldError | Merge<FieldError, FieldErrorsImpl<any>>;
     options: { value: string; label: string }[];
     className?: string;
     svgIcon: React.ReactNode;
+    onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;  // Added onChange prop
 }
 
 export interface PaginationProps {

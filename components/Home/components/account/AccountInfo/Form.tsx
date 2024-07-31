@@ -1,31 +1,32 @@
 "use client";
+import React, { useState, ChangeEvent } from 'react';
+import { useForm, SubmitHandler, FieldError } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+
 import Button from '@/components/Common/components/Buttons';
 import CustomInput from '@/components/Common/components/InputField';
 import CustomSelect from '@/components/Common/components/SelectField';
-import { PreOrderService } from '@/services/orders/orders';
-import useProductState from '@/store/products';
-import { getUserDataFromLocalStorage, numberFormat, toastAlert } from '@/utils';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { IOrderProductData } from '@/components/Home/types';
-import { getBaseUrl, getBrowserInfo, getDeviceInfo } from '@/components/Home/utils';
 import SelectArrowIcon from '@/components/Common/icons/SelectArrowIcon';
 import { ButtonLoading } from '@/components/Common/icons/ButtonLoading';
+
+import { PreOrderService } from '@/services/orders/orders';
+import useProductState from '@/store/products';
+import { numberFormat, toastAlert } from '@/utils';
+import { platformFieldsAndRules } from '@/components/Home/utils/platformFormConfig';
+import { createOrderFormData } from '@/components/Home/utils/orderUtils';
 
 interface IFormInput {
     mobile: string;
     password: string;
     description: string;
     platform: string;
-    price: number;
+    [key: string]: any;
 }
 
 const AccountForm: React.FC = () => {
     const productStore = useProductState(state => state.productStore);
     const [showLoading, setShowLoading] = useState<boolean>(false);
-
-    const userData = getUserDataFromLocalStorage();
+    const [selectedPlatform, setSelectedPlatform] = useState<string>('اکانت اکتیویژن');
 
     const {
         register,
@@ -34,52 +35,15 @@ const AccountForm: React.FC = () => {
     } = useForm<IFormInput>();
 
     let router = useRouter();
+
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         const productData = productStore?.productData;
         if (productData != null) {
-            const productTitle = productData?.titleFa || productData?.title || 'Unknown Product';
-            let formData: IOrderProductData = {
-                callbackUrl: getBaseUrl() + '/dashboard',
-                TotalProductsAmountToman: productData.staticPrice,
-                DiscountAmountToman: 0,
-                WalletAmountToman: 0,
-                PaymentAmountToman: productData.staticPrice,
-                Mobile: userData?.userName || '',
-                CustomerId: userData?.customerID || 0,
-                DiscountCode: 0,
-                Description: data.description,
-                Ip: '127.0.0.1',
-                Browser: getBrowserInfo().browserName,
-                Device: getDeviceInfo().deviceType,
-                OrderProducts: [
-                    {
-                        productId: productData?.id || '0',
-                        quantity: 1,
-                        productUnitAmountToman: productData.staticPrice || 0,
-                        additionalData: [
-                            {
-                                name: '',
-                                value: '',
-                            }
-                        ],
-                        playerId: 'examplePlayerId',
-                        name: 'exampleProductName',
-                        platform: data.platform || '',
-                        username: data.mobile,
-                        password: data.password,
-                        nameInGame: 'exampleNameInGame',
-                        backupCode: 'exampleBackupCode',
-                        description: data.description,
-                        os: getDeviceInfo().os,
-                        imageUrl: 'http://example.com/image.png',
-                        gmailPassword: 'exampleGmailPassword'
-                    }
-                ]
-            };
+            const preOrderData = createOrderFormData(productData, data);
 
             try {
                 setShowLoading(true);
-                const response = await PreOrderService(formData);
+                const response = await PreOrderService(preOrderData);
                 if (response?.data?.status === 'Success') {
                     setShowLoading(false);
                     toastAlert({ msg: "سفارش شما ثبت شد در حال هدایت به درگاه پرداخت ...", type: "success" });
@@ -90,19 +54,19 @@ const AccountForm: React.FC = () => {
                 setShowLoading(false);
                 const errorMessage = (error as Error).message || 'An unknown error occurred';
                 toastAlert({ msg: errorMessage });
-                console.log(error);
             }
         } else {
             toastAlert({ msg: "ابتدا یک محصول انتخاب کنید", type: "warning" })
         }
     };
 
+    const handlePlatformChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        setSelectedPlatform(e.target.value);
+    };
 
     return (
         <div className="lg:col-span-7 xl:order-1 order-2 col-span-12 w-full">
             <form onSubmit={handleSubmit(onSubmit)}>
-
-
                 <div className='grid lg:grid-cols-2 grid-cols-1 lg:gap-[14px] gap-[10px] items-center justify-center'>
                     <CustomSelect
                         id="platform"
@@ -112,12 +76,13 @@ const AccountForm: React.FC = () => {
                         validationRules={{ required: 'platform is required' }}
                         errors={errors.platform}
                         options={[
-                            { value: 'اکتیویژن', label: 'اکتیویژن' },
-                            { value: 'اکتیویژن1', label: 'اکتیویژن' },
-                            { value: 'اکتیویژن2', label: 'اکتیویژن' },
+                            { value: 'اکانت اکتیویژن', label: 'اکانت اکتیویژن' },
+                            { value: 'فیسبوک', label: 'فیسبوک' },
                         ]}
                         svgIcon={<SelectArrowIcon />}
+                        onChange={handlePlatformChange}
                     />
+
                     <CustomInput
                         id="mobile"
                         type="text"
@@ -135,22 +100,6 @@ const AccountForm: React.FC = () => {
                         placeholder="موبایل متصل به اکانت شما"
                     />
                     <CustomInput
-                        id="password"
-                        type="password"
-                        label="رمز عبور*"
-                        name="password"
-                        register={register}
-                        validationRules={{
-                            required: 'رمز عبور ضروری می‌باشد',
-                            minLength: {
-                                value: 8,
-                                message: 'رمز عبور حتما باید 8 کاراکتر باشد'
-                            }
-                        }}
-                        errors={errors.password}
-                        placeholder="رمز عبور اکانت شما"
-                    />
-                    <CustomInput
                         id="description"
                         type="text"
                         label="توضیحات"
@@ -159,6 +108,20 @@ const AccountForm: React.FC = () => {
                         errors={errors.description}
                         placeholder="توضیحات"
                     />
+                    {selectedPlatform && platformFieldsAndRules[selectedPlatform]?.map(field => (
+                        <CustomInput
+                            key={field.id}
+                            id={field.id}
+                            type={field.type}
+                            label={field.label}
+                            name={field.id}
+                            register={register}
+                            validationRules={field.validationRules}
+                            errors={errors[field.id] as FieldError}
+                            placeholder={field.placeholder}
+                        />
+                    ))}
+
                     <div className='lg:hidden flex text-[13px] font-medium mt-5'>
                         ثبت سفارش به معنی  <span className='text-white font-bold'> موافقت با قوانین </span>  است.
                     </div>
@@ -172,11 +135,10 @@ const AccountForm: React.FC = () => {
                     <Button className='mt-3 py-[14px] xl:text-base text-[14px] font-semibold rounded-[40px] flex items-center justify-center gap-x-2' type='submit'>
                         تایید نهایی و ثبت سفارش
                         {showLoading && <ButtonLoading />}
-
                     </Button>
                 </div>
-            </form >
-        </div >
+            </form>
+        </div>
     );
 };
 

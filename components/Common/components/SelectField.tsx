@@ -1,8 +1,6 @@
-import React from 'react';
-import { FieldValues } from 'react-hook-form';
+import React, { ChangeEvent } from 'react';
+import { FieldError, FieldValues } from 'react-hook-form';
 import { CustomSelectProps } from '../types';
-
-
 
 const CustomSelect = <T extends FieldValues>({
     id,
@@ -14,12 +12,20 @@ const CustomSelect = <T extends FieldValues>({
     options,
     className = '',
     svgIcon,
+    onChange,
 }: CustomSelectProps<T>) => {
+    const errorMessage = errors && (errors as FieldError)?.message ? (errors as FieldError).message : '';
+
     return (
         <div className={`custom-select-wrapper ${className}`}>
             <label htmlFor={id}>{label}</label>
             <div className="custom-select-container">
-                <select id={id} {...register(name, validationRules)} className="custom-select bg-white/15 border border-white/50 rounded-lg p-[14px]">
+                <select
+                    id={id}
+                    {...register(name, validationRules)}
+                    className="custom-select bg-white/15 border border-white/50 rounded-lg p-[14px]"
+                    onChange={onChange}
+                >
                     {options.map((option) => (
                         <option key={option.value} value={option.value}>
                             {option.label}
@@ -27,7 +33,7 @@ const CustomSelect = <T extends FieldValues>({
                     ))}
                 </select>
                 <span className="custom-select-icon">{svgIcon}</span>
-                {errors && <p>{errors.message}</p>}
+                {errorMessage && <p>{errorMessage}</p>}
             </div>
         </div>
     );
