@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IOrderProductData } from '@/components/Home/types';
-import { getBrowserInfo, getDeviceInfo } from '@/components/Home/utils';
+import { getBaseUrl, getBrowserInfo, getDeviceInfo } from '@/components/Home/utils';
 import SelectArrowIcon from '@/components/Common/icons/SelectArrowIcon';
 import { ButtonLoading } from '@/components/Common/icons/ButtonLoading';
 
@@ -39,7 +39,7 @@ const AccountForm: React.FC = () => {
         if (productData != null) {
             const productTitle = productData?.titleFa || productData?.title || 'Unknown Product';
             let formData: IOrderProductData = {
-                callbackUrl: 'http://localhost:3000/dashboard',
+                callbackUrl: getBaseUrl() + '/dashboard',
                 TotalProductsAmountToman: productData.staticPrice,
                 DiscountAmountToman: 0,
                 WalletAmountToman: 0,
