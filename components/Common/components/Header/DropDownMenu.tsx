@@ -1,7 +1,7 @@
 // components/DropdownMenu/DropdownMenu.tsx
 
 import React, { useState, useRef, useEffect, ReactNode } from 'react';
-import { DropdownMenuProps } from '../types';
+import { DropdownMenuProps } from '../../types';
 
 
 
