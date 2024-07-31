@@ -12,15 +12,20 @@ import LogoutIcon from '../icons/logoutIcon';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import authStore from '@/store/auth';
+import useLoginLayoutState from '@/store/loginLayout';
 
 const Header = () => {
     const AuthStore = authStore((state) => state.userStore);
-
+    const { loginLayoutStore, setLoginLayoutState } = useLoginLayoutState((state) => ({
+        loginLayoutStore: state.loginLayoutStore,
+        setLoginLayoutState: state.setLoginLayoutState,
+    }));
     const router = useRouter();
     const [isLogin, setIsLogin] = useState(false);
     const handelLogout = () => {
         logout();
         setIsLogin(false);
+        setLoginLayoutState(false, false)
         router.push('/login');
     }
 

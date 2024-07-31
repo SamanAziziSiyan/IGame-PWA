@@ -10,8 +10,9 @@ import { useState } from "react";
 import LoginVerify from "./LoginVerify";
 import { ButtonLoading } from "../../Common/icons/ButtonLoading";
 import { toastAlert } from "@/utils";
-import useLoginLayoutState from "@/store/loginLayout";
 import { toast } from "react-toastify";
+import useLoginLayoutState from "@/store/loginLayout";
+import LoginRouteLayout from "@/app/auth/layout";
 
 
 interface IFormInput {
@@ -21,12 +22,16 @@ const LoginFrom = () => {
     const [showVerify, setShowVerify] = useState<boolean>(false);
     const [showLoading, setShowLoading] = useState<boolean>(false);
     const [userPhoneNumber, setUserPhoneNumber] = useState<string>('');
+    const { loginLayoutStore, setLoginLayoutState } = useLoginLayoutState((state) => ({
+        loginLayoutStore: state.loginLayoutStore,
+        setLoginLayoutState: state.setLoginLayoutState,
+    }));
+    const { isShowVerifyForm } = loginLayoutStore;
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm<IFormInput>();
-    const { setLoginLayoutState } = useLoginLayoutState();
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
@@ -37,12 +42,12 @@ const LoginFrom = () => {
                 toastAlert({ msg: "پیامک با موفقیت ارسال شد", type: "success" });
                 setUserPhoneNumber(data.phoneNumber);
                 setShowVerify(true);
-                setLoginLayoutState(true);
+                setLoginLayoutState(true, true);
             } else {
                 const errorMsg = response?.data?.status === "Error" ? response.data.errors[0] : 'خطایی رخ داده است';
                 toastAlert({ msg: errorMsg, type: "info" });
                 setShowVerify(response?.data?.status === "Error");
-                setLoginLayoutState(true);
+                setLoginLayoutState(true, true);
             }
         } catch (error: any) {
             const errorMsg = error?.response?.status === 401
@@ -51,7 +56,7 @@ const LoginFrom = () => {
 
             toastAlert({ msg: errorMsg, type: "error" });
             setShowVerify(false);
-            setLoginLayoutState(false);
+            setLoginLayoutState(false, false);
         } finally {
             setShowLoading(false);
         }
@@ -60,7 +65,7 @@ const LoginFrom = () => {
     return (
         <div className="container-px ">
 
-            {!showVerify &&
+            {(!showVerify || !isShowVerifyForm) &&
                 <div className="mt-11">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className='grid grid-cols-1 mx-auto gap-[14px] items-center justify-center'>
@@ -102,7 +107,7 @@ const LoginFrom = () => {
                     </form >
                 </div>
             }
-            {showVerify && <LoginVerify userPhoneNumber={userPhoneNumber} />}
+            {(showVerify && isShowVerifyForm) && <LoginVerify userPhoneNumber={userPhoneNumber} />}
         </div>
     );
 };

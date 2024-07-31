@@ -12,9 +12,9 @@ import Timer from "./Timer";
 import LoginLayoutStore from "@/store/loginLayout"
 import authStore from "@/store/auth";
 import OTPInput from "react-otp-input";
-import Link from "next/link";
 import { CustomInputProps, LoginVerifyProps } from "../types";
 import { ButtonLoading } from "@/components/Common/icons/ButtonLoading";
+import useLoginLayoutState from "@/store/loginLayout";
 
 interface IFormInput {
     userName: string;
@@ -31,6 +31,9 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
     const [showLoading, setShowLoading] = useState<boolean>(false);
     const [TimerDuration, setTimerDuration] = useState<number>(60);
     const LoginLayout = LoginLayoutStore((state) => state.loginLayoutStore);
+    const { setLoginLayoutState } = useLoginLayoutState((state) => ({
+        setLoginLayoutState: state.setLoginLayoutState,
+    }));
     const [otp, setOtp] = useState('');
     const router = useRouter();
 
@@ -41,6 +44,11 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
         formState: { errors }
     } = useForm<IFormInput>();
     const { setAuthData } = authStore();
+
+    const handleNumberChange = () => {
+        setLoginLayoutState(false, false);
+        router.push('/login');
+    };
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
@@ -121,9 +129,11 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                         تایید کد
                         {showLoading && <ButtonLoading />}
                     </Button>
-                    <Link href='/login' className='mt-3 py-[14px] text-center bg-white font-semibold rounded-[40px] flex items-center justify-center gap-x-2'>
+                    <Button onClick={() => {
+                        handleNumberChange()
+                    }} className='mt-3 py-[14px] text-center bg-white font-semibold rounded-[40px] flex items-center justify-center gap-x-2'>
                         تغییر شماره
-                    </Link>
+                    </Button>
                 </div>
             </form>
         </div>
