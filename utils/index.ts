@@ -2,6 +2,7 @@ import { LoginService, TokenRefreshService } from "@/services/auth/login";
 import { ToastPosition, TypeOptions, toast } from "react-toastify";
 import moment from 'moment';
 import 'moment/locale/fa';
+import { isAxiosError } from "axios";
 interface IToastAlert {
     msg: React.ReactNode;
     type?: TypeOptions;
@@ -37,7 +38,11 @@ export const checkAuthToken = async (): Promise<boolean> => {
             return false;
         }
     } catch (error) {
-        return false;
+        if (isAxiosError(error) && error.response?.status === 401) {
+            return false;
+        } else {
+            return false;
+        }
     }
 };
 
@@ -120,6 +125,11 @@ export const getRelativeTime = (dateString: string): string => {
     const date = moment(dateString);
     return date.fromNow();
 }
+
+export const emitRedirect = (path: string) => {
+    const event = new CustomEvent<string>('router-redirect', { detail: path });
+    window.dispatchEvent(event);
+};
 
 
 

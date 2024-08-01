@@ -8,11 +8,13 @@ import SelectArrowIcon from '@/components/Common/icons/SelectArrowIcon';
 import { ButtonLoading } from "@/components/Common/components/Loading/ButtonLoading";
 import { PreOrderService } from '@/services/orders/orders';
 import useProductState from '@/store/products';
-import { numberFormat, toastAlert } from '@/utils';
+import { checkAuthToken, numberFormat, toastAlert } from '@/utils';
 import { platformFieldsAndRules } from '@/components/Home/utils/platformFormConfig';
 import { createOrderFormData } from '@/components/Home/utils/orderUtils';
 import CustomSelect from '@/components/Common/components/FormInputs/SelectField';
 import CustomInput from '@/components/Common/components/FormInputs/InputField';
+import useAuthStore from '@/store/auth';
+import { isAxiosError } from 'axios';
 
 interface IFormInput {
     mobile: string;
@@ -26,6 +28,8 @@ const AccountForm: React.FC = () => {
     const productStore = useProductState(state => state.productStore);
     const [showLoading, setShowLoading] = useState<boolean>(false);
     const [selectedPlatform, setSelectedPlatform] = useState<string>('اکانت اکتیویژن');
+    const [isLogin, setIsLogin] = useState(false);
+
 
     const {
         register,
@@ -37,6 +41,8 @@ const AccountForm: React.FC = () => {
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         const productData = productStore?.productData;
+        const { userStore } = useAuthStore.getState();
+
         if (productData != null) {
             const preOrderData = createOrderFormData(productData, data);
 
@@ -51,12 +57,23 @@ const AccountForm: React.FC = () => {
 
             } catch (error) {
                 setShowLoading(false);
-                const errorMessage = (error as Error).message || 'An unknown error occurred';
-                toastAlert({ msg: errorMessage });
+                if (isAxiosError(error)) {
+                    if (error.response?.status === 401) {
+                        toastAlert({ msg: "برای خرید، لطفاً دوباره وارد حساب کاربری خود شوید", type: "info" });
+                    } else {
+                        const errorMessage = error.message || 'خطای ناشناس';
+                        toastAlert({ msg: errorMessage });
+                    }
+                } else {
+                    toastAlert({ msg: 'خطایی رخ داده است' });
+                    setShowLoading(false);
+
+                }
             }
         } else {
             toastAlert({ msg: "ابتدا یک محصول انتخاب کنید", type: "warning" })
         }
+
     };
 
     const handlePlatformChange = (e: ChangeEvent<HTMLSelectElement>) => {
