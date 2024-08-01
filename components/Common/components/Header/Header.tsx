@@ -5,23 +5,26 @@ import Image from 'next/image';
 import NotificationIcon from '../../icons/notification';
 import AccountIcon from '../../icons/account';
 import ShopIcon from '../../icons/shopIcon';
-import { checkAuthToken, logout } from '@/utils';
+import { checkAuthToken, getUserDataFromLocalStorage, logout } from '@/utils';
 import { useEffect, useState } from 'react';
-import authStore from '@/store/auth';
 import { NotificationDropDown } from './NotficationDropdown';
 import { AccountDropDown } from './AccountDropDown';
+import useAuthStore from '@/store/auth';
 
 const Header = () => {
-    const AuthStore = authStore((state) => state.userStore);
+    const { userStore, setAuthData } = useAuthStore();
     const [isLogin, setIsLogin] = useState(false);
+    const userData = getUserDataFromLocalStorage();
 
     useEffect(() => {
         const checkUserLoggedIn = async () => {
             let isUserLoggedIn = await checkAuthToken();
             setIsLogin(isUserLoggedIn);
+            const userPhoneNumber = userData?.userName;
+            setAuthData({ userPhoneNumber }, true);
         }
         checkUserLoggedIn();
-    }, []);
+    },[]);
     return (
         <header className="bg-black text-white container-px py-4 shadow-md h-[91px] flex items-center">
             <div className="container flex justify-between items-center">
@@ -43,7 +46,7 @@ const Header = () => {
                             </Link>
                         </li>
                         <li>
-                            {!isLogin ?
+                            {!isLogin || userStore.isLoggedIn ?
                                 (<Link href="/auth">
                                     <AccountIcon className='max-lg:w-4 max-lg:h-4' />
                                 </Link>
