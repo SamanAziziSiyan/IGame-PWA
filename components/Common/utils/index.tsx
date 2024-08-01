@@ -20,3 +20,16 @@ export const scrollIntoSection = (element: HTMLElement | null) => {
         element.scrollIntoView({ behavior: 'smooth' });
     }
 }
+
+export const extractNumbersFromTitle = (title: string): string[] => {
+    const regex = /\d{2,}(?!\$)/g; 
+    const matches: string[] = [];
+    let match;
+
+    while ((match = regex.exec(title)) !== null) {
+        matches.push(match[0]); 
+    }
+
+    return matches;
+};
+
