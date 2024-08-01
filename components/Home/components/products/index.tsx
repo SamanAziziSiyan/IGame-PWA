@@ -7,7 +7,7 @@ const Products = () => {
     return (
         <>
             <FilterCategories />
-            <SpecialOffers />
+            {/* <SpecialOffers /> */}
             <Product />
         </>
     );
