@@ -20,11 +20,13 @@ const Header = () => {
         const checkUserLoggedIn = async () => {
             let isUserLoggedIn = await checkAuthToken();
             setIsLogin(isUserLoggedIn);
-            const userPhoneNumber = userData?.userName;
+
+            const userPhoneNumber = userData?.userName || '';
             setAuthData({ userPhoneNumber }, true);
         }
+
         checkUserLoggedIn();
-    });
+    }, [userData, setAuthData]);
     return (
         <header className="bg-black text-white container-px py-4 shadow-md h-[91px] flex items-center">
             <div className="container flex justify-between items-center">
