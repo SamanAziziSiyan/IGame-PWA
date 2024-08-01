@@ -48,11 +48,11 @@ export const NotificationDropDown = () => {
             }
             className="relative"
         >
-            <div className="absolute left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-200 z-50">
+            <div className="absolute md:left-0 -left-8 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-200 z-50">
                 <div className="p-4 border-b border-gray-200">
                     <h3 className="text-base font-semibold text-[#111] flex items-center justify-between">
                         اعلانات
-                        <NotificationIcon color="#111" size={20} className="max-lg:w-2 max-lg:h-2" />
+                        <NotificationIcon color="#111" size={20} className="max-lg:w-4 max-lg:h-4" />
                     </h3>
                 </div>
                 <div className="max-h-60 overflow-y-auto">
