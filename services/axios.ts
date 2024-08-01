@@ -1,4 +1,5 @@
-import axios, { AxiosInstance } from 'axios';
+import { toastAlert } from '@/utils';
+import axios, { AxiosError, AxiosInstance } from 'axios';
 
 const getToken = (): string | null => {
     if (typeof window !== 'undefined') {
@@ -7,7 +8,6 @@ const getToken = (): string | null => {
             try {
                 return JSON.parse(userData).token;
             } catch (error) {
-                console.error('Error parsing user data from local storage', error);
                 return null;
             }
         }
@@ -24,14 +24,12 @@ const axiosInstance: AxiosInstance = axios.create({
     }
 });
 
-// Add a request interceptor to set the Authorization header dynamically
 axiosInstance.interceptors.request.use(
     config => {
         const token = getToken();
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
         }
-        console.log('Request Interceptor:', config);
         return config;
     },
     error => {
@@ -41,10 +39,12 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
     response => {
-        console.log('Response Interceptor:', response);
         return response;
     },
-    error => {
+    (error: AxiosError) => {
+        if (error.code === 'ECONNABORTED') {
+            toastAlert({ msg: 'زمان پردازش به پایان رسید، لطفا دوباره امتحان کنید.', type: 'error' });
+        }
         return Promise.reject(error);
     }
 );
