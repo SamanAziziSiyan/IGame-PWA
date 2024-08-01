@@ -1,13 +1,9 @@
 import { LoginService, TokenRefreshService } from "@/services/auth/login";
-import { ToastPosition, TypeOptions, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import moment from 'moment';
 import 'moment/locale/fa';
 import { isAxiosError } from "axios";
-interface IToastAlert {
-    msg: React.ReactNode;
-    type?: TypeOptions;
-    position?: ToastPosition;
-}
+import { IToastAlert, IUserData } from "@/types";
 
 export const toastAlert = ({ msg, type = "error", position = "top-left" }: IToastAlert) => {
     toast(msg, {
@@ -22,7 +18,6 @@ export const toastAlert = ({ msg, type = "error", position = "top-left" }: IToas
         type,
     });
 };
-
 
 export const checkAuthToken = async (): Promise<boolean> => {
     let userData: IUserData = getUserDataFromLocalStorage();
@@ -46,12 +41,6 @@ export const checkAuthToken = async (): Promise<boolean> => {
     }
 };
 
-interface IUserData {
-    customerID: number;
-    token: string;
-    refreshToken: string;
-    userName: string;
-}
 export const getUserDataFromLocalStorage = (): IUserData => {
     if (typeof window !== "undefined") {
         const userData = localStorage.getItem('UserData');
@@ -82,13 +71,10 @@ export const sendAgain = async (userPhoneNumber: string) => {
     }
 };
 
-
 export const logout = (): void => {
     localStorage.removeItem("UserData");
     toastAlert({ msg: "با موفقیت خارج شدید", type: "success" });
 };
-
-
 
 export function numberFormat(
     input: number | string,
@@ -126,10 +112,6 @@ export const getRelativeTime = (dateString: string): string => {
     return date.fromNow();
 }
 
-export const emitRedirect = (path: string) => {
-    const event = new CustomEvent<string>('router-redirect', { detail: path });
-    window.dispatchEvent(event);
-};
 
 
 

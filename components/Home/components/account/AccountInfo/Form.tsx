@@ -81,7 +81,7 @@ const AccountForm: React.FC = () => {
     };
 
     return (
-        <div id='accountForm' className="lg:col-span-7 xl:order-1 order-2 col-span-12 w-full">
+        <div className="lg:col-span-7 xl:order-1 order-2 col-span-12 w-full">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='grid lg:grid-cols-2 grid-cols-1 lg:gap-[14px] gap-[10px] items-center justify-center'>
                     <CustomSelect
