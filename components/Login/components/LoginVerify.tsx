@@ -17,7 +17,6 @@ import useLoginLayoutState from "@/store/loginLayout";
 import { ButtonLoading } from "@/components/Common/components/Loading/ButtonLoading";
 
 interface IFormInput {
-    userName: string;
     verificationCode: string;
 }
 const renderCustomInput = (props: CustomInputProps) => (
@@ -53,7 +52,7 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
             setShowLoading(true);
-            const response = await OtpVerificationService(data.userName, data.verificationCode);
+            const response = await OtpVerificationService(userPhoneNumber, data.verificationCode);
             if (response.data.status !== "Success" || response.data.joinedErrors !== '') {
                 throw new Error(response.data.joinedErrors);
             } else {
@@ -90,7 +89,7 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                         <h3 className='font-bold text-xl'>تایید شماره همراه</h3>
                         <span className='font-normal text-[14px] '>کد ارسالی به شماره {userPhoneNumber} را وارد کنید</span>
                     </div>
-                    <CustomInput
+                    {/* <CustomInput
                         id="userName"
                         type="text"
                         label="نام کاربری*"
@@ -101,7 +100,7 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                         }}
                         errors={errors.userName}
                         placeholder="نام کاربری شما"
-                    />
+                    /> */}
                     <label htmlFor="verificationCode">کد ارسالی*</label>
                     <div className="otp-input-container">
                         <OTPInput
