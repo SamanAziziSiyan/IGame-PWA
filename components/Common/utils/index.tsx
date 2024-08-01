@@ -14,3 +14,9 @@ export const getNotificationIcon = (status: string) => {
             return null;
     }
 };
+
+export const scrollIntoSection = (element: HTMLElement | null) => {
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+    }
+}
