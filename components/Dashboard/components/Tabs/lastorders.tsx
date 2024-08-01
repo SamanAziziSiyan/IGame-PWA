@@ -53,7 +53,6 @@ const LastOrders = () => {
                     console.error('Failed to fetch profile data:', responseData.errors);
                 }
             } catch (err) {
-                console.log(err);
 
             } finally {
                 setLoading(false)

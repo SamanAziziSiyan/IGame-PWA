@@ -65,7 +65,6 @@ const Orders = () => {
                     console.error('Failed to fetch order data:', responseData.errors);
                 }
             } catch (err) {
-                console.log(err);
             } finally {
                 setLoading(false);
             }

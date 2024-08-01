@@ -43,7 +43,6 @@ const Profile = () => {
     });
 
     const onSubmit: SubmitHandler<IProfileData> = async (data) => {
-        console.log('data:', data);
         try {
             const response = await CustomerProfileUpdateService(
                 {

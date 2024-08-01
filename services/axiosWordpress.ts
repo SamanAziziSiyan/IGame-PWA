@@ -11,7 +11,6 @@ const axiosInstanceWordpress: AxiosInstance = axios.create({
 
 axiosInstanceWordpress.interceptors.request.use(
     config => {
-        console.log('Request Interceptor:', config);
         return config;
     },
     error => {
@@ -21,7 +20,6 @@ axiosInstanceWordpress.interceptors.request.use(
 
 axiosInstanceWordpress.interceptors.response.use(
     response => {
-        console.log('Response Interceptor:', response);
         return response;
     },
     error => {
