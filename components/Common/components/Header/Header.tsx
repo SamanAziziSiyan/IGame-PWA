@@ -24,7 +24,7 @@ const Header = () => {
             setAuthData({ userPhoneNumber }, true);
         }
         checkUserLoggedIn();
-    },[]);
+    });
     return (
         <header className="bg-black text-white container-px py-4 shadow-md h-[91px] flex items-center">
             <div className="container flex justify-between items-center">
