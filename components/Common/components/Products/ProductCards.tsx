@@ -2,15 +2,20 @@ import { IProduct } from "@/components/Home/types";
 import useProductState from "@/store/products";
 import { numberFormat, toastAlert } from "@/utils";
 import Image from "next/image";
+import { scrollIntoSection } from "../../utils";
 
 const ProductCards = ({ products }: { products: IProduct }) => {
     const { setProductData } = useProductState();
+
     const handlePreOrder = (productData: IProduct) => {
+        const accountFormElement = document.getElementById('accountForm');
+
         setProductData(productData);
         const title = productData.titleFa ? productData.titleFa : productData.title;
         toastAlert({
             msg: (<span>{title}<br />انتخاب شد</span>), type: "success"
         });
+        scrollIntoSection(accountFormElement);
     }
 
     return (
