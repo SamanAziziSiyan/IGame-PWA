@@ -22,14 +22,20 @@ export const scrollIntoSection = (element: HTMLElement | null) => {
 }
 
 export const extractNumbersFromTitle = (title: string): string[] => {
-    const regex = /\d{2,}(?!\$)/g; 
+    const regex = /\d+(\.\d+)?/g;
     const matches: string[] = [];
     let match;
 
     while ((match = regex.exec(title)) !== null) {
-        matches.push(match[0]); 
+        const number = match[0];
+
+        if (number.length === 1) {
+            continue;
+        }
+
+        const formattedNumber = number.includes('.') ? `${number}$` : `${number} CP`;
+        matches.push(formattedNumber);
     }
 
     return matches;
 };
-
