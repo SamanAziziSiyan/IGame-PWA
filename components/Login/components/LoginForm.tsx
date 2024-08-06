@@ -99,10 +99,10 @@ const LoginFrom = () => {
                                     <ButtonLoading />
                                 }
                             </Button>
-                            <Button className='mt-3 py-[14px] bg-white font-semibold rounded-[40px] flex items-center justify-center gap-x-2' type='submit'>
+                            {/*<Button className='mt-3 py-[14px] bg-white font-semibold rounded-[40px] flex items-center justify-center gap-x-2' type='submit'>
                                 <Image src={'/assets/images/SSO Icon.png'} width={24} height={24} alt="" />
                                 ورود با ایمیـــــــــل
-                            </Button>
+                            </Button>*/}
                         </div>
                     </form >
                 </div>

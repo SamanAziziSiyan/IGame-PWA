@@ -21,7 +21,7 @@ const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     <div className="flex w-full items-center justify-around pt-14">
                         <div></div>
                         <Image src='/assets/images/Call-of-duty-white.png' alt="Call-of-duty-white" width={105} height={19} />
-                        <Link href='/auth'>
+                        <Link href='/'>
                             <LeftArrowIcon className="bg-white/30 rounded-full cursor-pointer w-8 h-8 p-1 self-end	" />
                         </Link>
                     </div>
