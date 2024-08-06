@@ -38,7 +38,7 @@ const Header = () => {
                 </div>
                 <nav>
                     <ul className="flex gap-x-4 items-stretch">
-                        <li className='relative'>
+                        {/* <li className='relative'>
                             <div className='bg-red-600 rounded-full w-2 h-2 absolute top-0 left-[2px]'></div>
                             <NotificationDropDown />
                         </li>
@@ -46,10 +46,10 @@ const Header = () => {
                             <Link href="/shop">
                                 <ShopIcon className='max-lg:w-4 max-lg:h-4' />
                             </Link>
-                        </li>
+                        </li> */}
                         <li>
                             {(!isLogin || !userStore.isLoggedIn) ?
-                                (<Link href="/auth">
+                                (<Link href="/login">
                                     <AccountIcon className='max-lg:w-4 max-lg:h-4' />
                                 </Link>
 
