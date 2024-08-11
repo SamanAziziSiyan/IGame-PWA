@@ -78,7 +78,12 @@ const Product: FC<ProductProps> = ({ selectedCategory }) => {
                 setFilteredData(productData.filter(product =>
                     product.titleFa.includes('New Soldier') || product.titleFa.includes('New Solider') 
                 ));
+            }else if (selectedCategory === 'Double CP') {
+                setFilteredData(productData.filter(product =>
+                    product.titleFa.includes('دوبل')
+                ));
             }
+            
         };
         filterProducts();
     }, [selectedCategory, productData]);
