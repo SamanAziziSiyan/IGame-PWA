@@ -8,13 +8,13 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ setSelectedCategory }) =>
     const categories = [
         { name: 'همه', value: 'all' },
         { name: 'سیپی', value: 'cp' },
+        { name: 'سی پی دوبل', value: 'Double CP' },
         { name: 'آفر', value: 'offer' },
         { name: 'بتل پس', value: 'Battle Pass' },
         { name: 'سوپلای پس', value: 'Supply Pass' },
         { name: 'باندل', value: 'bundle' },
         { name: 'بازگشت به بازی', value: 'Welcome Back' },
         { name: 'اکانت تازه ساخت', value: 'New Soldier' },
-        { name: 'سی پی دوبل', value: 'Double CP' },
     ];
 
     const [activeCategory, setActiveCategory] = useState<string>('all');
