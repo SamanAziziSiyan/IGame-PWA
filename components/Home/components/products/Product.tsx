@@ -58,6 +58,26 @@ const Product: FC<ProductProps> = ({ selectedCategory }) => {
                 setFilteredData(productData.filter(product =>
                     product.titleFa.includes('آفر')
                 ));
+            } else if (selectedCategory === 'Battle Pass') {
+                setFilteredData(productData.filter(product =>
+                    product.titleFa.includes('بتل پس')
+                ));
+            } else if (selectedCategory === 'Supply Pass') {
+                setFilteredData(productData.filter(product =>
+                    product.titleFa.includes('Supply Pass')
+                ));
+            } else if (selectedCategory === 'bundle') {
+                setFilteredData(productData.filter(product =>
+                    product.titleFa.includes('باندل')
+                ));
+            }else if (selectedCategory === 'Welcome Back') {
+                setFilteredData(productData.filter(product =>
+                    product.titleFa.includes('Welcome Back') || product.titleFa.includes('بازگشت به بازی')
+                ));
+            }else if (selectedCategory === 'New Soldier') {
+                setFilteredData(productData.filter(product =>
+                    product.titleFa.includes('New Soldier') || product.titleFa.includes('New Solider') 
+                ));
             }
         };
         filterProducts();
