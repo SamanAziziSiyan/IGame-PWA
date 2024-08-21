@@ -13,6 +13,7 @@ const CustomSelect = <T extends FieldValues>({
     className = '',
     svgIcon,
     onChange,
+    value,
 }: CustomSelectProps<T>) => {
     const errorMessage = errors && (errors as FieldError)?.message ? (errors as FieldError).message : '';
 
@@ -25,6 +26,7 @@ const CustomSelect = <T extends FieldValues>({
                     {...register(name, validationRules)}
                     className="custom-select bg-white/15 border border-white/50 rounded-lg p-[14px]"
                     onChange={onChange}
+                    value={value}
                 >
                     {options.map((option) => (
                         <option key={option.value} value={option.value}>

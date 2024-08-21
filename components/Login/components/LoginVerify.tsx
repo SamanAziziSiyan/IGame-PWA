@@ -15,6 +15,8 @@ import OTPInput from "react-otp-input";
 import { CustomInputProps, LoginVerifyProps } from "../types";
 import useLoginLayoutState from "@/store/loginLayout";
 import { ButtonLoading } from "@/components/Common/components/Loading/ButtonLoading";
+import useProductState from "@/store/products";
+import { scrollIntoSection } from "@/components/Common/utils";
 
 interface IFormInput {
     verificationCode: string;
@@ -27,6 +29,7 @@ const renderCustomInput = (props: CustomInputProps) => (
     />
 );
 const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
+    const productStore = useProductState(state => state.productStore);
     const [showLoading, setShowLoading] = useState<boolean>(false);
     const [TimerDuration, setTimerDuration] = useState<number>(60);
     const LoginLayout = LoginLayoutStore((state) => state.loginLayoutStore);
@@ -50,6 +53,7 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
     };
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+        const productData = productStore?.productData;
         try {
             setShowLoading(true);
             const response = await OtpVerificationService(userPhoneNumber, data.verificationCode);
@@ -65,8 +69,11 @@ const LoginVerify = ({ userPhoneNumber }: LoginVerifyProps) => {
                     "customerID": response.data.data.customerId
                 }));
                 setTimerDuration(response?.data?.data?.validityDuration);
-
-                router.push('/dashboard');
+                if (productData != null) {
+                    router.push('/#accountForm');
+                } else {
+                    router.push('/');
+                }
             }
         } catch (error: any) {
             toastAlert({ msg: error?.message || "خطایی رخ داده است", type: "error" });

@@ -36,6 +36,7 @@ export interface CustomSelectProps<T extends FieldValues> {
     className?: string;
     svgIcon: React.ReactNode;
     onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;  // Added onChange prop
+    value?: string;
 }
 
 export interface PaginationProps {
