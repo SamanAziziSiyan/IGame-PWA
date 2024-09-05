@@ -25,7 +25,7 @@ const ProductCards = ({ products }: { products: IProduct }) => {
             handlePreOrder(products)
         }} className='col-span-1 cursor-pointer border-white/30 border bg-[url(/assets/images/product-bg.png)] items-center flex justify-center flex-col rounded-xl relative'>
             <div className=''>
-                <Image src="/assets/images/product.png" alt="IGame product" width={141} height={149} className="rounded -mt-6 w-full" />
+                <Image src="/assets/images/product.png" alt="Irancp product" width={141} height={149} className="rounded -mt-6 w-full" />
             </div>
             <div className='flex flex-col rounded-b-xl items-center pt-2 gap-1 bg-black/20 backdrop-blur-md h-full w-full'>
                 <span style={{direction:'ltr'}} className="md:text-[18px] text-[15px] font-black text-white">{numbersString ? numbersString : '‌'}</span>

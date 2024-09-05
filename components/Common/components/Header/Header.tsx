@@ -33,7 +33,7 @@ const Header = () => {
                 <div className="flex items-center gap-x-4">
                     {/* Add Logo Image */}
                     <Link href='/'>
-                        <Image src="/assets/images/logo.png" alt="IGame Logo" width={100} height={50} className="rounded" />
+                        <Image src="/assets/images/logo.png" alt="IranCP Logo" width={100} height={50} className="rounded" />
                     </Link>
                 </div>
                 <nav>

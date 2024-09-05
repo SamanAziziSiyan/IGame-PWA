@@ -8,8 +8,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
-  title: "IGame PWA",
-  description: "This is IGame PWA Shop",
+  title: "IranCP PWA",
+  description: "IranCP is a marketplace for buying CP for games",
 };
 
 export const viewport: Viewport = {

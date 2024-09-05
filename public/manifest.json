@@ -1,7 +1,7 @@
 {
-  "name": "IGame PWA Shop",
-  "short_name": "IGame Shop",
-  "description": "This is IGame PWA Shop",
+  "name": "IranCP PWA Shop",
+  "short_name": "IranCP PWA",
+  "description": "IranCP is a marketplace for buying CP for games",
   "icons": [
     {
       "src": "/assets/icons/android-launchericon-192-192.png",
