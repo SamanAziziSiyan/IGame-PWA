@@ -8,13 +8,6 @@ const AccountDesc = () => {
       <div className="w-full lg:text-base text-[14px] mt-14 text-white/80 text-justify flex flex-col gap-y-4">
         <div>
           {" "}
-          <span>
-            کالاف دیوتی موبایل یک بازی موبایلی جذاب است که گیمرهای بسیاری را به
-            خود جذب کرده است. برای دسترسی به شخصیت های کالاف دیوتی، گان، پرک و
-            آفرهای بازی کالاف خرید Cp call of duty mobile ضروری است. اگر به
-            دنبال خرید سی پی کالاف ارزان هستید، انتخاب بهترین سایت خرید سی پی
-            اهمیت بسیاری دارد.
-          </span>
           <Image src="/assets/images/img1.png" alt="" className="object-cover mx-auto py-8" width={975} height={731}></Image>
           <span>
             سایت ایران سی پی یکی از بهترین سایت ‌های خرید سی پی در ایران است که
