@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# IranCP PWA — Customer-Facing Web App
 
-## Getting Started
+## Overview
 
-First, run the development server:
+A Next.js customer-facing PWA for IranCP, a marketplace for buying game CP. The repository contains the frontend application and its PWA configuration.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Technical Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Next.js 14
+- React 18
+- TypeScript
+- Tailwind CSS
+- Axios
+- Zustand
+- React Hook Form
+- Google OAuth
+- OTP input
+- Workbox / next-pwa
+- Jalali/Persian date tooling
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Architecture
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The application uses the Next.js App Router. The root layout configures Persian document language, application metadata, and the web app manifest. The home route delegates rendering to the Home component layer.
 
-## Learn More
+PWA behavior is configured with `@ducanh2912/next-pwa`, including service-worker registration and runtime caching for static assets and selected external resources.
 
-To learn more about Next.js, take a look at the following resources:
+## Verified PWA Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Web app manifest
+- Standalone display mode
+- Installable PWA asset configuration
+- Service-worker generation through next-pwa
+- Runtime caching rules for static resources and selected external assets
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Development
 
-## Deploy on Vercel
+Install dependencies with `npm install`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Run locally with `npm run dev`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Build with `npm run build`.
+
+## Repository Context
+
+This repository and `IranCP-PWA` contain effectively identical project manifests and the same initial README state. Keep one repository as the primary portfolio reference rather than presenting both as separate projects.
+
+The original iGame system also involved WordPress and .NET backends. Those services are outside this repository, so this README does not claim ownership of the complete platform.
+
+## Security / Configuration
+
+Do not commit API keys, OAuth secrets, private backend credentials, or production configuration. The checked-in PWA configuration should be treated as client-side configuration only.
+
+## Limitations
+
+The public repository does not include the complete backend services or production infrastructure. External service contracts and some application behavior cannot be independently verified from this frontend snapshot alone.
+
+## Project Status
+
+Historical portfolio source snapshot demonstrating a production-oriented Next.js/PWA frontend and multi-service integration context.
